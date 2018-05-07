@@ -10,8 +10,8 @@ site: bookdown::bookdown_site
 
 More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
 
-This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
-This step is heavy on computational memory and very slow. Noise filtered OTU-OTU level covariance would be ideal.     
+The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+This step is heavy on computational memory and slow. Noise filtered OTU-OTU level covariance would be ideal.     
 
 **Load packages and data**  
 
@@ -199,9 +199,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH 815876b UNW- 506 1865 -- 
+## IGRAPH dfb32cf UNW- 506 1865 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 815876b (vertex names):
+## + edges from dfb32cf (vertex names):
 ## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
 ## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
 ## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          

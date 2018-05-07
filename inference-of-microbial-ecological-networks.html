@@ -95,6 +95,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -110,6 +111,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#preparing-for-the-course"><i class="fa fa-check"></i><b>1.1</b> Preparing for the course</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#useful-functions"><i class="fa fa-check"></i><b>1.2</b> Useful functions</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#focus"><i class="fa fa-check"></i><b>1.3</b> Focus</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#target-audience"><i class="fa fa-check"></i><b>1.4</b> Target audience</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#license"><i class="fa fa-check"></i><b>1.5</b> License</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html"><i class="fa fa-check"></i><b>2</b> Set-up and Pre-processing</a><ul>
 <li class="chapter" data-level="2.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>2.1</b> Structure</a></li>
@@ -186,8 +190,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="inference-of-microbial-ecological-networks" class="section level1">
 <h1><span class="header-section-number">7</span> Inference of Microbial Ecological Networks</h1>
 <p>More information on <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226">SPIEC-EASI</a>.</p>
-<p>This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.<br />
-This step is heavy on computational memory and very slow. Noise filtered OTU-OTU level covariance would be ideal.</p>
+<p>The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.<br />
+This step is heavy on computational memory and slow. Noise filtered OTU-OTU level covariance would be ideal.</p>
 <p><strong>Load packages and data</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&quot;zdk123/SpiecEasi&quot;</span>)
@@ -306,9 +310,9 @@ vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw
 <h3><span class="header-section-number">7.2.1</span> Prepare data for plotting</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.ig &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(n.c, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>, <span class="dt">weighted =</span> <span class="ot">TRUE</span>)
 stool.ig <span class="co"># we can see all the attributes and weights</span></code></pre></div>
-<pre><code>## IGRAPH 815876b UNW- 506 1865 -- 
+<pre><code>## IGRAPH dfb32cf UNW- 506 1865 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 815876b (vertex names):
+## + edges from dfb32cf (vertex names):
 ## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
 ## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
 ## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          

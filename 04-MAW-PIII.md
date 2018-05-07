@@ -11,7 +11,7 @@ site: bookdown::bookdown_site
 
 Barplots are an easy and intuitive way of visualising the composition of your samples. However, the way this is implented in phyloseq causes problems with the order of the taxa in the legend at higher taxonomic levels.
 
-We will use the filtered phyloseq object from the Microbiome Analytics Workshop 2018 tutorial I.  
+We will use the filtered phyloseq object from **Set-up and Pre-processing** section.  
 
 **Load packages** 
 

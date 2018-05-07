@@ -95,6 +95,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -110,6 +111,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#preparing-for-the-course"><i class="fa fa-check"></i><b>1.1</b> Preparing for the course</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#useful-functions"><i class="fa fa-check"></i><b>1.2</b> Useful functions</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#focus"><i class="fa fa-check"></i><b>1.3</b> Focus</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#target-audience"><i class="fa fa-check"></i><b>1.4</b> Target audience</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#license"><i class="fa fa-check"></i><b>1.5</b> License</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html"><i class="fa fa-check"></i><b>2</b> Set-up and Pre-processing</a><ul>
 <li class="chapter" data-level="2.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>2.1</b> Structure</a></li>
@@ -252,6 +256,7 @@ p +<span class="st"> </span><span class="kw">scale_color_brewer</span>(<span cla
 </div>
 <div id="permanova" class="section level2">
 <h2><span class="header-section-number">5.3</span> PERMANOVA</h2>
+<p>Permutational multivariate analysis of variance <a href="https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841">further reading</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vegan)</code></pre></div>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
@@ -285,6 +290,7 @@ permanova</code></pre></div>
 </div>
 <div id="checking-the-homogeneity-condition" class="section level2">
 <h2><span class="header-section-number">5.4</span> Checking the homogeneity condition</h2>
+<p>Type <code>?betadisper</code> in R console for more information.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps.disper &lt;-<span class="st"> </span><span class="kw">betadisper</span>(unifrac.dist, metadf$scientific_name)
 <span class="kw">permutest</span>(ps.disper, <span class="dt">pairwise =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
@@ -307,8 +313,8 @@ permanova</code></pre></div>
 ## human vaginal metagenome           2.0164e-07            3.0628e-16
 ## human skin metagenome              1.7519e-01            7.3652e-02
 ##                          human vaginal metagenome human skin metagenome
-## human gut metagenome                   1.0000e-03                 0.193
-## human oral metagenome                  1.0000e-03                 0.089
+## human gut metagenome                   1.0000e-03                 0.171
+## human oral metagenome                  1.0000e-03                 0.073
 ## human vaginal metagenome                                          0.001
 ## human skin metagenome                  1.8573e-04</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>

@@ -114,6 +114,8 @@ p + scale_color_brewer(palette = "Dark2")+ scale_fill_gradient(low = "#e0ecf4", 
 
 ## PERMANOVA  
 
+Permutational multivariate analysis of variance [further reading](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841)  
+
 
 ```r
 library(vegan)
@@ -165,6 +167,8 @@ permanova
 
 ## Checking the homogeneity condition  
 
+Type `?betadisper` in R console for more information.  
+
 
 ```r
 ps.disper <- betadisper(unifrac.dist, metadf$scientific_name)
@@ -192,12 +196,11 @@ permutest(ps.disper, pairwise = TRUE)
 ## human vaginal metagenome           2.0164e-07            3.0628e-16
 ## human skin metagenome              1.7519e-01            7.3652e-02
 ##                          human vaginal metagenome human skin metagenome
-## human gut metagenome                   1.0000e-03                 0.193
-## human oral metagenome                  1.0000e-03                 0.089
+## human gut metagenome                   1.0000e-03                 0.171
+## human oral metagenome                  1.0000e-03                 0.073
 ## human vaginal metagenome                                          0.001
 ## human skin metagenome                  1.8573e-04
 ```
-
 
 
 

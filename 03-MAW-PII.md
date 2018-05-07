@@ -9,11 +9,11 @@ site: bookdown::bookdown_site
 
 # Alpha diversities  
 
-Alpha diversity measures are used to identify within individual taxa richness and eveness. The commonly used metrices/indices are Shannon, Inverse Simpson, Simpson, Gini, Observed and Chao1. These indices do not take into account the phylogeny of the taxa identified in sequencing. Phylogenetic diversity (Faith's PD) uses phylogenetic distance to calculate the diversity of a given sample.   
+Alpha diversity measures are used to identify within individual taxa richness and evenness. The commonly used metrics/indices are Shannon, Inverse Simpson, Simpson, Gini, Observed and Chao1. These indices do not take into account the phylogeny of the taxa identified in sequencing. Phylogenetic diversity (Faith's PD) uses phylogenetic distance to calculate the diversity of a given sample.   
 
 *It is important to note that, alpha diversity indices are sensitive to noise that is inherent to application of polymerase chain reaction and the  sequencing errors.*  
 
-One has to consider the sequecing depth (how much you have sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample)   
+One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample)   
 
 **Load packages**  
  
@@ -32,7 +32,7 @@ library(dplyr) # data handling
 
 The data for tutorial is stored as *.rds file in the R project folder.  
 
-We will use the filtered phyloseq object from previous tutorial.  
+We will use the filtered phyloseq object from **Set-up and Pre-processing** section.  
 
 
 ```r
@@ -63,8 +63,24 @@ summary(sample_sums(ps1))
 ##    1286    3063    4192    5060    5790   41694
 ```
 
-As is evident there is a large difference in the numer of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!  
-We will normalise to the lowest depth of atleast 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This descion will depend on the research question being addressed.  
+As is evident there is a large difference in the number of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!  
+
+We can plot the rarefaction curve for the observed OTUs in the entire data set.  
+
+
+```r
+out_tab <- t(abundances(ps1))
+p <- vegan::rarecurve(out_tab, 
+                      step = 50, label = FALSE, 
+                      sample = min(rowSums(out_tab), 
+                                   col = "blue", cex = 0.6))
+```
+
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+Not all samples are reaching a plateau and that few samples have high number of reads and high number of OTUs.  
+Since we are comparing different body sites, some are expected to have low bacterial load.  
+We will normalize to the lowest depth of at least 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This decision will depend on the research question being addressed.  
 
 ## Equal sample sums  
 
@@ -114,7 +130,7 @@ ps0.rar <- rarefy_even_depth(ps1, sample.size = 2000)
 saveRDS(ps0.rar, "./phyobjects/ps0.rar.rds")
 ```
 
-Check how mauch data you have now  
+Check how much data you have now  
 
 
 ```r
@@ -133,15 +149,15 @@ print(ps0.rar)
 ```
 
 
+
 ```r
  # quick check for sampling depth
 
 barplot(sample_sums(ps0.rar), las =2)
 ```
 
-<img src="03-MAW-PII_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
- 
 
 
 ```r
@@ -152,11 +168,11 @@ p.rar <- plot_taxa_prevalence(ps0.rar, "Phylum")
 p.rar
 ```
 
-<img src="03-MAW-PII_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 
 
-Compare this to taxa prevalence plot from part I of the tutorial.  
+Compare this to taxa prevalence plot from previous section of the tutorial.  
 
 Do you see any difference?  
 
@@ -166,7 +182,7 @@ Do you see any difference?
 
 For more diversity indices please refer to [Microbiome Package](http://microbiome.github.io/microbiome/Diversity.html)  
 
-Let use calcualte diversity  
+Let use calculate diversity  
 
 
 ```r
@@ -228,7 +244,7 @@ p <- ggboxplot(div.df, x = "scientific_name", y = "shannon",
 p + rotate_x_text()
 ```
 
-<img src="03-MAW-PII_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 ```r
 colnames(hmp.div)
@@ -240,7 +256,7 @@ colnames(hmp.div)
 ```
 
 
-Alterantive way  
+Alternative way  
 
 
 ```r
@@ -302,7 +318,7 @@ p <- p + rremove("x.text")
 p
 ```
 
-<img src="03-MAW-PII_files/figure-html/unnamed-chunk-11-1.png" width="1152" />
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-12-1.png" width="1152" />
 
 ```r
 ggsave("./figures/Diversities.pdf", height = 4, width = 10)
@@ -326,7 +342,7 @@ p2 <- p + stat_compare_means(comparisons = L.pairs,
 p2
 ```
 
-<img src="03-MAW-PII_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 ### Phylogenetic diversity   
 
@@ -399,8 +415,58 @@ pd.plot + stat_compare_means(comparisons = L.pairs,
                                                 symbols = c("****", "***", "**", "*", "n.s")))
 ```
 
-<img src="03-MAW-PII_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
+**NOTE:**  
+
+There are arguments both for and against the use of rarefying to equal library size.  
+The application of normalization method will depend on the type of research question. It is always good to check if there is a correlation between increasing library sizes and richness. Observed OTUs and Phylogenetic diversity can be affected by library sizes. It is always good to check for this before making a choice.    
+
+
+```r
+lib.div <- diversities(ps1, index = "all")
+
+lib.div2 <- richness(ps1)
+
+
+# let us add library size
+lib.div$LibrarySize <- sample_sums(ps1)
+
+lib.div$Richness <- lib.div2$`0`
+
+colnames(lib.div)
+```
+
+```
+## [1] "inverse_simpson" "gini_simpson"    "shannon"         "fisher"         
+## [5] "coverage"        "LibrarySize"     "Richness"
+```
+
+```r
+ggscatter(lib.div, "LibrarySize", 
+          "shannon") + 
+  stat_cor(method = "pearson")
+```
+
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+
+```r
+ggscatter(lib.div, "inverse_simpson", "LibrarySize",
+          add = "loess") + 
+  stat_cor(method = "pearson")
+```
+
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-17-2.png" width="672" />
+
+```r
+ggscatter(lib.div, "Richness", "LibrarySize",
+          add = "loess") + 
+  stat_cor(method = "pearson", 
+           label.x = 100, 
+           label.y = 50000)
+```
+
+<img src="03-MAW-PII_files/figure-html/unnamed-chunk-17-3.png" width="672" />
 
 
 ```r
