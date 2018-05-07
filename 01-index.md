@@ -6,7 +6,8 @@ output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
 
-# OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018  
+
+<center>![ microbiome R package](images/logos.png)</center>  
 
 # Introduction  
 
