@@ -1,0 +1,275 @@
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+site: bookdown::bookdown_site
+---
+
+
+# Alpha diversities  
+
+Alpha diversity measures are used to identify within individual taxa richness and eveness. The commonly used metrices/indices are Shannon, Inverse Simpson, Simpson, Gini, Observed and Chao1. These indices do not take into account the phylogeny of the taxa identified in sequencing. Phylogenetic diversity (Faith's PD) uses phylogenetic distance to calculate the diversity of a given sample.   
+
+*It is important to note that, alpha diversity indices are sensitive to noise that is inherent to application of polymerase chain reaction and the  sequencing errors.*  
+
+One has to consider the sequecing depth (how much you have sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample)   
+
+**Load packages**  
+ 
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(microbiomeutilities) # some utility tools 
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(DT) # interactive tables in html and markdown
+library(data.table) # alternative to data.frame
+library(dplyr) # data handling  
+
+```
+
+The data for tutorial is stored as *.rds file in the R project folder.  
+
+We will use the filtered phyloseq object from previous tutorial.  
+
+```{r}
+
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+
+# use print option to see the data saved as phyloseq object.
+
+print(ps1)
+
+```
+
+
+```{r}
+
+summary(sample_sums(ps1))
+
+```
+
+As is evident there is a large difference in the numer of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!  
+We will normalise to the lowest depth of atleast 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This descion will depend on the research question being addressed.  
+
+## Equal sample sums  
+
+```{r}
+
+set.seed(9242)  # This will help in reprodcuing the filtering and nomalisation. 
+
+ps0.rar <- rarefy_even_depth(ps1, sample.size = 2000)
+
+saveRDS(ps0.rar, "./phyobjects/ps0.rar.rds")
+
+```
+
+Check how mauch data you have now  
+
+```{r}
+
+ps0.rar <- readRDS("./phyobjects/ps0.rar.rds")
+
+
+print(ps0.rar)
+
+```
+
+```{r}
+
+ # quick check for sampling depth
+
+barplot(sample_sums(ps0.rar), las =2)
+
+```
+
+ 
+
+```{r}
+# quick check taxa prevalence
+
+p.rar <- plot_taxa_prevalence(ps0.rar, "Phylum")
+
+p.rar
+
+```
+
+
+
+Compare this to taxa prevalence plot from part I of the tutorial.  
+
+Do you see any difference?  
+
+## Diversities  
+
+### Non-phylogenetic diversities  
+
+For more diversity indices please refer to [Microbiome Package](http://microbiome.github.io/microbiome/Diversity.html)  
+
+Let use calcualte diversity  
+
+```{r}
+
+hmp.div <- diversities(ps0.rar, index = "all")
+
+datatable(hmp.div)
+
+```
+
+This is one way to plot your data. 
+
+```{r}
+# get the metadata out as seprate object
+hmp.meta <- meta(ps0.rar)
+
+
+# Add the rownames as a new colum for easy integration later.
+hmp.meta$sam_name <- rownames(hmp.meta)
+
+# Add the rownames to diversity table
+hmp.div$sam_name <- rownames(hmp.div)
+
+# merge these two data frames into one
+div.df <- merge(hmp.div,hmp.meta, by = "sam_name")
+
+# check the tables
+colnames(div.df)
+
+# Now use this data frame to plot 
+p <- ggboxplot(div.df, x = "scientific_name", y = "shannon",
+              fill = "scientific_name", palette = "jco")
+p + rotate_x_text()
+
+colnames(hmp.div)
+```
+
+
+Alterantive way  
+
+```{r}
+
+# convert phyloseq object into a long data format.  
+
+div.df2 <- div.df[,c("scientific_name", "inverse_simpson", "gini_simpson", "shannon", "fisher", "coverage")]
+
+# the names are not pretty. we can replace them 
+
+colnames(div.df2) <- c("Location", "Inverse Simpson", "Gini-Simpson", "Shannon", "Fisher", "Coverage")
+
+# check
+colnames(div.df2)
+
+div_df_melt <- reshape2::melt(div.df2)
+
+head(div_df_melt)
+
+```
+
+The diversity indices are stored under column named *variable*.  
+
+```{r, fig.height=8, fig.width=12}
+
+# Now use this data frame to plot 
+p <- ggboxplot(div_df_melt, x = "Location", y = "value",
+              fill = "Location", 
+              palette = "jco", 
+              legend= "right",
+              facet.by = "variable", 
+              scales = "free")
+
+p <- p + rotate_x_text() 
+# we will remove the x axis lables
+
+p <- p + rremove("x.text")
+p
+ggsave("./figures/Diversities.pdf", height = 4, width = 10)
+
+```
+
+
+```{r}
+
+lev <- levels(div_df_melt$Location) # get the variables
+
+# make a pairwise list that we want to compare.
+L.pairs <- combn(seq_along(lev), 2, simplify = FALSE, FUN = function(i)lev[i])
+
+pval <- list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("****", "***", "**", "*", "n.s")) 
+
+p2 <- p + stat_compare_means(comparisons = L.pairs, 
+                             label = "p.signif", 
+                             symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), 
+                                                symbols = c("****", "***", "**", "*", "n.s")))
+
+p2
+```
+
+### Phylogenetic diversity   
+
+Phylogenetic diversity is calculated using the `picante` package.  
+
+```{r, message=FALSE, warning=FALSE}
+
+
+library(picante)
+
+ps0.rar.otutab <- as.data.frame(ps0.rar@otu_table)
+
+ps0.rar.tree <- ps0.rar@phy_tree
+
+# hmp.meta from previous code chunks
+
+# We first need to check if the tree is rooted or not 
+
+ps0.rar@phy_tree
+df.pd <- pd(t(ps0.rar.otutab), ps0.rar.tree,include.root=T) # t(ou_table) transposes the table for use in picante and the tre file comes from the first code chunck we used to read tree file (see making a phyloseq object section).
+
+
+datatable(df.pd)
+
+```
+
+now we need to plot PD. Check above how to get the metadata file from phyloseq object.  
+
+```{r}
+# now we need to plot PD
+
+# We will add the results of PD to this file and then plot.
+
+hmp.meta$Phylogenetic_Diversity <- df.pd$PD
+
+```
+
+**Plot**   
+
+```{r}
+
+pd.plot <- ggboxplot(hmp.meta, x = "scientific_name", 
+                     y = "Phylogenetic_Diversity",
+                     fill = "scientific_name", 
+                     palette = "jco",
+                     ylab = "Phylogenetic Diversity", 
+                     xlab = "Body site",
+                     legend = "right")
+pd.plot <- pd.plot + rotate_x_text()
+
+pd.plot + stat_compare_means(comparisons = L.pairs, 
+                             label = "p.signif", 
+                             symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), 
+                                                symbols = c("****", "***", "**", "*", "n.s")))
+
+```
+
+
+```{r}
+
+sessionInfo()
+
+
+```
+
+

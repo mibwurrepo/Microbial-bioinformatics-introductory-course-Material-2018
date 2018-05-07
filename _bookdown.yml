@@ -1,0 +1,6 @@
+book_filename: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL"
+delete_merged_file: true
+new_session: yes
+author: "Sudarshan A. Shetty"
+date: "`r Sys.Date()`"
+output_dir: "docs"

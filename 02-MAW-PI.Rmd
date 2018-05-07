@@ -1,0 +1,395 @@
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+site: bookdown::bookdown_site
+---
+
+
+# Set-up and Pre-processing  
+
+This tutorial will introduce you to basics of microbial community analysis. More importantly on how to look at you data and filter appropriately. We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609). The 16S rRNA gene variable region sequenced here is V1-V3. The raw reads were processed using QIIME 1.9.1, SortMeRNA, and OTU picking was done using the Closed-reference OTU-picking at 97% identity.   
+
+The main tools used here are [Phyloseq](https://joey711.github.io/phyloseq/) and [microbiome](http://microbiome.github.io/microbiome/)
+Kindly cite all the packages and tools that you have used in your analysis. Also make sure that you provide the scripts you used for analysis as supplementary material with your research article.    
+Check [Quick-R](http://www.statmethods.net/).  
+
+## Structure    
+
+Let us create few folders to organize our analysis. While this can be personal preference, make sure you write the structure to guide others who do not know your data well. This is important like the *old days* hand-writing should be readable to understand.      
+
+```{r, eval=FALSE}
+
+# Create Folders as following
+
+#Tables  
+
+dir.create("tables")
+
+# Figures 
+
+dir.create("figures")  
+
+# Phyloseq objects  
+
+dir.create("phyobjects")  
+
+# Custom codes/notes  
+
+dir.create("codes_notes")
+
+
+```
+
+**Load packages**  
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(microbiomeutilities) # some utility tools 
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(DT) # interactive tables in html and markdown
+library(data.table) # alternative to data.frame
+library(dplyr) # data handling  
+
+```
+
+## Making a phyloseq object  
+
+This is the basis for your analyses. In this phyloseq object, information on OTUs, taxonomy, the phylogenetic tree and metadata is stored. A single object with all this information provides a very convinient way of handling data.
+Please remember that the metadata (i.e. mapping) file has to be in *.csv format (columns have sample attributes).
+Below you can see how the mapping file has been used.   
+
+For more infromation: [phyloseq](http://joey711.github.io/phyloseq/import-data) 
+
+**Things to be done in QIIME terminal (if required):**
+**Important Note 2**: If you have error in loading the biom files stating **JSON or HDF5** then you need to convert it in to a JSON format.  
+
+For this, use the following command within the QIIME terminal and not in R!  
+
+````{r}
+# biom convert -i NGTaxMerged.biom -o ngtax_json.biom --table-type "OTU table" --to-json    
+```
+
+For more information on the biom format please  [click here](http://biom-format.org/documentation/biom_conversion.html). 
+
+**Important Note 3**: The most recent version of NG-Tax does not have this issue. 
+
+
+**NOTE**     
+Update to latest version of Microbiome package to use the `read_phyloseq` function. This function can be used for reading other outputs (like .shared and consensus taxonomy files from mothur) into phyloseq object.     
+
+
+## Read input to phyloseq object
+
+```{r, eval=TRUE}
+
+# may take anywhere between 30 seconds to 2 or more minutes to create a phyloseq object depending on the size of biom file and your PCs processing strength.
+
+pseq1 <- read_phyloseq(otu.file = "./input_data/NGTaxMerged_conv.biom", taxonomy.file = NULL, metadata.file = "./input_data/mappingMerged_edit.csv", type = "biom")
+
+```
+
+## Read the tree file.
+
+Note: requires a package called `ape` and the extension has to be ".tre" and not ".tree" (you can just change the name of the file extension)
+
+```{r, eval=TRUE}
+# Load tree file
+library(ape)
+treefile_p1 <- read.tree("./input_data/combinedTree.tre")
+
+```
+
+## Merge into phyloseq object.
+
+```{r, eval=FALSE}
+ps0 <-merge_phyloseq(pseq1,treefile_p1)
+# ps1 is the first phyloseq object.
+
+rank_names(ps0) #we check the taxonomic rank information 
+datatable(tax_table(ps0)) # the table is interactive you can scrol and search thorugh it for details.
+
+```
+
+## Read test data
+
+If you dont have your own biom file, we have a test dataset.  
+The data for tutorial is stored as *.rds file in the R project folder.  
+
+We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609).
+
+```{r}
+
+ps0 <- readRDS("ps.sub.rds")
+
+# use print option to see the data saved as phyloseq object.
+
+print(ps0)
+
+```
+
+How many OTUs do you find?    
+How many samples?  
+
+Alternatively, you can also check you data as shown below:  
+
+```{r}
+
+# check for number of samples 
+nsamples(ps0)
+
+# check for number of samples 
+ntaxa(ps0)
+
+# check for sample variables 
+sample_variables(ps0)
+
+```
+
+
+```{r}
+
+# check for unique values in variables  
+
+unique(sample_data(ps0)$scientific_name)
+
+```
+
+Which metagenomes do you see?
+
+**Important Note 4**  
+
+Always keep track of the filtering steps you performed and make a note of it!
+
+## Pre-processing data check   
+
+### Sequencing depth  
+
+Crude visualization of the sequencing depth for individual samples.
+
+```{r}
+
+# simple bar plot  
+
+barplot(sample_sums(ps0), las=2) # here las=2 will rotate the label of X-axis
+
+# try typing ?barplot
+
+```
+
+You can see there is uneven sequencing depth.  
+
+```{r}
+
+summary(sample_sums(ps0))
+
+```
+
+From the above plot and summary, it is evident that there is a large difference in the sequencing depth. 
+Let us check for our important variable
+
+```{r}
+
+p_seqdepth <- plot_read_distribution(ps0, "scientific_name", "density")
+
+print(p_seqdepth)
+
+ggsave("./figures/read_distribution.pdf", height = 4, width = 6)
+```
+
+What do you see from this plot?  
+
+### Distribution of OTUs    
+
+```{r}
+
+# We make a data table with information on the OTUs
+ps0_df_taxa =data.table(tax_table(ps0),OTUabundance = taxa_sums(ps0),OTU = taxa_names(ps0))
+ps1_tax_plot <- ggplot(ps0_df_taxa, aes(OTUabundance)) + geom_histogram() + ggtitle("Histogram of OTU (unique sequence) counts") + theme_bw()
+print(ps1_tax_plot)
+
+
+```
+
+Check how different phyla are represented in the total data.
+
+```{r}
+
+taxasums = rowSums(otu_table(ps0))
+  
+taxatable <- as.data.frame.matrix(tax_table(ps0))
+
+
+tax_plot1 <- ggplot(taxatable, aes(x = taxasums, color = taxatable[, "Phylum"])) 
+tax_plot1 <- tax_plot1 + geom_line(size = 1.5, stat = "density") 
+tax_plot1 <- tax_plot1 + theme_bw() 
+tax_plot1 <- tax_plot1 + guides(color=guide_legend(title="Phylum", nrow = 8)) 
+tax_plot1 + scale_x_log10() + xlab("Log10 OTU Counts") 
+
+ggsave("./figures/Distribution of OTUs.pdf", height = 4, width = 6)
+
+```
+
+
+Another way to identify dominant and rare outs in the dataset is as follows:  
+
+```{r}
+
+p <- plot_taxa_prevalence(ps0, "Phylum")
+p
+
+ggsave("./figures/OTU prevalence.pdf", height = 4, width = 6)
+
+
+# Set reference to check OTUs present in less than 10%  
+
+p <- p + geom_hline(yintercept = 0.1, color = "steelblue")
+p
+
+# Set reference to check OTUs present in less than 5%  
+
+p <- p + geom_hline(yintercept = 0.05, color = "red")
+p
+
+```
+
+We can extract the prevalence and abundance data used for previous plot.  
+
+```{r}
+
+prev_df <- p$data
+
+head(prev_df)
+
+```
+
+Use this data for some checks.  
+
+```{r}
+# check for distribution of prevalence values  
+
+hist(prev_df$prevalence)
+
+# What can you see from the histogram?
+
+# Check total OTUs
+nrow(prev_df)
+
+# Check how many are present in  less than 5% samples  
+nrow(prev_df[prev_df$prevalence > 0.05, ])
+
+# now check if you put this as a threshold for filtering how many OTUs will you loose?
+
+nrow(prev_df[prev_df$prevalence > 0.05, ])/nrow(prev_df) *100
+
+```
+
+20.4% of the OTUs will be lost. Check with the prevalence plot and see which OTUs will be lost.  
+
+One of the common artifacts in sequencing data and taxonomy assignments is the classification of mitochondria and chloroplast.  
+
+```{r}
+
+datatable(tax_table(ps0))
+
+# Family mitochondria 
+
+```
+
+
+Remove the mitochondria OTUs.   
+
+```{r}
+
+ps1 <- subset_taxa(ps0, Family != "mitochondria")
+
+print(ps1)
+
+# also check how many lost 
+
+ntaxa(ps0)-ntaxa(ps1)
+
+# Save this filtered phyloseq object for later analysis  
+
+saveRDS(ps1 , "./phyobjects/ps1.rds")
+
+```
+
+Check how many total reads are there in the data set.  
+
+```{r}
+
+#total number of reads in the dataset
+reads_per_OTU <- taxa_sums(ps1)
+print(sum(reads_per_OTU))
+
+```
+
+There are 2398446 reads in the total data set.  
+How many OTUs are less than 10 reads and how many reads do they contain?   
+
+```{r}
+
+print(length(reads_per_OTU[reads_per_OTU < 10]))
+
+print(sum(reads_per_OTU[reads_per_OTU < 10]))
+
+```
+
+To put this into context; out of the 3690 OTUs, a 1678 OTUs contain less than 10 reads, which is:  
+
+```{r}
+
+print((1678/3690)*100)
+
+```
+
+This is a major drawback of the OTU picking strategy. This percent can be lowered with NG_tax, DADA2, Deblur like approaches.  
+
+Let us see how many singletons are there?
+
+```{r}
+
+length(which(taxa_sums(ps1) <= 1))
+
+```
+
+Let us see how many doubletons are there?
+
+```{r}
+
+length(which(taxa_sums(ps1) == 2))
+
+```
+
+Let us see how many Singletons and doubletons are there?
+
+```{r}
+
+length(which(taxa_sums(ps1) <= 2))
+
+```
+
+Singletons and doubletons  
+```{r}
+
+round((892/3690)*100, digits = 2)
+
+```
+
+24.17% of the OTUs are doubletons or singletons. This is suggests that there can be potentially spurious OTUs.    
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+

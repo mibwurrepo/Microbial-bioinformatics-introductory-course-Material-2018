@@ -1,0 +1,142 @@
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+site: bookdown::bookdown_site
+---
+
+# Beta diversity metrics  
+
+Beta-diversity: Measures for differences between samples from different groups to identify if there are differences in the overall community composition and structure.   
+
+**Load packages and data**  
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(dplyr) # data handling  
+
+```
+
+
+For more information:
+
+[Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531).  
+
+[Normalisation and data transformation](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).  
+
+[What is Constrained and Unconstrained Ordination](http://www.davidzeleny.net/anadat-r/doku.php/en:ordination).  
+
+
+```{r}
+
+# read non rarefied data
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+# read non rarefied data
+ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
+# use print option to see the data saved as phyloseq object.
+
+```
+
+## Phylogenetic beta-diversity metrics  
+
+### Unweighted Unifrac  
+
+Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important.  
+
+```{r}
+
+ps1.rel <- transform(ps1, "compositional")
+
+ordu.unwt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=F)
+
+# check for Eigen values 
+# barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
+
+unwt.unifrac <- plot_ordination(ps1.rel, 
+                                     ordu.unwt.uni, color="scientific_name") 
+unwt.unifrac <- unwt.unifrac + ggtitle("Unweighted UniFrac") + geom_point(size = 2)
+unwt.unifrac <- unwt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
+print(unwt.unifrac)
+
+```
+
+
+### Weighted Unifrac  
+
+Weighted Unifrac will consider the abundances of different taxa.  
+
+```{r}
+
+ordu.wt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=T)
+
+# check for Eigen values 
+# barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
+
+wt.unifrac <- plot_ordination(ps1.rel, 
+                                     ordu.wt.uni, color="scientific_name") 
+wt.unifrac <- wt.unifrac + ggtitle("Weighted UniFrac") + geom_point(size = 2)
+wt.unifrac <- wt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
+print(wt.unifrac)
+
+print(wt.unifrac + stat_ellipse())
+
+```
+
+The figure brings forward an important characteristics of microbiome data call the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
+
+
+## Population-level Density landscapes    
+
+```{r}
+p <- microbiome::plot_landscape(ps1.rel, "NMDS", "bray", col = "scientific_name") +
+       labs(title = paste("NMDS / Bray-Curtis"))   
+
+p + scale_color_brewer(palette = "Dark2")+ scale_fill_gradient(low = "#e0ecf4", high = "#6e016b") 
+
+```
+
+## PERMANOVA  
+
+```{r}
+library(vegan)
+metadf <- data.frame(sample_data(ps1.rel))
+
+unifrac.dist <- UniFrac(ps1.rel, 
+                        weighted = TRUE, 
+                        normalized = TRUE,  
+                        parallel = FALSE, 
+                        fast = TRUE)
+
+permanova <- adonis(unifrac.dist ~ scientific_name, data = metadf)
+
+permanova
+
+```
+
+## Checking the homogeneity condition  
+
+```{r}
+
+ps.disper <- betadisper(unifrac.dist, metadf$scientific_name)
+permutest(ps.disper, pairwise = TRUE)
+
+```
+
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+
+

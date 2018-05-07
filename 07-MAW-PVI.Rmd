@@ -1,0 +1,358 @@
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+site: bookdown::bookdown_site
+---
+
+# Inference of Microbial Ecological Networks     
+
+More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
+
+This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+This step is heavy on computational memory and very slow. Noise filtered OTU-OTU level covariance would be ideal.     
+
+**Load packages and data**  
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60), ignore = TRUE, eval=FALSE}
+library(devtools)
+install_github("zdk123/SpiecEasi")
+
+ #Other packages you need to install are 
+install.packages("igraph")
+
+install.packages("intergraph")
+install.packages("GGally")
+devtools::install_github("briatte/ggnet")
+
+install.packages("network")
+install.packages("ggnetwork")
+
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(dplyr) # data handling
+library(SpiecEasi) # Network analysis for sparse compositional data  
+library(network)
+library(intergraph)
+#devtools::install_github("briatte/ggnet")
+library(ggnet)
+library(igraph)
+
+```
+
+
+**Read data**
+
+```{r}
+
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+```
+
+**Select only stool samples**  
+
+We will subset our data to include only stool samples.  
+
+```{r}
+
+ps1.stool <- subset_samples(ps1, bodysite == "Stool")
+
+```
+
+
+**For testing reduce the number of OTUs**  
+
+```{r}
+
+ps1.stool.otu <- prune_taxa(taxa_sums(ps1.stool) > 100, ps1.stool)
+
+# Add taxonomic classification to OTU ID
+ps1.stool.otu.f <- microbiomeutilities::format_to_besthit(ps1.stool.otu)
+
+head(tax_table(ps1.stool))
+```
+
+Check the difference in two phyloseq objects.  
+
+```{r, eval=FALSE}
+
+head(tax_table(ps1.stool.otu.f))
+
+```
+
+## Prepare data for SpiecEasi  
+
+The calcualtion of SpiecEasi are time consuming. For this tutorial we will have the necessary input files for SpiecEasi.  
+
+* OTU table  
+* Taxonomy table  
+
+We save it as *.rds* object.  
+
+```{r}
+
+otu.c <- t(otu_table(ps1.stool.otu.f)@.Data) #extract the otu table from phyloseq object
+
+tax.c <- as.data.frame(tax_table(ps1.stool.otu.f)@.Data)#extract the taxonomy information
+
+head(tax.c)
+
+saveRDS(otu.c, "input_data/stool.otu.c.rds")
+saveRDS(tax.c, "input_data/stool.tax.c.rds")
+
+
+```
+
+
+## SPIEC-EASI network reconstruction  
+
+More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
+
+This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+This step is heavy on computational memory and very slow. For this workshop we have already have the output and will skip this chuck.  
+```{r, eval=FALSE}
+
+# In practice, use more repetitions
+set.seed(1244)
+net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50))
+
+# saveRDS(net.c, "input_data/net.c.rds")
+
+#please use more numebr of rep.num (99 or 999) the paraemters 
+
+## Create graph object and get edge values  
+
+
+```
+
+
+**We have save the output of net.c to save time**  
+
+The output of `spiec.easi` is stored in *./input_data/* as *stool.net.c.rds*. Read this file in R and follow the steps below.  
+
+```{r}
+
+net.c <- readRDS("input_data/stool.net.c.rds")
+n.c <- symBeta(getOptBeta(net.c))
+
+```
+
+**Add names to IDs**  
+We also add abundance values to vertex (nodes).  
+
+```{r}
+
+colnames(n.c) <- rownames(n.c) <- colnames(otu.c)
+
+vsize <- log2(apply(otu.c, 2, mean)) # add log abundance as properties of vertex/nodes.
+
+```
+
+### Prepare data for plotting  
+
+```{r}
+stool.ig <- graph.adjacency(n.c, mode='undirected', add.rownames = TRUE, weighted = TRUE)
+stool.ig # we can see all the attributes and weights
+
+#plot(stool.ig)
+```
+
+
+set the layout option
+
+```{r, eval=FALSE}
+# check what is it?
+?layout_with_fr
+
+```
+
+```{r}
+
+coords.fdr = layout_with_fr(stool.ig)
+
+```
+
+### igraph network  
+
+```{r}
+
+E(stool.ig)[weight > 0]$color<-"steelblue" #now color the edges based on their values positive is steelblue
+E(stool.ig)[weight < 0]$color<-"orange"  #now color the edges based on their values
+
+plot(stool.ig, layout=coords.fdr, vertex.size = 2, vertex.label.cex = 0.5)
+```
+
+The visualisation can be enhanced using [ggnet](https://briatte.github.io/ggnet/) R package.  
+
+```{r}
+
+stool.net <- asNetwork(stool.ig)
+network::set.edge.attribute(stool.net, "color", ifelse(stool.net %e% "weight" > 0, "steelblue", "orange"))
+
+```
+
+Start adding taxonomic information.  
+
+```{r}
+colnames(tax_table(ps1.stool.otu.f))
+phyla <- map_levels(colnames(otu.c), from = "best_hit", to = "Phylum", tax_table(ps1.stool.otu.f))
+stool.net %v% "Phylum" <- phyla
+stool.net %v% "nodesize" <- vsize
+
+```
+
+### Network plot    
+
+```{r, warning=FALSE, message=FALSE}
+
+mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"))
+
+p <- ggnet2(stool.net, node.color = "Phylum", 
+            label = TRUE, node.size = "nodesize", 
+            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+
+p 
+
+p <- ggnet2(stool.net, node.color = "Phylum", 
+            label = TRUE, node.size = 2, 
+            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+
+p 
+
+
+```
+
+## Network properties  
+
+Check for the number of positive and negative edges.  
+
+```{r}
+
+betaMat=as.matrix(symBeta(getOptBeta(net.c)))
+
+# We divide by two since an edge is represented by two entries in the matrix.
+positive=length(betaMat[betaMat>0])/2 
+
+negative=length(betaMat[betaMat<0])/2 
+
+total=length(betaMat[betaMat!=0])/2 
+
+
+```
+
+### Modularity in networks  
+
+```{r}
+
+net.c
+
+mod.net <- net.c$refit
+
+colnames(mod.net) <- rownames(mod.net) <- colnames(otu.c)#you can remove this 
+
+vsize <- log2(apply(otu.c, 2, mean))# value we may or may not use as vertex.attribute
+
+stool.ig.mod <- graph.adjacency(mod.net, mode='undirected', add.rownames = TRUE)
+plot(stool.ig.mod) # we can see all the attributes and weights
+
+
+stool.net.mod <- asNetwork(stool.ig.mod)
+
+```
+
+
+
+```{r}
+
+phyla <- map_levels(colnames(otu.c), from = "best_hit", to = "Phylum", tax_table(ps1.stool.otu.f))
+stool.net.mod %v% "Phylum" <- phyla
+stool.net.mod %v% "nodesize" <- vsize
+
+```
+
+### Network plot    
+
+```{r, warning=FALSE, message=FALSE}
+
+mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"))
+
+p <- ggnet2(stool.net.mod, node.color = "Phylum", 
+            label = TRUE, node.size = 2, 
+            label.size = 2) + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+
+p 
+```
+
+Identify modularity in networks.  
+
+```{r}
+
+modules =cluster_fast_greedy(stool.ig.mod)
+
+print(modules)
+
+modularity(modules)
+
+V(stool.ig.mod)$color=modules$membership
+
+plot(stool.ig.mod, col = modules, vertex.size = 4, vertex.label = NA)
+
+stool.net.mod %v% "membership" <- modules$membership
+
+p <- ggnet2(stool.net.mod, node.color = "membership", 
+            label = TRUE, node.size = "nodesize", 
+            label.size = 2) + guides(color=guide_legend(title="membership"), size = FALSE) + mycolors
+
+p 
+
+```
+
+Check which OTUs are part of different modules.  
+
+```{r}
+
+modulesOneIndices=which(modules$membership==1)
+modulesOneOtus=modules$names[modulesOneIndices]
+modulesTwoIndices=which(modules$membership==2)
+modulesTwoOtus=modules$names[modulesTwoIndices]
+
+modulesThreeIndices=which(modules$membership==3)
+modulesThreeOtus=modules$names[modulesThreeIndices]
+modulesFourIndices=which(modules$membership==4)
+modulesFourOtus=modules$names[modulesFourIndices]
+
+modulesFiveIndices=which(modules$membership==5)
+modulesFiveOtus=modules$names[modulesFiveIndices]
+modulesSixIndices=which(modules$membership==6)
+modulesSixOtus=modules$names[modulesSixIndices]
+
+print(modulesFiveOtus)
+
+```
+
+### Good reads for ecological networks  
+
+[Using network analysis to explore co-occurrence patterns in soil microbial communities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3260507/)  
+
+[Microbial Co-occurrence Relationships in the Human Microbiome](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002606)  
+
+[Correlation detection strategies in microbial data sets vary widely in sensitivity and precision](http://www.nature.com/ismej/journal/v10/n7/full/ismej2015235a.html)  
+
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+

@@ -1,0 +1,1644 @@
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes"
+date: "19 april 2018"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+
+<center>![ microbiome R package](https://github.com/mibwurrepo/Summer-School-Material-2018/blob/master/images/microbiomeR_Stickerreseize.png)</center>  
+
+
+Three day spring school on basics of high throughput 16S rRNA gene sequencing data analysis. This spring school is organised in collaboration with [VLAG graduate school](https://www.vlaggraduateschool.nl/en.htm), [Laboratory of Microbiology](https://www.wur.nl/en/Expertise-Services/Chair-groups/Agrotechnology-and-Food-Sciences/Laboratory-of-Microbiology.htm), [Systems and Synthetic Biology](https://www.wur.nl/en/Expertise-Services/Chair-groups/Agrotechnology-and-Food-Sciences/Laboratory-of-Systems-and-Synthetic-Biology.htm), Wageningen University & Research, the Netherlands and [Department of Mathematics and Statistics University of Turku](https://www.utu.fi/en/units/sci/units/math/Pages/home.aspx), Finland. This year it will be held at [Wageningen University & Research](https://www.wur.nl/en.htm). We will cover topics related to basics of sequencing and microbial community analysis. We will use [NG-Tax]( https://f1000research.com/articles/5-1791/v1) and [R](https://www.r-project.org/) based tools like [Phyloseq](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217), [microbiome](http://microbiome.github.io/microbiome/) and [ggplot2](http://ggplot2.org/) for downstream data analysis and visualization.   
+
+**Reference and important links**  
+  
+
+* [R](https://www.r-project.org/).  
+* [Phyloseq](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217).    
+* [microbiome](http://microbiome.github.io/microbiome/).   
+* [ggplot2](http://ggplot2.org/).  
+* [RMarkdown](https://rmarkdown.rstudio.com/).  
+* [RMarkdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).  
+* [R Studio](https://www.rstudio.com/).     
+* [List of R tools for microbiome analysis](https://github.com/microsud/Tools-Microbiome-Anlaysis).  
+
+
+
+
+
+<!--chapter:end:01-index.Rmd-->
+
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+
+Set-up and Pre-processing  
+=======================================================================  
+
+This tutorial will introduce you to basics of microbial community analysis. More importantly on how to look at you data and filter appropriately. We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609). The 16S rRNA gene variable region sequenced here is V1-V3. The raw reads were processed using QIIME 1.9.1, SortMeRNA, and OTU picking was done using the Closed-reference OTU-picking at 97% identity.   
+
+The main tools used here are [Phyloseq](https://joey711.github.io/phyloseq/) and [microbiome](http://microbiome.github.io/microbiome/)
+Kindly cite all the packages and tools that you have used in your analysis. Also make sure that you provide the scripts you used for analysis as supplementary material with your research article.    
+You can also find useful cheat sheets for R in the folder "Useful R cheat sheets".  
+or other simple commands on plotting or data transformation on [Quick-R](http://www.statmethods.net/)
+
+# Structure    
+
+Let us create few folders to organize our analysis. While this can be personal preference, make sure you write the structure to guide others who do not know your data well. This is important like the *old days* hand-writing should be readable to understand.      
+
+```{r, eval=FALSE}
+
+# Tables  
+
+dir.create("tables")
+
+# Figures 
+
+dir.create("figures")  
+
+# Phyloseq objects  
+
+dir.create("phyobjects")  
+
+# Custom codes/notes  
+
+dir.create("codes_notes")
+
+
+```
+
+## Load packages  
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(microbiomeutilities) # some utility tools 
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(DT) # interactive tables in html and markdown
+library(data.table) # alternative to data.frame
+library(dplyr) # data handling  
+
+```
+
+# Making a phyloseq object  
+
+This is the basis for your analyses. In this phyloseq object, information on OTUs, taxonomy, the phylogenetic tree and metadata is stored. A single object with all this information provides a very convinient way of handling data.
+Please remember that the metadata (i.e. mapping) file has to be in *.csv format (columns have sample attributes).
+Below you can see how the mapping file has been used.   
+
+For more infromation: [phyloseq](http://joey711.github.io/phyloseq/import-data) 
+
+**Things to be done in QIIME terminal (if required):**
+**Important Note 2**: If you have error in loading the biom files stating **JSON or HDF5** then you need to convert it in to a JSON format.  
+
+For this, use the following command within the QIIME terminal and not in R!  
+
+````{r}
+# biom convert -i NGTaxMerged.biom -o ngtax_json.biom --table-type "OTU table" --to-json    
+```
+
+For more information on the biom format please  [click here](http://biom-format.org/documentation/biom_conversion.html). 
+
+**Important Note 3**: The most recent version of NG-Tax does not have this issue. 
+
+
+**NOTE**     
+Update to latest version of Microbiome package to use the `read_phyloseq` function. This function can be used for reading other outputs (like .shared and consensus taxonomy files from mothur) into phyloseq object.     
+
+
+## Read input to phyloseq object
+
+```{r, eval=TRUE}
+
+# may take anywhere between 30 seconds to 2 or more minutes to create a phyloseq object depending on the size of biom file and your PCs processing strength.
+
+pseq1 <- read_phyloseq(otu.file = "./input_data/NGTaxMerged_conv.biom", taxonomy.file = NULL, metadata.file = "./input_data/mappingMerged_edit.csv", type = "biom")
+
+```
+
+## Read the tree file.
+
+Note: requires a package called `ape` and the extension has to be ".tre" and not ".tree" (you can just change the name of the file extension)
+
+```{r, eval=TRUE}
+# Load tree file
+library(ape)
+treefile_p1 <- read.tree("./input_data/combinedTree.tre")
+
+```
+
+## Merge into phyloseq object.
+
+```{r, eval=FALSE}
+ps0 <-merge_phyloseq(pseq1,treefile_p1)
+# ps1 is the first phyloseq object.
+
+rank_names(ps0) #we check the taxonomic rank information 
+datatable(tax_table(ps0)) # the table is interactive you can scrol and search thorugh it for details.
+
+```
+
+# Read test data
+
+If you dont have your own biom file, we have a test dataset.  
+The data for tutorial is stored as *.rds file in the R project folder.  
+
+We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609).
+
+```{r}
+
+ps0 <- readRDS("ps.sub.rds")
+
+# use print option to see the data saved as phyloseq object.
+
+print(ps0)
+
+```
+
+How many OTUs do you find?    
+How many samples?  
+
+Alternatively, you can also check you data as shown below:  
+
+```{r}
+
+# check for number of samples 
+nsamples(ps0)
+
+# check for number of samples 
+ntaxa(ps0)
+
+# check for sample variables 
+sample_variables(ps0)
+
+```
+
+
+```{r}
+
+# check for unique values in variables  
+
+unique(sample_data(ps0)$scientific_name)
+
+```
+
+Which metagenomes do you see?
+
+**Important Note 4**  
+
+Always keep track of the filtering steps you performed and make a note of it!
+
+# Pre-processing data check   
+
+## Sequencing depth  
+
+```{r}
+
+# simple bar plot  
+
+barplot(sample_sums(ps0), las=2)
+
+```
+
+You can see there is uneven sequencing depth.  
+
+```{r}
+
+summary(sample_sums(ps0))
+
+```
+
+From the above plot and summary, it is evident that there is a large difference in the sequencing depth. 
+Let us check for our important variable
+
+```{r}
+
+p_seqdepth <- plot_read_distribution(ps0, "scientific_name", "density")
+
+print(p_seqdepth)
+
+ggsave("./figures/read_distribution.pdf", height = 4, width = 6)
+```
+
+What do you see from this plot?  
+
+## Distribution of OTUs    
+
+```{r}
+
+# We make a data table with information on the OTUs
+ps0_df_taxa =data.table(tax_table(ps0),OTUabundance = taxa_sums(ps0),OTU = taxa_names(ps0))
+ps1_tax_plot <- ggplot(ps0_df_taxa, aes(OTUabundance)) + geom_histogram() + ggtitle("Histogram of OTU (unique sequence) counts") + theme_bw()
+print(ps1_tax_plot)
+
+
+```
+
+Check how different phyla are represented in the total data.
+
+```{r}
+
+taxasums = rowSums(otu_table(ps0))
+  
+taxatable <- as.data.frame.matrix(tax_table(ps0))
+
+
+tax_plot1 <- ggplot(taxatable, aes(x = taxasums, color = taxatable[, "Phylum"])) 
+tax_plot1 <- tax_plot1 + geom_line(size = 1.5, stat = "density") 
+tax_plot1 <- tax_plot1 + theme_bw() 
+tax_plot1 <- tax_plot1 + guides(color=guide_legend(title="Phylum", nrow = 8)) 
+tax_plot1 + scale_x_log10() + xlab("Log10 OTU Counts") 
+
+ggsave("./figures/Distribution of OTUs.pdf", height = 4, width = 6)
+
+```
+
+
+Another way to identify dominant and rare outs in the dataset is as follows:  
+
+```{r}
+
+p <- plot_taxa_prevalence(ps0, "Phylum")
+p
+
+ggsave("./figures/OTU prevalence.pdf", height = 4, width = 6)
+
+
+# Set reference to check OTUs present in less than 10%  
+
+p <- p + geom_hline(yintercept = 0.1, color = "steelblue")
+p
+
+# Set reference to check OTUs present in less than 5%  
+
+p <- p + geom_hline(yintercept = 0.05, color = "red")
+p
+
+```
+
+We can extract the prevalence and abundance data used for previous plot.  
+
+```{r}
+
+prev_df <- p$data
+
+head(prev_df)
+
+```
+
+Use this data for some checks.  
+
+```{r}
+# check for distribution of prevalence values  
+
+hist(prev_df$prevalence)
+
+# What can you see from the histogram?
+
+# Check total OTUs
+nrow(prev_df)
+
+# Check how many are present in  less than 5% samples  
+nrow(prev_df[prev_df$prevalence > 0.05, ])
+
+# now check if you put this as a threshold for filtering how many OTUs will you loose?
+
+nrow(prev_df[prev_df$prevalence > 0.05, ])/nrow(prev_df) *100
+
+```
+
+20.4% of the OTUs will be lost. Check with the prevalence plot and see which OTUs will be lost.  
+
+One of the common artifacts in sequencing data and taxonomy assignments is the classification of mitochondria and chloroplast.  
+
+```{r}
+
+datatable(tax_table(ps0))
+
+# Family mitochondria 
+
+```
+
+
+Remove the mitochondria OTUs.   
+
+```{r}
+
+ps1 <- subset_taxa(ps0, Family != "mitochondria")
+
+print(ps1)
+
+# also check how many lost 
+
+ntaxa(ps0)-ntaxa(ps1)
+
+# Save this filtered phyloseq object for later analysis  
+
+saveRDS(ps1 , "./phyobjects/ps1.rds")
+
+```
+
+Check how many total reads are there in the data set.  
+
+```{r}
+
+#total number of reads in the dataset
+reads_per_OTU <- taxa_sums(ps1)
+print(sum(reads_per_OTU))
+
+```
+
+There are 2398446 reads in the total data set.  
+How many OTUs are less than 10 reads and how many reads do they contain?   
+
+```{r}
+
+print(length(reads_per_OTU[reads_per_OTU < 10]))
+
+print(sum(reads_per_OTU[reads_per_OTU < 10]))
+
+```
+
+To put this into context; out of the 3690 OTUs, a 1678 OTUs contain less than 10 reads, which is:  
+
+```{r}
+
+print((1678/3690)*100)
+
+```
+
+This is a major drawback of the OTU picking strategy. This percent can be lowered with NG_tax, DADA2, Deblur like approaches.  
+
+Let us see how many singletons are there?
+
+```{r}
+
+length(which(taxa_sums(ps1) <= 1))
+
+```
+
+Let us see how many doubletons are there?
+
+```{r}
+
+length(which(taxa_sums(ps1) == 2))
+
+```
+
+Let us see how many Singletons and doubletons are there?
+
+```{r}
+
+length(which(taxa_sums(ps1) <= 2))
+
+```
+
+Singletons and doubletons  
+```{r}
+
+round((892/3690)*100, digits = 2)
+
+```
+
+24.17% of the OTUs are doubletons or singletons. This is suggests that there can be potentially spurious OTUs.    
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+
+
+<!--chapter:end:02-MAW-PI.Rmd-->
+
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+
+Alpha diversities  
+=======================================================================   
+
+Alpha diversity measures are used to identify within individual taxa richness and eveness. The commonly used metrices/indices are Shannon, Inverse Simpson, Simpson, Gini, Observed and Chao1. These indices do not take into account the phylogeny of the taxa identified in sequencing. Phylogenetic diversity (Faith's PD) uses phylogenetic distance to calculate the diversity of a given sample.   
+
+*It is important to note that, alpha diversity indices are sensitive to noise that is inherent to application of polymerase chain reaction and the  sequencing errors.*  
+
+One has to consider the sequecing depth (how much you have sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample)   
+
+# Load packages  
+ 
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(microbiomeutilities) # some utility tools 
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(DT) # interactive tables in html and markdown
+library(data.table) # alternative to data.frame
+library(dplyr) # data handling  
+
+```
+
+The data for tutorial is stored as *.rds file in the R project folder.  
+
+We will use the filtered phyloseq object from previous tutorial.  
+
+```{r}
+
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+
+# use print option to see the data saved as phyloseq object.
+
+print(ps1)
+
+```
+
+
+```{r}
+
+summary(sample_sums(ps1))
+
+```
+
+As is evident there is a large difference in the numer of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!  
+We will normalise to the lowest depth of atleast 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This descion will depend on the research question being addressed.  
+
+# Equal sample sums  
+
+```{r}
+
+set.seed(9242)  # This will help in reprodcuing the filtering and nomalisation. 
+
+ps0.rar <- rarefy_even_depth(ps1, sample.size = 2000)
+
+saveRDS(ps0.rar, "./phyobjects/ps0.rar.rds")
+
+```
+
+Check how mauch data you have now  
+
+```{r}
+
+ps0.rar <- readRDS("./phyobjects/ps0.rar.rds")
+
+
+print(ps0.rar)
+
+```
+
+```{r}
+
+ # quick check for sampling depth
+
+barplot(sample_sums(ps0.rar), las =2)
+
+```
+
+ 
+
+```{r}
+# quick check taxa prevalence
+
+p.rar <- plot_taxa_prevalence(ps0.rar, "Phylum")
+
+p.rar
+
+```
+
+
+
+Compare this to taxa prevalence plot from part I of the tutorial.  
+
+Do you see any difference?  
+
+# Diversities  
+
+## Non-phylogenetic diversities  
+
+For more diversity indices please refer to [Microbiome Package](http://microbiome.github.io/microbiome/Diversity.html)  
+
+Let use calcualte diversity  
+
+```{r}
+
+hmp.div <- diversities(ps0.rar, index = "all")
+
+datatable(hmp.div)
+
+```
+
+This is one way to plot your data. 
+
+```{r}
+# get the metadata out as seprate object
+hmp.meta <- meta(ps0.rar)
+
+
+# Add the rownames as a new colum for easy integration later.
+hmp.meta$sam_name <- rownames(hmp.meta)
+
+# Add the rownames to diversity table
+hmp.div$sam_name <- rownames(hmp.div)
+
+# merge these two data frames into one
+div.df <- merge(hmp.div,hmp.meta, by = "sam_name")
+
+# check the tables
+colnames(div.df)
+
+# Now use this data frame to plot 
+p <- ggboxplot(div.df, x = "scientific_name", y = "shannon",
+              fill = "scientific_name", palette = "jco")
+p + rotate_x_text()
+
+colnames(hmp.div)
+```
+
+
+Alterantive way  
+
+```{r}
+
+# convert phyloseq object into a long data format.  
+
+div.df2 <- div.df[,c("scientific_name", "inverse_simpson", "gini_simpson", "shannon", "fisher", "coverage")]
+
+# the names are not pretty. we can replace them 
+
+colnames(div.df2) <- c("Location", "Inverse Simpson", "Gini-Simpson", "Shannon", "Fisher", "Coverage")
+
+# check
+colnames(div.df2)
+
+div_df_melt <- reshape2::melt(div.df2)
+
+head(div_df_melt)
+
+```
+
+The diversity indices are stored under column named *variable*.  
+
+```{r, fig.height=8, fig.width=12}
+
+# Now use this data frame to plot 
+p <- ggboxplot(div_df_melt, x = "Location", y = "value",
+              fill = "Location", 
+              palette = "jco", 
+              legend= "right",
+              facet.by = "variable", 
+              scales = "free")
+
+p <- p + rotate_x_text() 
+# we will remove the x axis lables
+
+p <- p + rremove("x.text")
+p
+ggsave("./figures/Diversities.pdf", height = 4, width = 10)
+
+```
+
+
+```{r}
+
+lev <- levels(div_df_melt$Location) # get the variables
+
+# make a pairwise list that we want to compare.
+L.pairs <- combn(seq_along(lev), 2, simplify = FALSE, FUN = function(i)lev[i])
+
+pval <- list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("****", "***", "**", "*", "n.s")) 
+
+p2 <- p + stat_compare_means(comparisons = L.pairs, 
+                             label = "p.signif", 
+                             symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), 
+                                                symbols = c("****", "***", "**", "*", "n.s")))
+
+p2
+```
+
+## Phylogenetic diversity   
+
+Phylogenetic diversity is calculated using the `picante` package.  
+
+```{r, message=FALSE, warning=FALSE}
+
+
+library(picante)
+
+ps0.rar.otutab <- as.data.frame(ps0.rar@otu_table)
+
+ps0.rar.tree <- ps0.rar@phy_tree
+
+# hmp.meta from previous code chunks
+
+df.pd <- pd(t(ps0.rar.otutab), ps0.rar.tree,include.root=F) # t(ou_table) transposes the table for use in picante and the tre file comes from the first code chunck we used to read tree file (see making a phyloseq object section).
+
+
+datatable(df.pd)
+
+```
+
+now we need to plot PD. Check above how to get the metadata file from phyloseq object.  
+
+```{r}
+# now we need to plot PD
+
+# We will add the results of PD to this file and then plot.
+
+hmp.meta$Phylogenetic_Diversity <- df.pd$PD
+
+```
+
+**Plot**   
+
+```{r}
+
+pd.plot <- ggboxplot(hmp.meta, x = "scientific_name", 
+                     y = "Phylogenetic_Diversity",
+                     fill = "scientific_name", 
+                     palette = "jco",
+                     ylab = "Phylogenetic Diversity", 
+                     xlab = "Body site",
+                     legend = "right")
+pd.plot <- pd.plot + rotate_x_text()
+
+pd.plot + stat_compare_means(comparisons = L.pairs, 
+                             label = "p.signif", 
+                             symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), 
+                                                symbols = c("****", "***", "**", "*", "n.s")))
+
+```
+
+
+```{r}
+
+sessionInfo()
+
+
+```
+
+
+
+<!--chapter:end:03-MAW-PII.Rmd-->
+
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+
+Composition plots  
+=======================================================================   
+ 
+Barplots are an easy and intuitive way of visualising the composition of your samples. However, the way this is implented in phyloseq causes problems with the order of the taxa in the legend at higher taxonomic levels.
+
+We will use the filtered phyloseq object from the Microbiome Analytics Workshop 2018 tutorial I.  
+
+# Load packages 
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(dplyr) # data handling  
+
+```
+
+  
+```{r}
+
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+# use print option to see the data saved as phyloseq object.
+
+print(ps1)
+
+```
+
+# Barplot counts 
+
+```{r, fig.height= 6, fig.width=20, warning=FALSE, message= FALSE}
+
+ps1.com <- ps1
+
+# We need to set Palette
+taxic <- as.data.frame(ps1.com@tax_table)  # this will help in setting large color options
+
+#colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)
+#getPalette = colorRampPalette(brewer.pal(12, "Paired"))  # change the palette as well as the number of colors will change according to palette.
+
+taxic$OTU <- rownames(taxic)  # Add the OTU ids from OTU table into the taxa table at the end.
+colnames(taxic)  # You can see that we now have extra taxonomy levels.
+
+taxmat <- as.matrix(taxic)  # convert it into a matrix.
+new.tax <- tax_table(taxmat)  # convert into phyloseq compatible file.
+tax_table(ps1.com) <- new.tax  # incroporate into phyloseq Object
+
+
+
+# now edit the unclassified taxa
+# tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "f__", "Family"] <- "Unclassified family"
+
+
+# We will also remove the 'f__' patterns for cleaner labels
+# tax_table(ps1.com)[, colnames(tax_table(ps1.com))] <- gsub(tax_table(ps1.com)[, 
+#    colnames(tax_table(ps1.com))], pattern = "[a-z]__", replacement = "")
+
+# it would be nice to have the Taxonomic names in italics.
+# for that we set this
+
+guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15, 
+    face = "italic", colour = "Black", angle = 0)))
+
+
+## Now we need to plot at family level, We can do it as follows:
+
+# first remove the phy_tree
+
+ps1.com@phy_tree <- NULL
+
+# Second merge at family level 
+
+ps1.com.fam <- aggregate_taxa(ps1.com, "Family", top = 10)
+
+plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") + 
+    scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size=18))
+  
+plot.composition.COuntAbun
+
+#ggsave("./Test_Outputfiles/Family_barplot_CountAbundance.pdf", height = 6, width = 8)
+
+
+```
+
+
+This plot is based on the reads/sample. You can see the reads are not evenly distributed over the samples, nevertheless their overall composition seems to be the same. The only thing that is different is the scaling. You don't need any other normalisation alogorithms. To check this in the next step we plot the relative abundance.
+
+# Barplot relative abundance 
+
+Make it relative abundance
+
+```{r, fig.height= 6, fig.width=20, warning=FALSE, message= FALSE}
+
+# the previous pseq object ps1.com.fam is only counts.
+
+# Use traqnsform function of microbiome to convert it to rel abun.
+
+ps1.com.rel <- microbiome::transform(ps1.com, "compositional")
+
+ps1.com.fam2 <- aggregate_taxa(ps1.com.rel, "Family", top = 10)
+
+
+plot.composition.relAbun <- plot_composition(ps1.com.fam2, 
+                                             sample.sort = "scientific_name", 
+                                             x.label = "env_material") + theme(legend.position = "bottom") + scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90)) + 
+  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size=18))
+  
+plot.composition.relAbun
+
+
+#ggsave("./figures/Family_barplot_RelAbundance.pdf", height = 6, width = 8)
+
+
+```
+
+# Barplot customize 
+
+```{r}
+
+data.com <- plot.composition.relAbun$data
+colnames(data.com)
+
+```
+
+```{r}
+
+
+p.com <- ggplot(data.com, aes(x = Sample, y = Abundance, fill = OTU))
+p.com <- p.com + geom_bar(position = "stack", stat = "identity")
+p.com <- p.com + scale_x_discrete(labels = data.com$xlabel, breaks = data.com$Sample)
+p.com <- p.com + facet_grid(~xlabel, scales = "free") + theme_bw()
+p.com <- p.com + scale_fill_brewer("Family", palette = "Paired") 
+p.com <- p.com + rremove("x.text") 
+
+ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
+
+
+```
+
+for more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
+
+
+# Heatmaps
+
+```{r}
+
+# base plot
+p.heat <- ggplot(data.com, aes(x = Sample, y = OTU)) + geom_tile(aes(fill = Abundance)) 
+
+# Change color
+p.heat <- p.heat + scale_fill_distiller("Abundance", palette = "RdYlBu") + theme_bw() 
+
+# Make bacterial names italics
+p.heat <- p.heat + theme(axis.text.y = element_text(colour = 'black', 
+                                                    size = 10, 
+                                                    face = 'italic')) 
+# Make seperate samples based on main varaible
+p.heat <- p.heat + facet_grid(~xlabel, 
+                              scales = "free") + rremove("x.text") 
+
+p.heat <- p.heat + ylab("Family")
+
+#Clean the x-axis
+p.heat <- p.heat + theme(axis.title.x=element_blank(),
+                     axis.text.x=element_blank(),
+                     axis.ticks.x=element_blank()) 
+
+# Clean the facet label box
+p.heat <- p.heat + theme(legend.key = element_blank(), 
+                     strip.background = element_rect(colour="black", fill="white"))
+
+print(p.heat)
+
+ggsave("./figures/Heatmap.pdf", height = 4, width = 6)
+
+
+# + geom_text(aes(label = round(Abundance)), size = 0.4)
+```
+
+
+# Extra  
+
+```{r}
+
+
+ps_df <- microbiomeutilities::phy_to_ldf(ps1.com, transform.counts = "compositional")
+
+colnames(ps_df)
+# this data.frame can be used to customize several plots.  
+
+# example boxplot at phylum level
+
+p.box <- ggstripchart(ps_df, "scientific_name", "Abundance", 
+                      facet.by = "Phylum", color = "scientific_name",
+                      palette = "jco")
+
+p.box + rremove("x.text")
+
+```
+
+
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+<!--chapter:end:04-MAW-PIII.Rmd-->
+
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+Beta diversity metrics  
+=======================================================================  
+
+# Load packages and data  
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(dplyr) # data handling  
+
+```
+
+
+For more information:
+
+[Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531).  
+
+[Normalisation and data transformation](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).  
+
+[What is Constrained and Unconstrained Ordination](http://www.davidzeleny.net/anadat-r/doku.php/en:ordination).  
+
+
+```{r}
+
+# read non rarefied data
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+# read non rarefied data
+ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
+# use print option to see the data saved as phyloseq object.
+
+```
+
+# Phylogenetic beta-diversity metrics  
+
+## Unweighted Unifrac
+
+```{r}
+
+ps1.rel <- transform(ps1, "compositional")
+
+ordu.unwt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=F)
+
+# check for Eigen values 
+# barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
+
+unwt.unifrac <- plot_ordination(ps1.rel, 
+                                     ordu.unwt.uni, color="scientific_name") 
+unwt.unifrac <- unwt.unifrac + ggtitle("Unweighted UniFrac") + geom_point(size = 2)
+unwt.unifrac <- unwt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
+print(unwt.unifrac)
+
+```
+
+
+## Weighted Unifrac
+
+```{r}
+
+ordu.wt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=T)
+
+# check for Eigen values 
+# barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
+
+wt.unifrac <- plot_ordination(ps1.rel, 
+                                     ordu.wt.uni, color="scientific_name") 
+wt.unifrac <- wt.unifrac + ggtitle("Weighted UniFrac") + geom_point(size = 2)
+wt.unifrac <- wt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
+print(wt.unifrac)
+
+print(wt.unifrac + stat_ellipse())
+
+```
+
+The figure brings forward an important characteristics of microbiome data call the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
+
+
+## Population-level Density landscapes    
+
+```{r}
+p <- microbiome::plot_landscape(ps1.rel, "NMDS", "bray", col = "scientific_name") +
+       labs(title = paste("NMDS / Bray-Curtis"))   
+
+p + scale_color_brewer(palette = "Dark2")+ scale_fill_gradient(low = "#e0ecf4", high = "#6e016b") 
+
+```
+
+## PERMANOVA  
+
+```{r}
+library(vegan)
+metadf <- data.frame(sample_data(ps1.rel))
+
+unifrac.dist <- UniFrac(ps1.rel, 
+                        weighted = TRUE, 
+                        normalized = TRUE,  
+                        parallel = FALSE, 
+                        fast = TRUE)
+
+permanova <- adonis(unifrac.dist ~ scientific_name, data = metadf)
+
+permanova
+
+```
+
+## Checking the homogeneity condition  
+
+```{r}
+
+ps.disper <- betadisper(unifrac.dist, metadf$scientific_name)
+permutest(ps.disper, pairwise = TRUE)
+
+```
+
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+
+
+
+<!--chapter:end:05-MAW-PIV.Rmd-->
+
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+Core microbiota  
+=======================================================================  
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(dplyr) # data handling  
+
+```
+
+# Core microbiota anlaysis   
+
+For more information:
+
+[The adult intestinal core microbiota is determined by analysis depth and health status](https://www.sciencedirect.com/science/article/pii/S1198743X14609629?via%3Dihub).  
+
+[Intestinal microbiome landscaping: insight in community assemblage and implications for microbial modulation strategies](https://academic.oup.com/femsre/article/41/2/182/2979411).  
+
+[Intestinal Microbiota in Healthy Adults: Temporal Analysis Reveals Individual and Common Core and Relation to Intestinal Symptoms](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0023035).  
+
+We will use the filtered phyloseq object from previous tutorial.We will use the filtered phyloseq object from the Microbiome Analytics Workshop 2018 tutorial I.
+
+```{r}
+
+# read non rarefied data
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+# use print option to see the data saved as phyloseq object.
+
+```
+
+Subset the data to keep only stool samples.  
+
+```{r}
+
+ps1.stool <- subset_samples(ps1, bodysite == "Stool")
+
+# convert to relative abundance  
+ps1.stool.rel <- microbiome::transform(ps1.stool, "compositional")
+print(ps1.stool.rel)
+
+ps1.stool.rel2 <- prune_taxa(taxa_sums(ps1.stool.rel) > 0, ps1.stool.rel)
+
+print(ps1.stool.rel2)
+
+```
+
+Check of the core OTUs  
+
+```{r}
+
+core.taxa.standard <- core_members(ps1.stool.rel2, detection = 0.001, prevalence = 50/100)
+
+print(core.taxa.standard)
+
+```
+
+There are 16 OTUs that are core based on the cut-offs for prevalence and detection we choose. However, we only see IDs, not very informative. We can get the classification of these as below.    
+
+```{r}
+
+# Extract the taxonomy table
+
+taxonomy <- as.data.frame(tax_table(ps1.stool.rel2))
+
+# Subset this taxonomy table to include only core OTUs  
+core_taxa_id <- subset(taxonomy, rownames(taxonomy) %in% core.taxa.standard)
+
+DT::datatable(core_taxa_id)
+
+```
+
+
+# Core abundance and diversity  
+Total core abundance in each sample (sum of abundances of the core members):
+
+```{r}
+
+core.abundance <- sample_sums(core(ps1.stool.rel2, detection = 0.001, prevalence = 50/100))
+
+DT::datatable(as.data.frame(core.abundance))
+
+```
+
+
+# Core visualization  
+
+## Core heatmaps  
+
+This visualization method has been used for instance in [Intestinal microbiome landscaping: insight in community assemblage and implications for microbial modulation strategies](https://academic.oup.com/femsre/article/41/2/182/2979411).  
+
+Note that you can order the taxa on the heatmap with the order.taxa argument.
+
+
+```{r}
+
+# Core with compositionals:
+prevalences <- seq(.05, 1, .05)
+detections <- 10^seq(log10(1e-3), log10(.2), length = 10)
+
+# Also define gray color palette
+gray <- gray(seq(0,1,length=5))
+p.core <- plot_core(ps1.stool.rel2, plot.type = "heatmap", colours = gray,
+    prevalences = prevalences, detections = detections, min.prevalence = .5) +
+    xlab("Detection Threshold (Relative Abundance (%))")
+print(p.core)    
+
+
+# Same with the viridis color palette
+# color-blind friendly and uniform
+# options: viridis, magma, plasma, inferno
+# https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+# Also discrete=TRUE versions available
+library(viridis)
+print(p.core + scale_fill_viridis())
+
+```
+
+Color change 
+
+```{r}
+
+# Core with compositionals:
+prevalences <- seq(.05, 1, .05)
+detections <- 10^seq(log10(1e-3), log10(.2), length = 10)
+
+# Also define gray color palette
+gray <- gray(seq(0,1,length=5))
+p.core <- plot_core(ps1.stool.rel2, 
+                    plot.type = "heatmap", 
+                    colours = rev(brewer.pal(5, "Spectral")),
+                    prevalences = prevalences, 
+                    detections = detections, 
+                    min.prevalence = .5) + 
+  xlab("Detection Threshold (Relative Abundance (%))")
+
+print(p.core) 
+
+```
+
+We have a custom script to format this figure which can be found in `scripts` folder in the `RProject`.  
+
+```{r}
+
+source("./scripts/plot_core_assist.R")
+plot_data <- p.core$data
+
+df_plot <- plot_core_assist(plot_data, tax_table(ps1.stool.rel2), levels = "Family")
+
+p.core$data <- df_plot
+
+plot(p.core + theme(axis.text.y = element_text(face="italic")))
+
+```
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+
+<!--chapter:end:06-MAW-PV.Rmd-->
+
+---
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SUMMER SCHOOL 2018"
+author: "Sudarshan"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: true
+    use_bookdown: false
+    highlight: haddock
+---
+
+Inference of Microbial Ecological Networks     
+=======================================================================  
+
+More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
+
+This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+This step is heavy on computational memory and very slow. Noise filtered OTU-OTU level covariance would be ideal.     
+
+# Load packages and data  
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60), ignore = TRUE, eval=FALSE}
+library(devtools)
+install_github("zdk123/SpiecEasi")
+
+ #Other packages you need to install are 
+install.packages("igraph")
+
+install.packages("intergraph")
+install.packages("GGally")
+devtools::install_github("briatte/ggnet")
+
+install.packages("network")
+install.packages("ggnetwork")
+
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+
+library(microbiome) # data analysis and visualisation
+library(phyloseq) # also the basis of data object. Data analysis and visualisation
+library(RColorBrewer) # nice color options
+library(ggpubr) # publication quality figures, based on ggplot2
+library(dplyr) # data handling
+library(SpiecEasi) # Network analysis for sparse compositional data  
+library(network)
+library(intergraph)
+#devtools::install_github("briatte/ggnet")
+library(ggnet)
+library(igraph)
+
+```
+
+
+```{r}
+
+ps1 <- readRDS("./phyobjects/ps1.rds")
+
+```
+
+**Select only stool samples**  
+
+We will subset our data to include only stool samples.  
+
+```{r}
+
+ps1.stool <- subset_samples(ps1, bodysite == "Stool")
+
+```
+
+
+**For testing reduce the number of OTUs**  
+
+```{r}
+
+ps1.stool.otu <- prune_taxa(taxa_sums(ps1.stool) > 100, ps1.stool)
+
+# Add taxonomic classification to OTU ID
+ps1.stool.otu.f <- microbiomeutilities::format_to_besthit(ps1.stool.otu)
+
+head(tax_table(ps1.stool))
+```
+
+Check the difference in two phyloseq objects.  
+
+```{r, eval=FALSE}
+
+head(tax_table(ps1.stool.otu.f))
+
+```
+
+# Prepare data for SpiecEasi  
+
+The calcualtion of SpiecEasi are time consuming. For this tutorial we will have the necessary input files for SpiecEasi.  
+
+* OTU table  
+* Taxonomy table  
+
+We save it as *.rds* object.  
+
+```{r}
+
+otu.c <- t(otu_table(ps1.stool.otu.f)@.Data) #extract the otu table from phyloseq object
+
+tax.c <- as.data.frame(tax_table(ps1.stool.otu.f)@.Data)#extract the taxonomy information
+
+head(tax.c)
+
+saveRDS(otu.c, "input_data/stool.otu.c.rds")
+saveRDS(tax.c, "input_data/stool.tax.c.rds")
+
+
+```
+
+
+# SPIEC-EASI network reconstruction  
+
+More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
+
+This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+This step is heavy on computational memory and very slow. For this workshop we have already have the output and will skip this chuck.  
+```{r, eval=FALSE}
+
+# In practice, use more repetitions
+set.seed(1244)
+net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50))
+
+# saveRDS(net.c, "input_data/net.c.rds")
+
+#please use more numebr of rep.num (99 or 999) the paraemters 
+
+## Create graph object and get edge values  
+
+
+```
+
+
+**We have save the output of net.c to save time**  
+
+The output of `spiec.easi` is stored in *./input_data/* as *stool.net.c.rds*. Read this file in R and follow the steps below.  
+
+```{r}
+
+net.c <- readRDS("input_data/stool.net.c.rds")
+n.c <- symBeta(getOptBeta(net.c))
+
+```
+
+**Add names to IDs**  
+We also add abundance values to vertex (nodes).  
+
+```{r}
+
+colnames(n.c) <- rownames(n.c) <- colnames(otu.c)
+
+vsize <- log2(apply(otu.c, 2, mean)) # add log abundance as properties of vertex/nodes.
+
+```
+
+# Prepare data for plotting  
+
+```{r}
+stool.ig <- graph.adjacency(n.c, mode='undirected', add.rownames = TRUE, weighted = TRUE)
+stool.ig # we can see all the attributes and weights
+
+#plot(stool.ig)
+```
+
+
+set the layout option
+
+```{r}
+# check what is it?
+?layout_with_fr
+
+coords.fdr = layout_with_fr(stool.ig)
+```
+
+## igraph network  
+
+```{r}
+
+E(stool.ig)[weight > 0]$color<-"steelblue" #now color the edges based on their values positive is steelblue
+E(stool.ig)[weight < 0]$color<-"orange"  #now color the edges based on their values
+
+plot(stool.ig, layout=coords.fdr, vertex.size = 2, vertex.label.cex = 0.5)
+```
+
+The visualisation can be enhanced using [ggnet](https://briatte.github.io/ggnet/) R package.  
+
+```{r}
+
+stool.net <- asNetwork(stool.ig)
+network::set.edge.attribute(stool.net, "color", ifelse(stool.net %e% "weight" > 0, "steelblue", "orange"))
+
+```
+
+Start adding taxonomic information.  
+
+```{r}
+colnames(tax_table(ps1.stool.otu.f))
+phyla <- map_levels(colnames(otu.c), from = "best_hit", to = "Phylum", tax_table(ps1.stool.otu.f))
+stool.net %v% "Phylum" <- phyla
+stool.net %v% "nodesize" <- vsize
+
+```
+
+## Network plot    
+
+```{r, warning=FALSE, message=FALSE}
+
+mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"))
+
+p <- ggnet2(stool.net, node.color = "Phylum", 
+            label = TRUE, node.size = "nodesize", 
+            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+
+p 
+
+p <- ggnet2(stool.net, node.color = "Phylum", 
+            label = TRUE, node.size = 2, 
+            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+
+p 
+
+
+```
+
+# Network properties  
+
+Number of positive and negative edges.  
+
+```{r}
+
+betaMat=as.matrix(symBeta(getOptBeta(net.c)))
+
+# We divide by two since an edge is represented by two entries in the matrix.
+positive=length(betaMat[betaMat>0])/2 
+
+negative=length(betaMat[betaMat<0])/2 
+
+total=length(betaMat[betaMat!=0])/2 
+
+
+```
+
+## Modularity in networks  
+
+```{r}
+
+net.c
+
+mod.net <- net.c$refit
+
+colnames(mod.net) <- rownames(mod.net) <- colnames(otu.c)#you can remove this 
+
+vsize <- log2(apply(otu.c, 2, mean))# value we may or may not use as vertex.attribute
+
+stool.ig.mod <- graph.adjacency(mod.net, mode='undirected', add.rownames = TRUE)
+plot(stool.ig.mod) # we can see all the attributes and weights
+
+
+stool.net.mod <- asNetwork(stool.ig.mod)
+
+```
+
+
+
+```{r}
+
+phyla <- map_levels(colnames(otu.c), from = "best_hit", to = "Phylum", tax_table(ps1.stool.otu.f))
+stool.net.mod %v% "Phylum" <- phyla
+stool.net.mod %v% "nodesize" <- vsize
+
+```
+
+## Network plot    
+
+```{r, warning=FALSE, message=FALSE}
+
+mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"))
+
+p <- ggnet2(stool.net.mod, node.color = "Phylum", 
+            label = TRUE, node.size = 2, 
+            label.size = 2) + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+
+p 
+```
+
+
+
+```{r}
+
+modules =cluster_fast_greedy(stool.ig.mod)
+
+print(modules)
+
+modularity(modules)
+
+V(stool.ig.mod)$color=modules$membership
+
+plot(stool.ig.mod, col = modules, vertex.size = 4, vertex.label = NA)
+
+stool.net.mod %v% "membership" <- modules$membership
+
+p <- ggnet2(stool.net.mod, node.color = "membership", 
+            label = TRUE, node.size = "nodesize", 
+            label.size = 2) + guides(color=guide_legend(title="membership"), size = FALSE) + mycolors
+
+p 
+
+```
+
+
+
+```{r}
+
+modulesOneIndices=which(modules$membership==1)
+modulesOneOtus=modules$names[modulesOneIndices]
+modulesTwoIndices=which(modules$membership==2)
+modulesTwoOtus=modules$names[modulesTwoIndices]
+
+modulesThreeIndices=which(modules$membership==3)
+modulesThreeOtus=modules$names[modulesThreeIndices]
+modulesFourIndices=which(modules$membership==4)
+modulesFourOtus=modules$names[modulesFourIndices]
+
+modulesFiveIndices=which(modules$membership==5)
+modulesFiveOtus=modules$names[modulesFiveIndices]
+modulesSixIndices=which(modules$membership==6)
+modulesSixOtus=modules$names[modulesSixIndices]
+
+print(modulesFiveOtus)
+
+```
+
+## Good reads for ecological networks  
+
+[Using network analysis to explore co-occurrence patterns in soil microbial communities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3260507/)  
+
+[Microbial Co-occurrence Relationships in the Human Microbiome](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002606)  
+
+[Correlation detection strategies in microbial data sets vary widely in sensitivity and precision](http://www.nature.com/ismej/journal/v10/n7/full/ismej2015235a.html)  
+
+
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+
+<!--chapter:end:07-MAW-PVI.Rmd-->
+
