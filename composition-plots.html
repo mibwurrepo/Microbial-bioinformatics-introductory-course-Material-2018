@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</title>
+  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  
+  
+  
+
+<meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
+
+
+<meta name="date" content="2018-05-07">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="alpha-diversities.html">
+<link rel="next" href="beta-diversity-metrics.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.4/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="open-reproducible-microbiome-data-analysis-spring-school-2018.html"><a href="open-reproducible-microbiome-data-analysis-spring-school-2018.html"><i class="fa fa-check"></i><b>1</b> OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#preparing-for-the-course"><i class="fa fa-check"></i><b>2.1</b> Preparing for the course</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#useful-functions"><i class="fa fa-check"></i><b>2.2</b> Useful functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html"><i class="fa fa-check"></i><b>3</b> Set-up and Pre-processing</a><ul>
+<li class="chapter" data-level="3.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>3.1</b> Structure</a></li>
+<li class="chapter" data-level="3.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#making-a-phyloseq-object"><i class="fa fa-check"></i><b>3.2</b> Making a phyloseq object</a></li>
+<li class="chapter" data-level="3.3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-input-to-phyloseq-object"><i class="fa fa-check"></i><b>3.3</b> Read input to phyloseq object</a></li>
+<li class="chapter" data-level="3.4" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>3.4</b> Read the tree file.</a></li>
+<li class="chapter" data-level="3.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>3.5</b> Merge into phyloseq object.</a></li>
+<li class="chapter" data-level="3.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-test-data"><i class="fa fa-check"></i><b>3.6</b> Read test data</a></li>
+<li class="chapter" data-level="3.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#pre-processing-data-check"><i class="fa fa-check"></i><b>3.7</b> Pre-processing data check</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#sequencing-depth"><i class="fa fa-check"></i><b>3.7.1</b> Sequencing depth</a></li>
+<li class="chapter" data-level="3.7.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#distribution-of-otus"><i class="fa fa-check"></i><b>3.7.2</b> Distribution of OTUs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>4</b> Alpha diversities</a><ul>
+<li class="chapter" data-level="4.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>4.1</b> Equal sample sums</a></li>
+<li class="chapter" data-level="4.2" data-path="alpha-diversities.html"><a href="alpha-diversities.html#diversities"><i class="fa fa-check"></i><b>4.2</b> Diversities</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#non-phylogenetic-diversities"><i class="fa fa-check"></i><b>4.2.1</b> Non-phylogenetic diversities</a></li>
+<li class="chapter" data-level="4.2.2" data-path="alpha-diversities.html"><a href="alpha-diversities.html#phylogenetic-diversity"><i class="fa fa-check"></i><b>4.2.2</b> Phylogenetic diversity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="composition-plots.html"><a href="composition-plots.html"><i class="fa fa-check"></i><b>5</b> Composition plots</a><ul>
+<li class="chapter" data-level="5.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-counts"><i class="fa fa-check"></i><b>5.1</b> Barplot counts</a></li>
+<li class="chapter" data-level="5.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>5.2</b> Barplot relative abundance</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>5.2.1</b> Barplot customize</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>5.3</b> Heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>6</b> Beta diversity metrics</a><ul>
+<li class="chapter" data-level="6.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>6.1</b> Phylogenetic beta-diversity metrics</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#unweighted-unifrac"><i class="fa fa-check"></i><b>6.1.1</b> Unweighted Unifrac</a></li>
+<li class="chapter" data-level="6.1.2" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#weighted-unifrac"><i class="fa fa-check"></i><b>6.1.2</b> Weighted Unifrac</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#population-level-density-landscapes"><i class="fa fa-check"></i><b>6.2</b> Population-level Density landscapes</a></li>
+<li class="chapter" data-level="6.3" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#permanova"><i class="fa fa-check"></i><b>6.3</b> PERMANOVA</a></li>
+<li class="chapter" data-level="6.4" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#checking-the-homogeneity-condition"><i class="fa fa-check"></i><b>6.4</b> Checking the homogeneity condition</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="core-microbiota.html"><a href="core-microbiota.html"><i class="fa fa-check"></i><b>7</b> Core microbiota</a><ul>
+<li class="chapter" data-level="7.1" data-path="core-microbiota.html"><a href="core-microbiota.html#core-microbiota-anlaysis"><i class="fa fa-check"></i><b>7.1</b> Core microbiota anlaysis</a></li>
+<li class="chapter" data-level="7.2" data-path="core-microbiota.html"><a href="core-microbiota.html#core-abundance-and-diversity"><i class="fa fa-check"></i><b>7.2</b> Core abundance and diversity</a></li>
+<li class="chapter" data-level="7.3" data-path="core-microbiota.html"><a href="core-microbiota.html#core-visualization"><i class="fa fa-check"></i><b>7.3</b> Core visualization</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="core-microbiota.html"><a href="core-microbiota.html#core-heatmaps"><i class="fa fa-check"></i><b>7.3.1</b> Core heatmaps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html"><i class="fa fa-check"></i><b>8</b> Inference of Microbial Ecological Networks</a><ul>
+<li class="chapter" data-level="8.1" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#prepare-data-for-spieceasi"><i class="fa fa-check"></i><b>8.1</b> Prepare data for SpiecEasi</a></li>
+<li class="chapter" data-level="8.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#spiec-easi-network-reconstruction"><i class="fa fa-check"></i><b>8.2</b> SPIEC-EASI network reconstruction</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#prepare-data-for-plotting"><i class="fa fa-check"></i><b>8.2.1</b> Prepare data for plotting</a></li>
+<li class="chapter" data-level="8.2.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#igraph-network"><i class="fa fa-check"></i><b>8.2.2</b> igraph network</a></li>
+<li class="chapter" data-level="8.2.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-plot"><i class="fa fa-check"></i><b>8.2.3</b> Network plot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-properties"><i class="fa fa-check"></i><b>8.3</b> Network properties</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#modularity-in-networks"><i class="fa fa-check"></i><b>8.3.1</b> Modularity in networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-plot-1"><i class="fa fa-check"></i><b>8.3.2</b> Network plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#good-reads-for-ecological-networks"><i class="fa fa-check"></i><b>8.3.3</b> Good reads for ecological networks</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="composition-plots" class="section level1">
+<h1><span class="header-section-number">5</span> Composition plots</h1>
+<p>Barplots are an easy and intuitive way of visualising the composition of your samples. However, the way this is implented in phyloseq causes problems with the order of the taxa in the legend at higher taxonomic levels.</p>
+<p>We will use the filtered phyloseq object from the Microbiome Analytics Workshop 2018 tutorial I.</p>
+<p><strong>Load packages</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbiome) <span class="co"># data analysis and visualisation</span>
+<span class="kw">library</span>(phyloseq) <span class="co"># also the basis of data object. Data analysis and visualisation</span>
+<span class="kw">library</span>(RColorBrewer) <span class="co"># nice color options</span>
+<span class="kw">library</span>(ggpubr) <span class="co"># publication quality figures, based on ggplot2</span>
+<span class="kw">library</span>(dplyr) <span class="co"># data handling  </span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps1.rds&quot;</span>)
+
+<span class="co"># use print option to see the data saved as phyloseq object.</span>
+
+<span class="kw">print</span>(ps1)</code></pre></div>
+<pre><code>## phyloseq-class experiment-level object
+## otu_table()   OTU Table:         [ 3690 taxa and 474 samples ]
+## sample_data() Sample Data:       [ 474 samples by 31 sample variables ]
+## tax_table()   Taxonomy Table:    [ 3690 taxa by 7 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 3690 tips and 3689 internal nodes ]</code></pre>
+<div id="barplot-counts" class="section level2">
+<h2><span class="header-section-number">5.1</span> Barplot counts</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.com &lt;-<span class="st"> </span>ps1
+
+<span class="co"># We need to set Palette</span>
+taxic &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ps1.com@tax_table)  <span class="co"># this will help in setting large color options</span>
+
+<span class="co">#colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)</span>
+<span class="co">#getPalette = colorRampPalette(brewer.pal(12, &quot;Paired&quot;))  # change the palette as well as the number of colors will change according to palette.</span>
+
+taxic$OTU &lt;-<span class="st"> </span><span class="kw">rownames</span>(taxic)  <span class="co"># Add the OTU ids from OTU table into the taxa table at the end.</span>
+<span class="kw">colnames</span>(taxic)  <span class="co"># You can see that we now have extra taxonomy levels.</span></code></pre></div>
+<pre><code>## [1] &quot;Kingdom&quot; &quot;Phylum&quot;  &quot;Class&quot;   &quot;Order&quot;   &quot;Family&quot;  &quot;Genus&quot;   &quot;Species&quot;
+## [8] &quot;OTU&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">taxmat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(taxic)  <span class="co"># convert it into a matrix.</span>
+new.tax &lt;-<span class="st"> </span><span class="kw">tax_table</span>(taxmat)  <span class="co"># convert into phyloseq compatible file.</span>
+<span class="kw">tax_table</span>(ps1.com) &lt;-<span class="st"> </span>new.tax  <span class="co"># incroporate into phyloseq Object</span>
+
+
+
+<span class="co"># now edit the unclassified taxa</span>
+<span class="co"># tax_table(ps1.com)[tax_table(ps1.com)[, &quot;Family&quot;] == &quot;f__&quot;, &quot;Family&quot;] &lt;- &quot;Unclassified family&quot;</span>
+
+
+<span class="co"># We will also remove the &#39;f__&#39; patterns for cleaner labels</span>
+<span class="co"># tax_table(ps1.com)[, colnames(tax_table(ps1.com))] &lt;- gsub(tax_table(ps1.com)[, </span>
+<span class="co">#    colnames(tax_table(ps1.com))], pattern = &quot;[a-z]__&quot;, replacement = &quot;&quot;)</span>
+
+<span class="co"># it would be nice to have the Taxonomic names in italics.</span>
+<span class="co"># for that we set this</span>
+
+guide_italics &lt;-<span class="st"> </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">label.theme =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">15</span>, 
+    <span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>, <span class="dt">angle =</span> <span class="dv">0</span>)))
+
+
+## Now we need to plot at family level, We can do it as follows:
+
+<span class="co"># first remove the phy_tree</span>
+
+ps1.com@phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span>
+
+<span class="co"># Second merge at family level </span>
+
+ps1.com.fam &lt;-<span class="st"> </span><span class="kw">aggregate_taxa</span>(ps1.com, <span class="st">&quot;Family&quot;</span>, <span class="dt">top =</span> <span class="dv">10</span>)
+
+plot.composition.COuntAbun &lt;-<span class="st"> </span><span class="kw">plot_composition</span>(ps1.com.fam) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) +<span class="st"> </span><span class="kw">theme_bw</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relative abundance&quot;</span>) +<span class="st"> </span>guide_italics +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">18</span>))
+  
+plot.composition.COuntAbun</code></pre></div>
+<p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-3-1.png" width="1920" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ggsave(&quot;./Test_Outputfiles/Family_barplot_CountAbundance.pdf&quot;, height = 6, width = 8)</span></code></pre></div>
+<p>This plot is based on the reads/sample. You can see the reads are not evenly distributed over the samples, nevertheless their overall composition seems to be the same. The only thing that is different is the scaling. You don’t need any other normalisation alogorithms. To check this in the next step we plot the relative abundance.</p>
+</div>
+<div id="barplot-relative-abundance" class="section level2">
+<h2><span class="header-section-number">5.2</span> Barplot relative abundance</h2>
+<p>Make it relative abundance</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the previous pseq object ps1.com.fam is only counts.</span>
+
+<span class="co"># Use traqnsform function of microbiome to convert it to rel abun.</span>
+
+ps1.com.rel &lt;-<span class="st"> </span>microbiome::<span class="kw">transform</span>(ps1.com, <span class="st">&quot;compositional&quot;</span>)
+
+ps1.com.fam2 &lt;-<span class="st"> </span><span class="kw">aggregate_taxa</span>(ps1.com.rel, <span class="st">&quot;Family&quot;</span>, <span class="dt">top =</span> <span class="dv">10</span>)
+
+
+plot.composition.relAbun &lt;-<span class="st"> </span><span class="kw">plot_composition</span>(ps1.com.fam2, 
+                                             <span class="dt">sample.sort =</span> <span class="st">&quot;scientific_name&quot;</span>, 
+                                             <span class="dt">x.label =</span> <span class="st">&quot;env_material&quot;</span>) +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) +<span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) +<span class="st"> </span><span class="kw">theme_bw</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relative abundance&quot;</span>) +<span class="st"> </span>guide_italics +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">18</span>))
+  
+plot.composition.relAbun</code></pre></div>
+<p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-4-1.png" width="1920" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ggsave(&quot;./figures/Family_barplot_RelAbundance.pdf&quot;, height = 6, width = 8)</span></code></pre></div>
+<div id="barplot-customize" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Barplot customize</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.com &lt;-<span class="st"> </span>plot.composition.relAbun$data
+<span class="kw">colnames</span>(data.com)</code></pre></div>
+<pre><code>## [1] &quot;OTU&quot;       &quot;Sample&quot;    &quot;Abundance&quot; &quot;xlabel&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.com &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> OTU))
+p.com &lt;-<span class="st"> </span>p.com +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)
+p.com &lt;-<span class="st"> </span>p.com +<span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> data.com$xlabel, <span class="dt">breaks =</span> data.com$Sample)
+p.com &lt;-<span class="st"> </span>p.com +<span class="st"> </span><span class="kw">facet_grid</span>(~xlabel, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) +<span class="st"> </span><span class="kw">theme_bw</span>()
+p.com &lt;-<span class="st"> </span>p.com +<span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) 
+p.com &lt;-<span class="st"> </span>p.com +<span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>) 
+
+<span class="kw">ggsave</span>(<span class="st">&quot;./figures/Composition plots.pdf&quot;</span>, <span class="dt">height =</span> <span class="dv">4</span>, <span class="dt">width =</span> <span class="dv">6</span>)</code></pre></div>
+<p>for more information <a href="http://microbiome.github.io/microbiome/Composition.html">Microbiome tutorial</a></p>
+</div>
+</div>
+<div id="heatmaps" class="section level2">
+<h2><span class="header-section-number">5.3</span> Heatmaps</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># base plot</span>
+p.heat &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> OTU)) +<span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Abundance)) 
+
+<span class="co"># Change color</span>
+p.heat &lt;-<span class="st"> </span>p.heat +<span class="st"> </span><span class="kw">scale_fill_distiller</span>(<span class="st">&quot;Abundance&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;RdYlBu&quot;</span>) +<span class="st"> </span><span class="kw">theme_bw</span>() 
+
+<span class="co"># Make bacterial names italics</span>
+p.heat &lt;-<span class="st"> </span>p.heat +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">&#39;black&#39;</span>, 
+                                                    <span class="dt">size =</span> <span class="dv">10</span>, 
+                                                    <span class="dt">face =</span> <span class="st">&#39;italic&#39;</span>)) 
+<span class="co"># Make seperate samples based on main varaible</span>
+p.heat &lt;-<span class="st"> </span>p.heat +<span class="st"> </span><span class="kw">facet_grid</span>(~xlabel, 
+                              <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) +<span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>) 
+
+p.heat &lt;-<span class="st"> </span>p.heat +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Family&quot;</span>)
+
+<span class="co">#Clean the x-axis</span>
+p.heat &lt;-<span class="st"> </span>p.heat +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),
+                     <span class="dt">axis.text.x=</span><span class="kw">element_blank</span>(),
+                     <span class="dt">axis.ticks.x=</span><span class="kw">element_blank</span>()) 
+
+<span class="co"># Clean the facet label box</span>
+p.heat &lt;-<span class="st"> </span>p.heat +<span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.key =</span> <span class="kw">element_blank</span>(), 
+                     <span class="dt">strip.background =</span> <span class="kw">element_rect</span>(<span class="dt">colour=</span><span class="st">&quot;black&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;white&quot;</span>))
+
+<span class="kw">print</span>(p.heat)</code></pre></div>
+<p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;./figures/Heatmap.pdf&quot;</span>, <span class="dt">height =</span> <span class="dv">4</span>, <span class="dt">width =</span> <span class="dv">6</span>)
+
+
+<span class="co"># + geom_text(aes(label = round(Abundance)), size = 0.4)</span></code></pre></div>
+<p><strong>Extra</strong></p>
+<p>Following is an example of customizing the plot using ggpubr.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps_df &lt;-<span class="st"> </span>microbiomeutilities::<span class="kw">phy_to_ldf</span>(ps1.com, <span class="dt">transform.counts =</span> <span class="st">&quot;compositional&quot;</span>)</code></pre></div>
+<pre><code>## An additonal column Sam_rep with sample names is created for reference purpose</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(ps_df)</code></pre></div>
+<pre><code>##  [1] &quot;OTUID&quot;                       &quot;Kingdom&quot;                    
+##  [3] &quot;Phylum&quot;                      &quot;Class&quot;                      
+##  [5] &quot;Order&quot;                       &quot;Family&quot;                     
+##  [7] &quot;Genus&quot;                       &quot;Species&quot;                    
+##  [9] &quot;OTU&quot;                         &quot;Sam_rep&quot;                    
+## [11] &quot;Abundance&quot;                   &quot;X.SampleID&quot;                 
+## [13] &quot;BarcodeSequence&quot;             &quot;LinkerPrimerSequence&quot;       
+## [15] &quot;run_prefix&quot;                  &quot;body_habitat&quot;               
+## [17] &quot;body_product&quot;                &quot;body_site&quot;                  
+## [19] &quot;bodysite&quot;                    &quot;dna_extracted&quot;              
+## [21] &quot;elevation&quot;                   &quot;env&quot;                        
+## [23] &quot;env_biome&quot;                   &quot;env_feature&quot;                
+## [25] &quot;env_material&quot;                &quot;env_package&quot;                
+## [27] &quot;geo_loc_name&quot;                &quot;host_common_name&quot;           
+## [29] &quot;host_scientific_name&quot;        &quot;host_subject_id&quot;            
+## [31] &quot;host_taxid&quot;                  &quot;latitude&quot;                   
+## [33] &quot;longitude&quot;                   &quot;physical_specimen_location&quot; 
+## [35] &quot;physical_specimen_remaining&quot; &quot;psn&quot;                        
+## [37] &quot;public&quot;                      &quot;sample_type&quot;                
+## [39] &quot;scientific_name&quot;             &quot;sequencecenter&quot;             
+## [41] &quot;title&quot;                       &quot;Description&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this data.frame can be used to customize several plots.  </span>
+
+<span class="co"># example boxplot at phylum level</span>
+
+p.box &lt;-<span class="st"> </span><span class="kw">ggstripchart</span>(ps_df, <span class="st">&quot;scientific_name&quot;</span>, <span class="st">&quot;Abundance&quot;</span>, 
+                      <span class="dt">facet.by =</span> <span class="st">&quot;Phylum&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;scientific_name&quot;</span>,
+                      <span class="dt">palette =</span> <span class="st">&quot;jco&quot;</span>)
+
+p.box +<span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>)</code></pre></div>
+<p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=Dutch_Netherlands.1252  LC_CTYPE=Dutch_Netherlands.1252   
+## [3] LC_MONETARY=Dutch_Netherlands.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=Dutch_Netherlands.1252    
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+## [1] bindrcpp_0.2.2     dplyr_0.7.4        ggpubr_0.1.6      
+## [4] magrittr_1.5       RColorBrewer_1.1-2 microbiome_1.0.2  
+## [7] ggplot2_2.2.1      phyloseq_1.23.1   
+## 
+## loaded via a namespace (and not attached):
+##  [1] ggrepel_0.7.0              Rcpp_0.12.16              
+##  [3] ape_5.1                    lattice_0.20-35           
+##  [5] tidyr_0.8.0                Biostrings_2.46.0         
+##  [7] assertthat_0.2.0           rprojroot_1.3-2           
+##  [9] digest_0.6.15              foreach_1.4.4             
+## [11] R6_2.2.2                   plyr_1.8.4                
+## [13] backports_1.1.2            stats4_3.4.4              
+## [15] evaluate_0.10.1            pillar_1.2.2              
+## [17] zlibbioc_1.24.0            rlang_0.2.0               
+## [19] lazyeval_0.2.1             data.table_1.10.4-3       
+## [21] vegan_2.5-1                S4Vectors_0.16.0          
+## [23] Matrix_1.2-14              rmarkdown_1.9             
+## [25] labeling_0.3               splines_3.4.4             
+## [27] stringr_1.3.0              igraph_1.2.1              
+## [29] pheatmap_1.0.8             munsell_0.4.3             
+## [31] compiler_3.4.4             xfun_0.1                  
+## [33] pkgconfig_2.0.1            BiocGenerics_0.24.0       
+## [35] multtest_2.34.0            mgcv_1.8-23               
+## [37] htmltools_0.3.6            tidyselect_0.2.4          
+## [39] biomformat_1.7.0           tibble_1.4.2              
+## [41] gridExtra_2.3              bookdown_0.7              
+## [43] IRanges_2.12.0             codetools_0.2-15          
+## [45] permute_0.9-4              viridisLite_0.3.0         
+## [47] MASS_7.3-49                grid_3.4.4                
+## [49] nlme_3.1-137               jsonlite_1.5              
+## [51] gtable_0.2.0               scales_0.5.0              
+## [53] stringi_1.1.7              XVector_0.18.0            
+## [55] reshape2_1.4.3             viridis_0.5.1             
+## [57] ggsci_2.8                  iterators_1.0.9           
+## [59] tools_3.4.4                microbiomeutilities_0.99.0
+## [61] ade4_1.7-11                Biobase_2.38.0            
+## [63] glue_1.2.0                 purrr_0.2.4               
+## [65] parallel_3.4.4             survival_2.42-3           
+## [67] yaml_2.1.18                colorspace_1.3-2          
+## [69] rhdf5_2.22.0               cluster_2.0.7-1           
+## [71] knitr_1.20                 bindr_0.1.1</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="alpha-diversities.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="beta-diversity-metrics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

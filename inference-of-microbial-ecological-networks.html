@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</title>
+  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  
+  
+  
+
+<meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
+
+
+<meta name="date" content="2018-05-07">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="core-microbiota.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.4/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="open-reproducible-microbiome-data-analysis-spring-school-2018.html"><a href="open-reproducible-microbiome-data-analysis-spring-school-2018.html"><i class="fa fa-check"></i><b>1</b> OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#preparing-for-the-course"><i class="fa fa-check"></i><b>2.1</b> Preparing for the course</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#useful-functions"><i class="fa fa-check"></i><b>2.2</b> Useful functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html"><i class="fa fa-check"></i><b>3</b> Set-up and Pre-processing</a><ul>
+<li class="chapter" data-level="3.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>3.1</b> Structure</a></li>
+<li class="chapter" data-level="3.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#making-a-phyloseq-object"><i class="fa fa-check"></i><b>3.2</b> Making a phyloseq object</a></li>
+<li class="chapter" data-level="3.3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-input-to-phyloseq-object"><i class="fa fa-check"></i><b>3.3</b> Read input to phyloseq object</a></li>
+<li class="chapter" data-level="3.4" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>3.4</b> Read the tree file.</a></li>
+<li class="chapter" data-level="3.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>3.5</b> Merge into phyloseq object.</a></li>
+<li class="chapter" data-level="3.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-test-data"><i class="fa fa-check"></i><b>3.6</b> Read test data</a></li>
+<li class="chapter" data-level="3.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#pre-processing-data-check"><i class="fa fa-check"></i><b>3.7</b> Pre-processing data check</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#sequencing-depth"><i class="fa fa-check"></i><b>3.7.1</b> Sequencing depth</a></li>
+<li class="chapter" data-level="3.7.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#distribution-of-otus"><i class="fa fa-check"></i><b>3.7.2</b> Distribution of OTUs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>4</b> Alpha diversities</a><ul>
+<li class="chapter" data-level="4.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>4.1</b> Equal sample sums</a></li>
+<li class="chapter" data-level="4.2" data-path="alpha-diversities.html"><a href="alpha-diversities.html#diversities"><i class="fa fa-check"></i><b>4.2</b> Diversities</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#non-phylogenetic-diversities"><i class="fa fa-check"></i><b>4.2.1</b> Non-phylogenetic diversities</a></li>
+<li class="chapter" data-level="4.2.2" data-path="alpha-diversities.html"><a href="alpha-diversities.html#phylogenetic-diversity"><i class="fa fa-check"></i><b>4.2.2</b> Phylogenetic diversity</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="composition-plots.html"><a href="composition-plots.html"><i class="fa fa-check"></i><b>5</b> Composition plots</a><ul>
+<li class="chapter" data-level="5.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-counts"><i class="fa fa-check"></i><b>5.1</b> Barplot counts</a></li>
+<li class="chapter" data-level="5.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>5.2</b> Barplot relative abundance</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>5.2.1</b> Barplot customize</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>5.3</b> Heatmaps</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>6</b> Beta diversity metrics</a><ul>
+<li class="chapter" data-level="6.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>6.1</b> Phylogenetic beta-diversity metrics</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#unweighted-unifrac"><i class="fa fa-check"></i><b>6.1.1</b> Unweighted Unifrac</a></li>
+<li class="chapter" data-level="6.1.2" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#weighted-unifrac"><i class="fa fa-check"></i><b>6.1.2</b> Weighted Unifrac</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#population-level-density-landscapes"><i class="fa fa-check"></i><b>6.2</b> Population-level Density landscapes</a></li>
+<li class="chapter" data-level="6.3" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#permanova"><i class="fa fa-check"></i><b>6.3</b> PERMANOVA</a></li>
+<li class="chapter" data-level="6.4" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#checking-the-homogeneity-condition"><i class="fa fa-check"></i><b>6.4</b> Checking the homogeneity condition</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="core-microbiota.html"><a href="core-microbiota.html"><i class="fa fa-check"></i><b>7</b> Core microbiota</a><ul>
+<li class="chapter" data-level="7.1" data-path="core-microbiota.html"><a href="core-microbiota.html#core-microbiota-anlaysis"><i class="fa fa-check"></i><b>7.1</b> Core microbiota anlaysis</a></li>
+<li class="chapter" data-level="7.2" data-path="core-microbiota.html"><a href="core-microbiota.html#core-abundance-and-diversity"><i class="fa fa-check"></i><b>7.2</b> Core abundance and diversity</a></li>
+<li class="chapter" data-level="7.3" data-path="core-microbiota.html"><a href="core-microbiota.html#core-visualization"><i class="fa fa-check"></i><b>7.3</b> Core visualization</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="core-microbiota.html"><a href="core-microbiota.html#core-heatmaps"><i class="fa fa-check"></i><b>7.3.1</b> Core heatmaps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html"><i class="fa fa-check"></i><b>8</b> Inference of Microbial Ecological Networks</a><ul>
+<li class="chapter" data-level="8.1" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#prepare-data-for-spieceasi"><i class="fa fa-check"></i><b>8.1</b> Prepare data for SpiecEasi</a></li>
+<li class="chapter" data-level="8.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#spiec-easi-network-reconstruction"><i class="fa fa-check"></i><b>8.2</b> SPIEC-EASI network reconstruction</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#prepare-data-for-plotting"><i class="fa fa-check"></i><b>8.2.1</b> Prepare data for plotting</a></li>
+<li class="chapter" data-level="8.2.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#igraph-network"><i class="fa fa-check"></i><b>8.2.2</b> igraph network</a></li>
+<li class="chapter" data-level="8.2.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-plot"><i class="fa fa-check"></i><b>8.2.3</b> Network plot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-properties"><i class="fa fa-check"></i><b>8.3</b> Network properties</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#modularity-in-networks"><i class="fa fa-check"></i><b>8.3.1</b> Modularity in networks</a></li>
+<li class="chapter" data-level="8.3.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-plot-1"><i class="fa fa-check"></i><b>8.3.2</b> Network plot</a></li>
+<li class="chapter" data-level="8.3.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#good-reads-for-ecological-networks"><i class="fa fa-check"></i><b>8.3.3</b> Good reads for ecological networks</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="inference-of-microbial-ecological-networks" class="section level1">
+<h1><span class="header-section-number">8</span> Inference of Microbial Ecological Networks</h1>
+<p>More information on <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226">SPIEC-EASI</a>.</p>
+<p>This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.<br />
+This step is heavy on computational memory and very slow. Noise filtered OTU-OTU level covariance would be ideal.</p>
+<p><strong>Load packages and data</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
+<span class="kw">install_github</span>(<span class="st">&quot;zdk123/SpiecEasi&quot;</span>)
+
+<span class="co"># Other packages you need to install are</span>
+<span class="kw">install.packages</span>(<span class="st">&quot;igraph&quot;</span>)
+
+<span class="kw">install.packages</span>(<span class="st">&quot;intergraph&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;GGally&quot;</span>)
+devtools::<span class="kw">install_github</span>(<span class="st">&quot;briatte/ggnet&quot;</span>)
+
+<span class="kw">install.packages</span>(<span class="st">&quot;network&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;ggnetwork&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbiome) <span class="co"># data analysis and visualisation</span>
+<span class="kw">library</span>(phyloseq) <span class="co"># also the basis of data object. Data analysis and visualisation</span>
+<span class="kw">library</span>(RColorBrewer) <span class="co"># nice color options</span>
+<span class="kw">library</span>(ggpubr) <span class="co"># publication quality figures, based on ggplot2</span>
+<span class="kw">library</span>(dplyr) <span class="co"># data handling</span>
+<span class="kw">library</span>(SpiecEasi) <span class="co"># Network analysis for sparse compositional data  </span>
+<span class="kw">library</span>(network)
+<span class="kw">library</span>(intergraph)
+<span class="co">#devtools::install_github(&quot;briatte/ggnet&quot;)</span>
+<span class="kw">library</span>(ggnet)
+<span class="kw">library</span>(igraph)</code></pre></div>
+<p><strong>Read data</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps1.rds&quot;</span>)</code></pre></div>
+<p><strong>Select only stool samples</strong></p>
+<p>We will subset our data to include only stool samples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.stool &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ps1, bodysite ==<span class="st"> &quot;Stool&quot;</span>)</code></pre></div>
+<p><strong>For testing reduce the number of OTUs</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.stool.otu &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(ps1.stool) &gt;<span class="st"> </span><span class="dv">100</span>, ps1.stool)
+
+<span class="co"># Add taxonomic classification to OTU ID</span>
+ps1.stool.otu.f &lt;-<span class="st"> </span>microbiomeutilities::<span class="kw">format_to_besthit</span>(ps1.stool.otu)
+
+<span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool))</code></pre></div>
+<pre><code>## Taxonomy Table:     [6 taxa by 7 taxonomic ranks]:
+##         Kingdom    Phylum           Class                  
+## 4440970 &quot;Bacteria&quot; &quot;TM7&quot;            &quot;TM7-3&quot;                
+## 4299136 &quot;Bacteria&quot; &quot;TM7&quot;            &quot;TM7-3&quot;                
+## 627481  &quot;Bacteria&quot; &quot;TM7&quot;            &quot;TM7-3&quot;                
+## 86812   &quot;Bacteria&quot; &quot;Proteobacteria&quot; &quot;Epsilonproteobacteria&quot;
+## 4442127 &quot;Bacteria&quot; &quot;Proteobacteria&quot; &quot;Epsilonproteobacteria&quot;
+## 4425150 &quot;Bacteria&quot; &quot;Proteobacteria&quot; &quot;Epsilonproteobacteria&quot;
+##         Order               Family               Genus           Species
+## 4440970 &quot;CW040&quot;             &quot;F16&quot;                NA              NA     
+## 4299136 &quot;CW040&quot;             &quot;F16&quot;                NA              NA     
+## 627481  &quot;I025&quot;              &quot;Rs-045&quot;             NA              NA     
+## 86812   &quot;Campylobacterales&quot; &quot;Campylobacteraceae&quot; &quot;Campylobacter&quot; NA     
+## 4442127 &quot;Campylobacterales&quot; &quot;Campylobacteraceae&quot; &quot;Campylobacter&quot; NA     
+## 4425150 &quot;Campylobacterales&quot; &quot;Campylobacteraceae&quot; &quot;Campylobacter&quot; NA</code></pre>
+<p>Check the difference in two phyloseq objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f))</code></pre></div>
+<div id="prepare-data-for-spieceasi" class="section level2">
+<h2><span class="header-section-number">8.1</span> Prepare data for SpiecEasi</h2>
+<p>The calcualtion of SpiecEasi are time consuming. For this tutorial we will have the necessary input files for SpiecEasi.</p>
+<ul>
+<li>OTU table<br />
+</li>
+<li>Taxonomy table</li>
+</ul>
+<p>We save it as <em>.rds</em> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">otu.c &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(ps1.stool.otu.f)@.Data) <span class="co">#extract the otu table from phyloseq object</span>
+
+tax.c &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f)@.Data)<span class="co">#extract the taxonomy information</span>
+
+<span class="kw">head</span>(tax.c)</code></pre></div>
+<pre><code>##                          Domain         Phylum              Class
+## OTU-359809:Sutterella  Bacteria Proteobacteria Betaproteobacteria
+## OTU-215097:Sutterella  Bacteria Proteobacteria Betaproteobacteria
+## OTU-179261:Sutterella  Bacteria Proteobacteria Betaproteobacteria
+## OTU-41229:Sutterella   Bacteria Proteobacteria Betaproteobacteria
+## OTU-4371362:Sutterella Bacteria Proteobacteria Betaproteobacteria
+## OTU-178885:Sutterella  Bacteria Proteobacteria Betaproteobacteria
+##                                  Order         Family      Genus
+## OTU-359809:Sutterella  Burkholderiales Alcaligenaceae Sutterella
+## OTU-215097:Sutterella  Burkholderiales Alcaligenaceae Sutterella
+## OTU-179261:Sutterella  Burkholderiales Alcaligenaceae Sutterella
+## OTU-41229:Sutterella   Burkholderiales Alcaligenaceae Sutterella
+## OTU-4371362:Sutterella Burkholderiales Alcaligenaceae Sutterella
+## OTU-178885:Sutterella  Burkholderiales Alcaligenaceae Sutterella
+##                              Species               best_hit
+## OTU-359809:Sutterella  g__Sutterella  OTU-359809:Sutterella
+## OTU-215097:Sutterella  g__Sutterella  OTU-215097:Sutterella
+## OTU-179261:Sutterella  g__Sutterella  OTU-179261:Sutterella
+## OTU-41229:Sutterella   g__Sutterella   OTU-41229:Sutterella
+## OTU-4371362:Sutterella g__Sutterella OTU-4371362:Sutterella
+## OTU-178885:Sutterella  g__Sutterella  OTU-178885:Sutterella</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveRDS</span>(otu.c, <span class="st">&quot;input_data/stool.otu.c.rds&quot;</span>)
+<span class="kw">saveRDS</span>(tax.c, <span class="st">&quot;input_data/stool.tax.c.rds&quot;</span>)</code></pre></div>
+</div>
+<div id="spiec-easi-network-reconstruction" class="section level2">
+<h2><span class="header-section-number">8.2</span> SPIEC-EASI network reconstruction</h2>
+<p>More information on <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226">SPIEC-EASI</a>.</p>
+<p>This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.<br />
+This step is heavy on computational memory and very slow. For this workshop we have already have the output and will skip this chuck.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># In practice, use more repetitions</span>
+<span class="kw">set.seed</span>(<span class="dv">1244</span>)
+net.c &lt;-<span class="st"> </span><span class="kw">spiec.easi</span>(otu.c, <span class="dt">method=</span><span class="st">&#39;mb&#39;</span>, <span class="dt">icov.select.params=</span><span class="kw">list</span>(<span class="dt">rep.num=</span><span class="dv">50</span>))
+
+<span class="co"># saveRDS(net.c, &quot;input_data/net.c.rds&quot;)</span>
+
+<span class="co">#please use more numebr of rep.num (99 or 999) the paraemters </span>
+
+## Create graph object and get edge values  </code></pre></div>
+<p><strong>We have save the output of net.c to save time</strong></p>
+<p>The output of <code>spiec.easi</code> is stored in <em>./input_data/</em> as <em>stool.net.c.rds</em>. Read this file in R and follow the steps below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">net.c &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;input_data/stool.net.c.rds&quot;</span>)
+n.c &lt;-<span class="st"> </span><span class="kw">symBeta</span>(<span class="kw">getOptBeta</span>(net.c))</code></pre></div>
+<p><strong>Add names to IDs</strong><br />
+We also add abundance values to vertex (nodes).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(n.c) &lt;-<span class="st"> </span><span class="kw">rownames</span>(n.c) &lt;-<span class="st"> </span><span class="kw">colnames</span>(otu.c)
+
+vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw">apply</span>(otu.c, <span class="dv">2</span>, mean)) <span class="co"># add log abundance as properties of vertex/nodes.</span></code></pre></div>
+<div id="prepare-data-for-plotting" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Prepare data for plotting</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.ig &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(n.c, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>, <span class="dt">weighted =</span> <span class="ot">TRUE</span>)
+stool.ig <span class="co"># we can see all the attributes and weights</span></code></pre></div>
+<pre><code>## IGRAPH 90207ca UNW- 506 1865 -- 
+## + attr: name (v/c), TRUE (v/c), weight (e/n)
+## + edges from 90207ca (vertex names):
+## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
+## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
+## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          
+## [4] OTU-359809:Sutterella--OTU-193233:Bacteroides           
+## [5] OTU-359809:Sutterella--OTU-544859:f__Ruminococcaceae    
+## [6] OTU-359809:Sutterella--OTU-1740499:Phascolarctobacterium
+## [7] OTU-215097:Sutterella--OTU-320291:Bacteroides           
+## [8] OTU-215097:Sutterella--OTU-300650:Prevotella            
+## + ... omitted several edges</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#plot(stool.ig)</span></code></pre></div>
+<p>set the layout option</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check what is it?</span>
+?layout_with_fr</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coords.fdr =<span class="st"> </span><span class="kw">layout_with_fr</span>(stool.ig)</code></pre></div>
+</div>
+<div id="igraph-network" class="section level3">
+<h3><span class="header-section-number">8.2.2</span> igraph network</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(stool.ig)[weight &gt;<span class="st"> </span><span class="dv">0</span>]$color&lt;-<span class="st">&quot;steelblue&quot;</span> <span class="co">#now color the edges based on their values positive is steelblue</span>
+<span class="kw">E</span>(stool.ig)[weight &lt;<span class="st"> </span><span class="dv">0</span>]$color&lt;-<span class="st">&quot;orange&quot;</span>  <span class="co">#now color the edges based on their values</span>
+
+<span class="kw">plot</span>(stool.ig, <span class="dt">layout=</span>coords.fdr, <span class="dt">vertex.size =</span> <span class="dv">2</span>, <span class="dt">vertex.label.cex =</span> <span class="fl">0.5</span>)</code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>The visualisation can be enhanced using <a href="https://briatte.github.io/ggnet/">ggnet</a> R package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.net &lt;-<span class="st"> </span><span class="kw">asNetwork</span>(stool.ig)
+network::<span class="kw">set.edge.attribute</span>(stool.net, <span class="st">&quot;color&quot;</span>, <span class="kw">ifelse</span>(stool.net %e%<span class="st"> &quot;weight&quot;</span> &gt;<span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;orange&quot;</span>))</code></pre></div>
+<p>Start adding taxonomic information.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f))</code></pre></div>
+<pre><code>## [1] &quot;Domain&quot;   &quot;Phylum&quot;   &quot;Class&quot;    &quot;Order&quot;    &quot;Family&quot;   &quot;Genus&quot;   
+## [7] &quot;Species&quot;  &quot;best_hit&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phyla &lt;-<span class="st"> </span><span class="kw">map_levels</span>(<span class="kw">colnames</span>(otu.c), <span class="dt">from =</span> <span class="st">&quot;best_hit&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Phylum&quot;</span>, <span class="kw">tax_table</span>(ps1.stool.otu.f))
+stool.net %v%<span class="st"> &quot;Phylum&quot;</span> &lt;-<span class="st"> </span>phyla
+stool.net %v%<span class="st"> &quot;nodesize&quot;</span> &lt;-<span class="st"> </span>vsize</code></pre></div>
+</div>
+<div id="network-plot" class="section level3">
+<h3><span class="header-section-number">8.2.3</span> Network plot</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mycolors &lt;-<span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#a6cee3&quot;</span>, <span class="st">&quot;#1f78b4&quot;</span>, <span class="st">&quot;#b2df8a&quot;</span>, <span class="st">&quot;#33a02c&quot;</span>,<span class="st">&quot;#fb9a99&quot;</span>,<span class="st">&quot;#e31a1c&quot;</span>,<span class="st">&quot;#fdbf6f&quot;</span>,<span class="st">&quot;#ff7f00&quot;</span>,<span class="st">&quot;#cab2d6&quot;</span>,<span class="st">&quot;#6a3d9a&quot;</span>,<span class="st">&quot;#ffff99&quot;</span>,<span class="st">&quot;#b15928&quot;</span>))
+
+p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
+            <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="st">&quot;nodesize&quot;</span>, 
+            <span class="dt">label.size =</span> <span class="dv">1</span>, <span class="dt">edge.color =</span> <span class="st">&quot;color&quot;</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
+
+p </code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
+            <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="dv">2</span>, 
+            <span class="dt">label.size =</span> <span class="dv">1</span>, <span class="dt">edge.color =</span> <span class="st">&quot;color&quot;</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
+
+p </code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+</div>
+</div>
+<div id="network-properties" class="section level2">
+<h2><span class="header-section-number">8.3</span> Network properties</h2>
+<p>Check for the number of positive and negative edges.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">betaMat=<span class="kw">as.matrix</span>(<span class="kw">symBeta</span>(<span class="kw">getOptBeta</span>(net.c)))
+
+<span class="co"># We divide by two since an edge is represented by two entries in the matrix.</span>
+positive=<span class="kw">length</span>(betaMat[betaMat&gt;<span class="dv">0</span>])/<span class="dv">2</span> 
+
+negative=<span class="kw">length</span>(betaMat[betaMat&lt;<span class="dv">0</span>])/<span class="dv">2</span> 
+
+total=<span class="kw">length</span>(betaMat[betaMat!=<span class="dv">0</span>])/<span class="dv">2</span> </code></pre></div>
+<div id="modularity-in-networks" class="section level3">
+<h3><span class="header-section-number">8.3.1</span> Modularity in networks</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">net.c</code></pre></div>
+<pre><code>## Model: Meinshausen &amp; Buhlmann Graph Estimation (mb)
+## selection criterion: stars 
+## Graph dimension: 506 
+## sparsity level 0.01459711</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod.net &lt;-<span class="st"> </span>net.c$refit
+
+<span class="kw">colnames</span>(mod.net) &lt;-<span class="st"> </span><span class="kw">rownames</span>(mod.net) &lt;-<span class="st"> </span><span class="kw">colnames</span>(otu.c)<span class="co">#you can remove this </span>
+
+vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw">apply</span>(otu.c, <span class="dv">2</span>, mean))<span class="co"># value we may or may not use as vertex.attribute</span>
+
+stool.ig.mod &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(mod.net, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(stool.ig.mod) <span class="co"># we can see all the attributes and weights</span></code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.net.mod &lt;-<span class="st"> </span><span class="kw">asNetwork</span>(stool.ig.mod)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phyla &lt;-<span class="st"> </span><span class="kw">map_levels</span>(<span class="kw">colnames</span>(otu.c), <span class="dt">from =</span> <span class="st">&quot;best_hit&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Phylum&quot;</span>, <span class="kw">tax_table</span>(ps1.stool.otu.f))
+stool.net.mod %v%<span class="st"> &quot;Phylum&quot;</span> &lt;-<span class="st"> </span>phyla
+stool.net.mod %v%<span class="st"> &quot;nodesize&quot;</span> &lt;-<span class="st"> </span>vsize</code></pre></div>
+</div>
+<div id="network-plot-1" class="section level3">
+<h3><span class="header-section-number">8.3.2</span> Network plot</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mycolors &lt;-<span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#a6cee3&quot;</span>, <span class="st">&quot;#1f78b4&quot;</span>, <span class="st">&quot;#b2df8a&quot;</span>, <span class="st">&quot;#33a02c&quot;</span>,<span class="st">&quot;#fb9a99&quot;</span>,<span class="st">&quot;#e31a1c&quot;</span>,<span class="st">&quot;#fdbf6f&quot;</span>,<span class="st">&quot;#ff7f00&quot;</span>,<span class="st">&quot;#cab2d6&quot;</span>,<span class="st">&quot;#6a3d9a&quot;</span>,<span class="st">&quot;#ffff99&quot;</span>,<span class="st">&quot;#b15928&quot;</span>))
+
+p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net.mod, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
+            <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="dv">2</span>, 
+            <span class="dt">label.size =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
+
+p </code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Identify modularity in networks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modules =<span class="kw">cluster_fast_greedy</span>(stool.ig.mod)
+
+<span class="kw">print</span>(modules)</code></pre></div>
+<pre><code>## IGRAPH clustering fast greedy, groups: 9, mod: 0.5
+## + groups:
+##   $`1`
+##    [1] &quot;OTU-178885:Sutterella&quot;           
+##    [2] &quot;OTU-529652:Sutterella&quot;           
+##    [3] &quot;OTU-1135084:Bacteroides&quot;         
+##    [4] &quot;OTU-196632:Clostridium&quot;          
+##    [5] &quot;OTU-187668:Clostridium&quot;          
+##    [6] &quot;OTU-176994:f__Ruminococcaceae&quot;   
+##    [7] &quot;OTU-197649:Lachnospira&quot;          
+##    [8] &quot;OTU-195752:Lachnospira&quot;          
+##    [9] &quot;OTU-194734:Coprococcus&quot;          
+##   + ... omitted several groups/vertices</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">modularity</span>(modules)</code></pre></div>
+<pre><code>## [1] 0.5044993</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(stool.ig.mod)$color=modules$membership
+
+<span class="kw">plot</span>(stool.ig.mod, <span class="dt">col =</span> modules, <span class="dt">vertex.size =</span> <span class="dv">4</span>, <span class="dt">vertex.label =</span> <span class="ot">NA</span>)</code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.net.mod %v%<span class="st"> &quot;membership&quot;</span> &lt;-<span class="st"> </span>modules$membership
+
+p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net.mod, <span class="dt">node.color =</span> <span class="st">&quot;membership&quot;</span>, 
+            <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="st">&quot;nodesize&quot;</span>, 
+            <span class="dt">label.size =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;membership&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors</code></pre></div>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
+## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p </code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p>Check which OTUs are part of different modules.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modulesOneIndices=<span class="kw">which</span>(modules$membership==<span class="dv">1</span>)
+modulesOneOtus=modules$names[modulesOneIndices]
+modulesTwoIndices=<span class="kw">which</span>(modules$membership==<span class="dv">2</span>)
+modulesTwoOtus=modules$names[modulesTwoIndices]
+
+modulesThreeIndices=<span class="kw">which</span>(modules$membership==<span class="dv">3</span>)
+modulesThreeOtus=modules$names[modulesThreeIndices]
+modulesFourIndices=<span class="kw">which</span>(modules$membership==<span class="dv">4</span>)
+modulesFourOtus=modules$names[modulesFourIndices]
+
+modulesFiveIndices=<span class="kw">which</span>(modules$membership==<span class="dv">5</span>)
+modulesFiveOtus=modules$names[modulesFiveIndices]
+modulesSixIndices=<span class="kw">which</span>(modules$membership==<span class="dv">6</span>)
+modulesSixOtus=modules$names[modulesSixIndices]
+
+<span class="kw">print</span>(modulesFiveOtus)</code></pre></div>
+<pre><code>##  [1] &quot;OTU-181239:Bacteroides&quot;           
+##  [2] &quot;OTU-192684:Bacteroides&quot;           
+##  [3] &quot;OTU-178810:Bacteroides&quot;           
+##  [4] &quot;OTU-194341:Bacteroides&quot;           
+##  [5] &quot;OTU-187623:Bacteroides&quot;           
+##  [6] &quot;OTU-197537:Bacteroides&quot;           
+##  [7] &quot;OTU-174036:Bacteroides&quot;           
+##  [8] &quot;OTU-176034:Bacteroides&quot;           
+##  [9] &quot;OTU-772282:f__Rikenellaceae&quot;      
+## [10] &quot;OTU-4325533:f__Rikenellaceae&quot;     
+## [11] &quot;OTU-850586:Odoribacter&quot;           
+## [12] &quot;OTU-180082:Parabacteroides&quot;       
+## [13] &quot;OTU-361170:Bilophila&quot;             
+## [14] &quot;OTU-544859:f__Ruminococcaceae&quot;    
+## [15] &quot;OTU-332185:f__Ruminococcaceae&quot;    
+## [16] &quot;OTU-196713:f__Ruminococcaceae&quot;    
+## [17] &quot;OTU-554303:f__Ruminococcaceae&quot;    
+## [18] &quot;OTU-213487:f__Ruminococcaceae&quot;    
+## [19] &quot;OTU-178015:f__Ruminococcaceae&quot;    
+## [20] &quot;OTU-180067:f__Ruminococcaceae&quot;    
+## [21] &quot;OTU-190303:f__Ruminococcaceae&quot;    
+## [22] &quot;OTU-193915:f__Ruminococcaceae&quot;    
+## [23] &quot;OTU-195222:f__Ruminococcaceae&quot;    
+## [24] &quot;OTU-198404:f__Ruminococcaceae&quot;    
+## [25] &quot;OTU-191872:f__Ruminococcaceae&quot;    
+## [26] &quot;OTU-184876:Lachnospira&quot;           
+## [27] &quot;OTU-210542:Lachnospira&quot;           
+## [28] &quot;OTU-302503:f__Ruminococcaceae&quot;    
+## [29] &quot;OTU-1978955:f__Ruminococcaceae&quot;   
+## [30] &quot;OTU-177359:Coprococcus&quot;           
+## [31] &quot;OTU-187248:f__Lachnospiraceae&quot;    
+## [32] &quot;OTU-185588:f__Lachnospiraceae&quot;    
+## [33] &quot;OTU-331150:f__Lachnospiraceae&quot;    
+## [34] &quot;OTU-190188:f__Lachnospiraceae&quot;    
+## [35] &quot;OTU-185937:f__Lachnospiraceae&quot;    
+## [36] &quot;OTU-195120:f__Lachnospiraceae&quot;    
+## [37] &quot;OTU-212481:f__Lachnospiraceae&quot;    
+## [38] &quot;OTU-531888:f__Lachnospiraceae&quot;    
+## [39] &quot;OTU-192127:f__Lachnospiraceae&quot;    
+## [40] &quot;OTU-192515:Ruminococcus&quot;          
+## [41] &quot;OTU-178742:f__Ruminococcaceae&quot;    
+## [42] &quot;OTU-367176:Oscillospira&quot;          
+## [43] &quot;OTU-199422:Oscillospira&quot;          
+## [44] &quot;OTU-196553:Oscillospira&quot;          
+## [45] &quot;OTU-184511:Faecalibacterium&quot;      
+## [46] &quot;OTU-183157:Faecalibacterium&quot;      
+## [47] &quot;OTU-185244:Faecalibacterium&quot;      
+## [48] &quot;OTU-174846:Faecalibacterium&quot;      
+## [49] &quot;OTU-184000:Faecalibacterium&quot;      
+## [50] &quot;OTU-365717:Faecalibacterium&quot;      
+## [51] &quot;OTU-194626:f__Ruminococcaceae&quot;    
+## [52] &quot;OTU-186723:f__Ruminococcaceae&quot;    
+## [53] &quot;OTU-183048:f__Ruminococcaceae&quot;    
+## [54] &quot;OTU-42372:[Eubacterium]&quot;          
+## [55] &quot;OTU-191718:f__Erysipelotrichaceae&quot;
+## [56] &quot;OTU-592616:f__Erysipelotrichaceae&quot;
+## [57] &quot;OTU-357930:Dialister&quot;             
+## [58] &quot;OTU-4354173:Veillonella&quot;          
+## [59] &quot;OTU-190902:[Ruminococcus]&quot;        
+## [60] &quot;OTU-179408:[Ruminococcus]&quot;        
+## [61] &quot;OTU-189403:[Ruminococcus]&quot;        
+## [62] &quot;OTU-182506:[Ruminococcus]&quot;        
+## [63] &quot;OTU-196370:[Ruminococcus]&quot;        
+## [64] &quot;OTU-186652:Dorea&quot;                 
+## [65] &quot;OTU-179905:f__Lachnospiraceae&quot;    
+## [66] &quot;OTU-183865:f__Lachnospiraceae&quot;    
+## [67] &quot;OTU-177237:Roseburia&quot;             
+## [68] &quot;OTU-195207:Roseburia&quot;             
+## [69] &quot;OTU-177515:Roseburia&quot;             
+## [70] &quot;OTU-194177:f__Lachnospiraceae&quot;    
+## [71] &quot;OTU-186263:f__Lachnospiraceae&quot;    
+## [72] &quot;OTU-198930:f__Lachnospiraceae&quot;    
+## [73] &quot;OTU-180312:f__Lachnospiraceae&quot;    
+## [74] &quot;OTU-531675:Blautia&quot;               
+## [75] &quot;OTU-183903:Blautia&quot;               
+## [76] &quot;OTU-198646:Blautia&quot;               
+## [77] &quot;OTU-181756:Blautia&quot;               
+## [78] &quot;OTU-194615:Blautia&quot;               
+## [79] &quot;OTU-192153:f__Lachnospiraceae&quot;    
+## [80] &quot;OTU-183969:f__Lachnospiraceae&quot;    
+## [81] &quot;OTU-573110:f__Lachnospiraceae&quot;</code></pre>
+</div>
+<div id="good-reads-for-ecological-networks" class="section level3">
+<h3><span class="header-section-number">8.3.3</span> Good reads for ecological networks</h3>
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3260507/">Using network analysis to explore co-occurrence patterns in soil microbial communities</a></p>
+<p><a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002606">Microbial Co-occurrence Relationships in the Human Microbiome</a></p>
+<p><a href="http://www.nature.com/ismej/journal/v10/n7/full/ismej2015235a.html">Correlation detection strategies in microbial data sets vary widely in sensitivity and precision</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=Dutch_Netherlands.1252  LC_CTYPE=Dutch_Netherlands.1252   
+## [3] LC_MONETARY=Dutch_Netherlands.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=Dutch_Netherlands.1252    
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] scales_0.5.0         sna_2.4              statnet.common_4.0.0
+##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
+##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.4     
+## [10] dplyr_0.7.4          ggpubr_0.1.6         magrittr_1.5        
+## [13] RColorBrewer_1.1-2   microbiome_1.0.2     ggplot2_2.2.1       
+## [16] phyloseq_1.23.1     
+## 
+## loaded via a namespace (and not attached):
+##  [1] Biobase_2.38.0             viridis_0.5.1             
+##  [3] tidyr_0.8.0                VGAM_1.0-5                
+##  [5] jsonlite_1.5               viridisLite_0.3.0         
+##  [7] splines_3.4.4              foreach_1.4.4             
+##  [9] assertthat_0.2.0           stats4_3.4.4              
+## [11] yaml_2.1.18                ggrepel_0.7.0             
+## [13] pillar_1.2.2               backports_1.1.2           
+## [15] lattice_0.20-35            glue_1.2.0                
+## [17] digest_0.6.15              XVector_0.18.0            
+## [19] colorspace_1.3-2           htmltools_0.3.6           
+## [21] Matrix_1.2-14              plyr_1.8.4                
+## [23] microbiomeutilities_0.99.0 pkgconfig_2.0.1           
+## [25] pheatmap_1.0.8             bookdown_0.7              
+## [27] zlibbioc_1.24.0            purrr_0.2.4               
+## [29] huge_1.2.7                 tibble_1.4.2              
+## [31] mgcv_1.8-23                IRanges_2.12.0            
+## [33] BiocGenerics_0.24.0        lazyeval_0.2.1            
+## [35] survival_2.42-3            evaluate_0.10.1           
+## [37] nlme_3.1-137               MASS_7.3-49               
+## [39] vegan_2.5-1                tools_3.4.4               
+## [41] data.table_1.10.4-3        formatR_1.5               
+## [43] stringr_1.3.0              S4Vectors_0.16.0          
+## [45] munsell_0.4.3              cluster_2.0.7-1           
+## [47] Biostrings_2.46.0          ade4_1.7-11               
+## [49] compiler_3.4.4             rlang_0.2.0               
+## [51] rhdf5_2.22.0               grid_3.4.4                
+## [53] iterators_1.0.9            biomformat_1.7.0          
+## [55] rmarkdown_1.9              gtable_0.2.0              
+## [57] codetools_0.2-15           multtest_2.34.0           
+## [59] reshape2_1.4.3             R6_2.2.2                  
+## [61] gridExtra_2.3              knitr_1.20                
+## [63] bindr_0.1.1                rprojroot_1.3-2           
+## [65] permute_0.9-4              ape_5.1                   
+## [67] stringi_1.1.7              parallel_3.4.4            
+## [69] Rcpp_0.12.16               tidyselect_0.2.4          
+## [71] xfun_0.1</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="core-microbiota.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
