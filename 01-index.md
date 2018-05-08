@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes"
-date: "2018-05-07"
+date: "2018-05-08"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---

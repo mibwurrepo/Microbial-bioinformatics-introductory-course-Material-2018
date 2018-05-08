@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-07"
+date: "2018-05-08"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -199,9 +199,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH dfb32cf UNW- 506 1865 -- 
+## IGRAPH 114de72 UNW- 506 1865 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from dfb32cf (vertex names):
+## + edges from 114de72 (vertex names):
 ## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
 ## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
 ## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          

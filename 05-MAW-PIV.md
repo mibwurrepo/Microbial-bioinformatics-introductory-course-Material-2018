@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-07"
+date: "2018-05-08"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -196,8 +196,8 @@ permutest(ps.disper, pairwise = TRUE)
 ## human vaginal metagenome           2.0164e-07            3.0628e-16
 ## human skin metagenome              1.7519e-01            7.3652e-02
 ##                          human vaginal metagenome human skin metagenome
-## human gut metagenome                   1.0000e-03                 0.171
-## human oral metagenome                  1.0000e-03                 0.073
+## human gut metagenome                   1.0000e-03                 0.173
+## human oral metagenome                  1.0000e-03                 0.079
 ## human vaginal metagenome                                          0.001
 ## human skin metagenome                  1.8573e-04
 ```
