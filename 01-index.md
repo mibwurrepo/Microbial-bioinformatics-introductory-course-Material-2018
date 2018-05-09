@@ -6,7 +6,6 @@ output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
 
-
 # Introduction  
 
 <center>![ microbiome R package](images/logos.png)</center>  
@@ -18,32 +17,22 @@ Three day spring school on basics of high throughput 16S rRNA gene sequencing da
 
 We recommend using your own laptop. If this is not possible, kindly contact the organizers.
 
-Install the following software before the course, if possible:
+Install the following software before the course:
 
 * [R version 3.4](https://www.r-project.org/)   
 * [R Studio](https://www.rstudio.com/)   
-* [phyloseq](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217)  
-* [microbiome](http://microbiome.github.io/microbiome/)  
-* [ggplot2](http://ggplot2.org/)   
-* [R graphics cookbook](http://www.cookbook-r.com/Graphs/)  
-
-The materials for the summer school will be made available through this website soon.       
-The script to set-up the RStudio environment with required package installations can be found in the folder named `scripts/setup_microbiome_analysis.R`.  
 
 Download the master brach of the the github repository for the [course](https://github.com/mibwurrepo/Microbial-bioinformatics-introductory-course-Material-2018).  
 
 ![ microbiome R package](images/Gihub_repo_step1.png)</center>  
 
 Unzip the `Microbial-bioinformatics-introductory-course-Material-2018-master.zip` folder.  
-open the `microbiometutorials.Rproj` 
+open the `microbiometutorials.Rproj`  
+
+The script to set-up the RStudio environment with required package installations can be found in the folder named `scripts/setup_microbiome_analysis.R`.  
 
 ![ microbiome R package](images/RStudio_IDE.png)</center>  
 
-
-**Useful links**  
-
-* [RMarkdown](https://rmarkdown.rstudio.com/)   
-* [List of R tools for microbiome analysis](https://microsud.github.io/Tools-Microbiome-Anlaysis/)   
 
 ## Useful functions   
 
@@ -51,7 +40,10 @@ open the `microbiometutorials.Rproj`
 * [R Markdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)  
 * [RStudio IDE](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)  
 * [ggplot2](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)  
-
+* [phyloseq](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217)  
+* [microbiome](http://microbiome.github.io/microbiome/)  
+* [R graphics cookbook](http://www.cookbook-r.com/Graphs/)  
+* [List of R tools for microbiome analysis](https://microsud.github.io/Tools-Microbiome-Anlaysis/)  
 
 ## Focus    
 The primary aim is introduce microbial community data analysis. There will be talks and discussion on theory and methodology for analysis of microbial community data. We will cover topics ranging from design of studies, sequencing technologies, importance of controls and standardized DNA processing. Supervised hands-on training covering analyses from raw reads using NG-Tax, downstream analysis in R for exploration and analysis of microbiome sequencing data will be priority. There will be a strong focus on using R, R Studio for moving towards reproducible and open science.   

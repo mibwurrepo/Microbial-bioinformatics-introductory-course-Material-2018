@@ -6,14 +6,13 @@ output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
 
-
 # Alpha diversities  
 
 Alpha diversity measures are used to identify within individual taxa richness and evenness. The commonly used metrics/indices are Shannon, Inverse Simpson, Simpson, Gini, Observed and Chao1. These indices do not take into account the phylogeny of the taxa identified in sequencing. Phylogenetic diversity (Faith's PD) uses phylogenetic distance to calculate the diversity of a given sample.   
 
 *It is important to note that, alpha diversity indices are sensitive to noise that is inherent to application of polymerase chain reaction and the  sequencing errors.*  
 
-One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample)   
+One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample).     
 
 **Load packages**  
  
@@ -30,14 +29,13 @@ library(data.table) # alternative to data.frame
 library(dplyr) # data handling  
 ```
 
-The data for tutorial is stored as *.rds file in the R project folder.  
+The data for tutorial is stored as *.rds file in the R project `phyobjects` folder.  
 
 We will use the filtered phyloseq object from **Set-up and Pre-processing** section.  
 
 
 ```r
 ps1 <- readRDS("./phyobjects/ps1.rds")
-
 
 # use print option to see the data saved as phyloseq object.
 

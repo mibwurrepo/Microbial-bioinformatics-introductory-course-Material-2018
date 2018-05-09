@@ -191,7 +191,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">3</span> Alpha diversities</h1>
 <p>Alpha diversity measures are used to identify within individual taxa richness and evenness. The commonly used metrics/indices are Shannon, Inverse Simpson, Simpson, Gini, Observed and Chao1. These indices do not take into account the phylogeny of the taxa identified in sequencing. Phylogenetic diversity (Faith’s PD) uses phylogenetic distance to calculate the diversity of a given sample.</p>
 <p><em>It is important to note that, alpha diversity indices are sensitive to noise that is inherent to application of polymerase chain reaction and the sequencing errors.</em></p>
-<p>One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample)</p>
+<p>One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample).</p>
 <p><strong>Load packages</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbiome) <span class="co"># data analysis and visualisation</span>
 <span class="kw">library</span>(phyloseq) <span class="co"># also the basis of data object. Data analysis and visualisation</span>
@@ -201,10 +201,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(DT) <span class="co"># interactive tables in html and markdown</span>
 <span class="kw">library</span>(data.table) <span class="co"># alternative to data.frame</span>
 <span class="kw">library</span>(dplyr) <span class="co"># data handling  </span></code></pre></div>
-<p>The data for tutorial is stored as *.rds file in the R project folder.</p>
+<p>The data for tutorial is stored as *.rds file in the R project <code>phyobjects</code> folder.</p>
 <p>We will use the filtered phyloseq object from <strong>Set-up and Pre-processing</strong> section.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps1.rds&quot;</span>)
-
 
 <span class="co"># use print option to see the data saved as phyloseq object.</span>
 

@@ -199,9 +199,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH eabab7c UNW- 506 1865 -- 
+## IGRAPH cbb76d9 UNW- 506 1865 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from eabab7c (vertex names):
+## + edges from cbb76d9 (vertex names):
 ## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
 ## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
 ## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          

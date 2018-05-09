@@ -6,7 +6,6 @@ output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
 
-
 # Composition plots  
 
 Barplots are an easy and intuitive way of visualising the composition of your samples. However, the way this is implented in phyloseq causes problems with the order of the taxa in the legend at higher taxonomic levels.
