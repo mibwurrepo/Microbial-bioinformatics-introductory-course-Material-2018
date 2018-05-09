@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-08">
+<meta name="date" content="2018-05-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -197,28 +197,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(ggpubr) <span class="co"># publication quality figures, based on ggplot2</span>
 <span class="kw">library</span>(dplyr) <span class="co"># data handling  </span></code></pre></div>
 <p>For more information:</p>
+<p><a href="http://ordination.okstate.edu/overview.htm">Ordination</a>.</p>
 <p><a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible</a>.</p>
 <p><a href="https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y">Normalisation and data transformation</a>.</p>
 <p><a href="http://www.davidzeleny.net/anadat-r/doku.php/en:ordination">What is Constrained and Unconstrained Ordination</a>.</p>
+<p><a href="https://www.frontiersin.org/articles/10.3389/fmicb.2017.02224/full">Microbiome Datasets Are Compositional: And This Is Not Optional</a></p>
+<p><a href="http://www.nrcresearchpress.com/doi/full/10.1139/cjm-2015-0821#.WvIJZIiFM2w">Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read non rarefied data</span>
 ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps1.rds&quot;</span>)
 
-<span class="co"># read non rarefied data</span>
+<span class="co"># read rarefied data</span>
 ps0.rar.rds &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps0.rar.rds&quot;</span>)
 <span class="co"># use print option to see the data saved as phyloseq object.</span></code></pre></div>
 <div id="phylogenetic-beta-diversity-metrics" class="section level2">
 <h2><span class="header-section-number">5.1</span> Phylogenetic beta-diversity metrics</h2>
 <div id="unweighted-unifrac" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Unweighted Unifrac</h3>
-<p>Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.rel &lt;-<span class="st"> </span><span class="kw">transform</span>(ps1, <span class="st">&quot;compositional&quot;</span>)
-
-ordu.unwt.uni &lt;-<span class="st"> </span><span class="kw">ordinate</span>(ps1.rel , <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="dt">weighted=</span>F)
+<p>Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important. However, it is sensitive to the sequencing depth. If a sample is sequenced more than the others then it may have many OTUs (most of them unique) consequently affecting the unifrac dissimilarity estimation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ordu.unwt.uni &lt;-<span class="st"> </span><span class="kw">ordinate</span>(ps0.rar.rds , <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="dt">weighted=</span>F)
 
 <span class="co"># check for Eigen values </span>
 <span class="co"># barplot(ordu.unwt.uni$values$Eigenvalues[1:10])</span>
 
-unwt.unifrac &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(ps1.rel, 
+unwt.unifrac &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(ps0.rar.rds, 
                                      ordu.unwt.uni, <span class="dt">color=</span><span class="st">&quot;scientific_name&quot;</span>) 
 unwt.unifrac &lt;-<span class="st"> </span>unwt.unifrac +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Unweighted UniFrac&quot;</span>) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)
 unwt.unifrac &lt;-<span class="st"> </span>unwt.unifrac +<span class="st"> </span><span class="kw">theme_classic</span>() +<span class="st"> </span><span class="kw">scale_color_brewer</span>(<span class="st">&quot;Location&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Set2&quot;</span>)
@@ -228,7 +229,9 @@ unwt.unifrac &lt;-<span class="st"> </span>unwt.unifrac +<span class="st"> </spa
 <div id="weighted-unifrac" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Weighted Unifrac</h3>
 <p>Weighted Unifrac will consider the abundances of different taxa.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ordu.wt.uni &lt;-<span class="st"> </span><span class="kw">ordinate</span>(ps1.rel , <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="dt">weighted=</span>T)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.rel &lt;-<span class="st"> </span>microbiome::<span class="kw">transform</span>(ps1, <span class="st">&quot;compositional&quot;</span>)
+
+ordu.wt.uni &lt;-<span class="st"> </span><span class="kw">ordinate</span>(ps1.rel , <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="dt">weighted=</span>T)
 
 <span class="co"># check for Eigen values </span>
 <span class="co"># barplot(ordu.unwt.uni$values$Eigenvalues[1:10])</span>
@@ -241,7 +244,9 @@ wt.unifrac &lt;-<span class="st"> </span>wt.unifrac +<span class="st"> </span><s
 <p><img src="05-MAW-PIV_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(wt.unifrac +<span class="st"> </span><span class="kw">stat_ellipse</span>())</code></pre></div>
 <p><img src="05-MAW-PIV_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<p>The figure brings forward an important characteristics of microbiome data call the ‘Horse-shoe effect’. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 <a href="http://msystems.asm.org/content/2/1/e00166-16">Uncovering the Horseshoe Effect in Microbial Analyses</a>.</p>
+<p>The figure brings forward an important characteristics of microbiome data called the ‘Horse-shoe effect’. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 <a href="http://msystems.asm.org/content/2/1/e00166-16">Uncovering the Horseshoe Effect in Microbial Analyses</a>.</p>
+<p>Another important aspect regarding weighted unifrac is its property of having heavier weights for abunant taxa. To detect changes in moderately abundant lineages an extenstion called generalized (UniFrac distance)(<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/</a>) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.</p>
+<p><strong>Note:</strong> It is crucial to understand the biological features of the samples. Although these are exploratory approaches, it is important to differentiate between biological signal and technical artifacts.</p>
 </div>
 </div>
 <div id="population-level-density-landscapes" class="section level2">
@@ -313,8 +318,8 @@ permanova</code></pre></div>
 ## human vaginal metagenome           2.0164e-07            3.0628e-16
 ## human skin metagenome              1.7519e-01            7.3652e-02
 ##                          human vaginal metagenome human skin metagenome
-## human gut metagenome                   1.0000e-03                 0.173
-## human oral metagenome                  1.0000e-03                 0.079
+## human gut metagenome                   1.0000e-03                 0.183
+## human oral metagenome                  1.0000e-03                 0.081
 ## human vaginal metagenome                                          0.001
 ## human skin metagenome                  1.8573e-04</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>

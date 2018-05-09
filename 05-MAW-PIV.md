@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-08"
+date: "2018-05-09"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -24,11 +24,17 @@ library(dplyr) # data handling
 
 For more information:
 
+[Ordination](http://ordination.okstate.edu/overview.htm).  
+
 [Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531).  
 
 [Normalisation and data transformation](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).  
 
 [What is Constrained and Unconstrained Ordination](http://www.davidzeleny.net/anadat-r/doku.php/en:ordination).  
+
+[Microbiome Datasets Are Compositional: And This Is Not Optional](https://www.frontiersin.org/articles/10.3389/fmicb.2017.02224/full)  
+
+[Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data](http://www.nrcresearchpress.com/doi/full/10.1139/cjm-2015-0821#.WvIJZIiFM2w)  
 
 
 
@@ -36,7 +42,7 @@ For more information:
 # read non rarefied data
 ps1 <- readRDS("./phyobjects/ps1.rds")
 
-# read non rarefied data
+# read rarefied data
 ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
 # use print option to see the data saved as phyloseq object.
 ```
@@ -45,18 +51,16 @@ ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
 
 ### Unweighted Unifrac  
 
-Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important.  
+Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important. However, it is sensitive to the sequencing depth. If a sample is sequenced more than the others then it may have many OTUs (most of them unique) consequently affecting the unifrac dissimilarity estimation.  
 
 
 ```r
-ps1.rel <- transform(ps1, "compositional")
-
-ordu.unwt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=F)
+ordu.unwt.uni <- ordinate(ps0.rar.rds , "PCoA", "unifrac", weighted=F)
 
 # check for Eigen values 
 # barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
 
-unwt.unifrac <- plot_ordination(ps1.rel, 
+unwt.unifrac <- plot_ordination(ps0.rar.rds, 
                                      ordu.unwt.uni, color="scientific_name") 
 unwt.unifrac <- unwt.unifrac + ggtitle("Unweighted UniFrac") + geom_point(size = 2)
 unwt.unifrac <- unwt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
@@ -72,6 +76,8 @@ Weighted Unifrac will consider the abundances of different taxa.
 
 
 ```r
+ps1.rel <- microbiome::transform(ps1, "compositional")
+
 ordu.wt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=T)
 
 # check for Eigen values 
@@ -92,8 +98,11 @@ print(wt.unifrac + stat_ellipse())
 
 <img src="05-MAW-PIV_files/figure-html/unnamed-chunk-4-2.png" width="672" />
 
-The figure brings forward an important characteristics of microbiome data call the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
+The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
+Another important aspect regarding weighted unifrac is its property of having heavier weights for abunant taxa. To detect changes in moderately abundant lineages an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
+
+**Note:** It is crucial to understand the biological features of the samples. Although these are exploratory approaches, it is important to differentiate between biological signal and technical artifacts.  
 
 ## Population-level Density landscapes    
 
@@ -196,8 +205,8 @@ permutest(ps.disper, pairwise = TRUE)
 ## human vaginal metagenome           2.0164e-07            3.0628e-16
 ## human skin metagenome              1.7519e-01            7.3652e-02
 ##                          human vaginal metagenome human skin metagenome
-## human gut metagenome                   1.0000e-03                 0.173
-## human oral metagenome                  1.0000e-03                 0.079
+## human gut metagenome                   1.0000e-03                 0.183
+## human oral metagenome                  1.0000e-03                 0.081
 ## human vaginal metagenome                                          0.001
 ## human skin metagenome                  1.8573e-04
 ```
