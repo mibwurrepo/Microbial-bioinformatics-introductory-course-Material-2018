@@ -10,8 +10,8 @@ site: bookdown::bookdown_site
 
 More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
 
-This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
-This step is heavy on computational memory and very slow. Noise filtered OTU-OTU level covariance would be ideal.     
+The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+This step is heavy on computational memory and slow. Noise filtered OTU-OTU level covariance would be ideal.     
 
 **Load packages and data**  
 
@@ -188,6 +188,7 @@ E(stool.ig)[weight > 0]$color<-"steelblue" #now color the edges based on their v
 E(stool.ig)[weight < 0]$color<-"orange"  #now color the edges based on their values
 
 plot(stool.ig, layout=coords.fdr, vertex.size = 2, vertex.label.cex = 0.5)
+
 ```
 
 The visualisation can be enhanced using [ggnet](https://briatte.github.io/ggnet/) R package.  
@@ -202,6 +203,7 @@ network::set.edge.attribute(stool.net, "color", ifelse(stool.net %e% "weight" > 
 Start adding taxonomic information.  
 
 ```{r}
+
 colnames(tax_table(ps1.stool.otu.f))
 phyla <- map_levels(colnames(otu.c), from = "best_hit", to = "Phylum", tax_table(ps1.stool.otu.f))
 stool.net %v% "Phylum" <- phyla

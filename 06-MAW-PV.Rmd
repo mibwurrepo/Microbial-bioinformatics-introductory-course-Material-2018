@@ -28,9 +28,7 @@ library(dplyr) # data handling
 
 ## Core microbiota anlaysis   
 
-
-
-We will use the filtered phyloseq object from previous tutorial.We will use the filtered phyloseq object from the Microbiome Analytics Workshop 2018 tutorial I.
+We will use the filtered phyloseq object from previous tutorial. We will use the filtered phyloseq object from the first section for pre-processioning.
 
 ```{r}
 

@@ -25,11 +25,17 @@ library(dplyr) # data handling
 
 For more information:
 
+[Ordination](http://ordination.okstate.edu/overview.htm).  
+
 [Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531).  
 
 [Normalisation and data transformation](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).  
 
 [What is Constrained and Unconstrained Ordination](http://www.davidzeleny.net/anadat-r/doku.php/en:ordination).  
+
+[Microbiome Datasets Are Compositional: And This Is Not Optional](https://www.frontiersin.org/articles/10.3389/fmicb.2017.02224/full)  
+
+[Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data](http://www.nrcresearchpress.com/doi/full/10.1139/cjm-2015-0821#.WvIJZIiFM2w)  
 
 
 ```{r}
@@ -37,7 +43,7 @@ For more information:
 # read non rarefied data
 ps1 <- readRDS("./phyobjects/ps1.rds")
 
-# read non rarefied data
+# read rarefied data
 ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
 # use print option to see the data saved as phyloseq object.
 
@@ -47,18 +53,32 @@ ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
 
 ### Unweighted Unifrac  
 
-Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important.  
+Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important. However, it is sensitive to the sequencing depth. If a sample is sequenced more than the others then it may have many OTUs (most of them unique) consequently affecting the unifrac dissimilarity estimation.  
+
+Previous section we check for sparsity and it was high. One decision that needs to be done is if singletons and OTUs represented with low number of reads arereal observations or sequecing artifacts?  
+Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads are discarded. We can check how much sparsity can be reduced by removing OTUs with low prevelance and abundance.  
+
+```{r}
+# if we remove OTUs that are detected atleast 10 times in 5% of the samples
+ps0.rar.filtered <- core(ps0.rar.rds, detection = 10, prevalence = 0.05)
+
+summarize_phyloseq(ps0.rar.filtered)
+
+# we reduce the sparsity considerably. 
+
+```
+
+Since the data used here consists of different body sites with distinct biological properties, the results of ordination do not change a lot by filtering "rare" OTUs. Once again, knowing the biology of your samples and making choices rationally and documenting them is crucial.  
+
 
 ```{r}
 
-ps1.rel <- transform(ps1, "compositional")
-
-ordu.unwt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=F)
+ordu.unwt.uni <- ordinate(ps0.rar.filtered, "PCoA", "unifrac", weighted=F)
 
 # check for Eigen values 
 # barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
 
-unwt.unifrac <- plot_ordination(ps1.rel, 
+unwt.unifrac <- plot_ordination(ps0.rar.filtered, 
                                      ordu.unwt.uni, color="scientific_name") 
 unwt.unifrac <- unwt.unifrac + ggtitle("Unweighted UniFrac") + geom_point(size = 2)
 unwt.unifrac <- unwt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
@@ -66,12 +86,15 @@ print(unwt.unifrac)
 
 ```
 
+Try repeating the above ordination using non-filtered phyloseq object.  
 
 ### Weighted Unifrac  
 
 Weighted Unifrac will consider the abundances of different taxa.  
 
 ```{r}
+
+ps1.rel <- microbiome::transform(ps1, "compositional")
 
 ordu.wt.uni <- ordinate(ps1.rel , "PCoA", "unifrac", weighted=T)
 
@@ -88,20 +111,34 @@ print(wt.unifrac + stat_ellipse())
 
 ```
 
-The figure brings forward an important characteristics of microbiome data call the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
+The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
+Another important aspect regarding weighted unifrac is its property of having heavier weights for abunant taxa. To detect changes in moderately abundant lineages an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
+
+**To reiterate:** It is crucial to understand the biological features of the samples. Although these are exploratory approaches, it is important to differentiate between biological signal and technical artifacts.  
 
 ## Population-level Density landscapes    
 
 ```{r}
-p <- microbiome::plot_landscape(ps1.rel, "NMDS", "bray", col = "scientific_name") +
+
+p <- plot_landscape(ps1.rel, 
+                    "NMDS", 
+                    "bray", 
+                    col = "scientific_name") +
        labs(title = paste("NMDS / Bray-Curtis"))   
 
-p + scale_color_brewer(palette = "Dark2")+ scale_fill_gradient(low = "#e0ecf4", high = "#6e016b") 
+p <- p + scale_color_brewer(palette = "Dark2")+ scale_fill_gradient(low = "#e0ecf4", high = "#6e016b") 
 
+p 
 ```
 
+Bray-Curtis dissimilarity does not consider phylogenetic relationships between OTUs. There are several distance methods and a list can be obtained by typying `?distanceMethodList` in the console pane.   
+
+Section on multivariate analysis will be discussed on Day3.  
+
 ## PERMANOVA  
+
+Permutational multivariate analysis of variance [further reading](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841)  
 
 ```{r}
 library(vegan)
@@ -121,13 +158,14 @@ permanova
 
 ## Checking the homogeneity condition  
 
+Type `?betadisper` in R console for more information.  
+
 ```{r}
 
 ps.disper <- betadisper(unifrac.dist, metadf$scientific_name)
 permutest(ps.disper, pairwise = TRUE)
 
 ```
-
 
 
 ```{r}
