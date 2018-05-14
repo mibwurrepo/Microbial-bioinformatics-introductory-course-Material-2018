@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-09"
+date: "2018-05-14"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -289,9 +289,9 @@ sessionInfo()
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2.2     dplyr_0.7.4        ggpubr_0.1.6      
-## [4] magrittr_1.5       RColorBrewer_1.1-2 microbiome_1.0.2  
-## [7] ggplot2_2.2.1      phyloseq_1.23.1   
+## [1] bindrcpp_0.2.2       dplyr_0.7.4          ggpubr_0.1.6        
+## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
+## [7] ggplot2_2.2.1        phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] ggrepel_0.7.0              Rcpp_0.12.16              
@@ -303,33 +303,34 @@ sessionInfo()
 ## [13] backports_1.1.2            stats4_3.4.4              
 ## [15] evaluate_0.10.1            pillar_1.2.2              
 ## [17] zlibbioc_1.24.0            rlang_0.2.0               
-## [19] lazyeval_0.2.1             data.table_1.10.4-3       
+## [19] lazyeval_0.2.1             data.table_1.11.2         
 ## [21] vegan_2.5-1                S4Vectors_0.16.0          
 ## [23] Matrix_1.2-14              rmarkdown_1.9             
 ## [25] labeling_0.3               splines_3.4.4             
-## [27] stringr_1.3.0              igraph_1.2.1              
-## [29] pheatmap_1.0.8             munsell_0.4.3             
-## [31] compiler_3.4.4             xfun_0.1                  
-## [33] pkgconfig_2.0.1            BiocGenerics_0.24.0       
-## [35] multtest_2.34.0            mgcv_1.8-23               
-## [37] htmltools_0.3.6            tidyselect_0.2.4          
-## [39] biomformat_1.7.0           tibble_1.4.2              
-## [41] gridExtra_2.3              bookdown_0.7              
-## [43] IRanges_2.12.0             codetools_0.2-15          
-## [45] permute_0.9-4              viridisLite_0.3.0         
-## [47] MASS_7.3-49                grid_3.4.4                
-## [49] nlme_3.1-137               jsonlite_1.5              
-## [51] gtable_0.2.0               scales_0.5.0              
-## [53] stringi_1.1.7              XVector_0.18.0            
-## [55] reshape2_1.4.3             viridis_0.5.1             
-## [57] ggsci_2.8                  iterators_1.0.9           
-## [59] tools_3.4.4                microbiomeutilities_0.99.0
-## [61] ade4_1.7-11                Biobase_2.38.0            
-## [63] glue_1.2.0                 purrr_0.2.4               
-## [65] parallel_3.4.4             survival_2.42-3           
-## [67] yaml_2.1.18                colorspace_1.3-2          
-## [69] rhdf5_2.22.0               cluster_2.0.7-1           
-## [71] knitr_1.20                 bindr_0.1.1
+## [27] Rtsne_0.13                 stringr_1.3.0             
+## [29] igraph_1.2.1               pheatmap_1.0.8            
+## [31] munsell_0.4.3              compiler_3.4.4            
+## [33] xfun_0.1                   pkgconfig_2.0.1           
+## [35] BiocGenerics_0.24.0        multtest_2.34.0           
+## [37] mgcv_1.8-23                htmltools_0.3.6           
+## [39] tidyselect_0.2.4           biomformat_1.7.0          
+## [41] tibble_1.4.2               gridExtra_2.3             
+## [43] bookdown_0.7               IRanges_2.12.0            
+## [45] codetools_0.2-15           permute_0.9-4             
+## [47] viridisLite_0.3.0          MASS_7.3-49               
+## [49] grid_3.4.4                 nlme_3.1-137              
+## [51] jsonlite_1.5               gtable_0.2.0              
+## [53] scales_0.5.0               stringi_1.1.7             
+## [55] XVector_0.18.0             reshape2_1.4.3            
+## [57] viridis_0.5.1              ggsci_2.8                 
+## [59] iterators_1.0.9            tools_3.4.4               
+## [61] microbiomeutilities_0.99.0 ade4_1.7-11               
+## [63] Biobase_2.38.0             glue_1.2.0                
+## [65] purrr_0.2.4                parallel_3.4.4            
+## [67] survival_2.42-3            yaml_2.1.18               
+## [69] colorspace_1.3-2           rhdf5_2.22.0              
+## [71] cluster_2.0.7-1            knitr_1.20                
+## [73] bindr_0.1.1
 ```
 
 
