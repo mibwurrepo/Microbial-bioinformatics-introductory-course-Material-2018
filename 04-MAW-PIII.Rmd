@@ -8,7 +8,7 @@ site: bookdown::bookdown_site
 
 # Composition plots  
 
-Barplots are an easy and intuitive way of visualising the composition of your samples. However, the way this is implented in phyloseq causes problems with the order of the taxa in the legend at higher taxonomic levels.
+Barplots are a simple way of visualising the composition of your samples.    
 
 We will use the filtered phyloseq object from **Set-up and Pre-processing** section.  
 
@@ -93,8 +93,7 @@ plot.composition.COuntAbun
 
 ```
 
-
-This plot is based on the reads/sample. You can see the reads are not evenly distributed over the samples, nevertheless their overall composition seems to be the same. The only thing that is different is the scaling. You don't need any other normalisation alogorithms. To check this in the next step we plot the relative abundance.
+This plot is based on the reads per sample. In the next step, we plot the relative abundance.
 
 ## Barplot relative abundance 
 
@@ -149,10 +148,10 @@ ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 
 ```
 
-for more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
+For more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
 
-
-## Heatmaps
+## Heatmaps  
+These are a good alternative to barplots.  
 
 ```{r}
 
@@ -211,7 +210,6 @@ p.box <- ggstripchart(ps_df, "scientific_name", "Abundance",
 p.box + rremove("x.text")
 
 ```
-
 
 
 

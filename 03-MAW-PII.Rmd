@@ -111,8 +111,6 @@ p.rar
 
 ```
 
-
-
 Compare this to taxa prevalence plot from previous section of the tutorial.  
 
 Do you see any difference?  
@@ -123,7 +121,7 @@ Do you see any difference?
 
 For more diversity indices please refer to [Microbiome Package](http://microbiome.github.io/microbiome/Diversity.html)  
 
-Let use calculate diversity  
+Let us calculate diversity.  
 
 ```{r}
 
@@ -133,12 +131,11 @@ datatable(hmp.div)
 
 ```
 
-This is one way to plot your data. 
+This is one way to plot the data. 
 
 ```{r}
 # get the metadata out as seprate object
 hmp.meta <- meta(ps0.rar)
-
 
 # Add the rownames as a new colum for easy integration later.
 hmp.meta$sam_name <- rownames(hmp.meta)
@@ -218,7 +215,7 @@ p2 <- p + stat_compare_means(comparisons = L.pairs,
                              symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 0.1, 1), 
                                                 symbols = c("****", "***", "**", "*", "n.s")))
 
-p2
+print(p2)
 ```
 
 ### Phylogenetic diversity   
@@ -226,7 +223,6 @@ p2
 Phylogenetic diversity is calculated using the `picante` package.  
 
 ```{r, message=FALSE, warning=FALSE}
-
 
 library(picante)
 
@@ -239,6 +235,7 @@ ps0.rar.tree <- ps0.rar@phy_tree
 # We first need to check if the tree is rooted or not 
 
 ps0.rar@phy_tree
+# it is a rooted tree
 df.pd <- pd(t(ps0.rar.otutab), ps0.rar.tree,include.root=T) # t(ou_table) transposes the table for use in picante and the tre file comes from the first code chunck we used to read tree file (see making a phyloseq object section).
 
 
@@ -246,7 +243,7 @@ datatable(df.pd)
 
 ```
 
-now we need to plot PD. Check above how to get the metadata file from phyloseq object.  
+now we need to plot PD. Check above how to get the metadata file from a phyloseq object.  
 
 ```{r}
 # now we need to plot PD
@@ -311,6 +308,7 @@ ggscatter(lib.div, "Richness", "LibrarySize",
            label.y = 50000)
 
 ```
+
 
 ```{r}
 

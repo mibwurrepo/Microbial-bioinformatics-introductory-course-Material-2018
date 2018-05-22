@@ -8,15 +8,19 @@ site: bookdown::bookdown_site
 
 # Set-up and Pre-processing  
 
-This tutorial will introduce you to basics of microbial community analysis. More importantly on how to look at your data and filter appropriately. We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609). The 16S rRNA gene variable region sequenced here is V1-V3. The raw reads were processed using QIIME 1.9.1, SortMeRNA, and OTU picking was done using the closed-reference OTU-picking at 97% identity.   
+This tutorial will introduce you to basic steps of microbial community analysis. More importantly on how to look at your data and filter appropriately. We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609). The 16S rRNA gene variable region sequenced here is V1-V3. The raw reads were processed using QIIME 1.9.1, SortMeRNA, and OTU picking was done using the closed-reference OTU-picking at 97% identity.   
 
 The main tools used in this tutorials are [Phyloseq](https://joey711.github.io/phyloseq/) and [microbiome](http://microbiome.github.io/microbiome/).    
-Kindly cite all the packages and tools that you have used in your analysis as listed at the end of each document in `sessionInfo`. Also make sure that you provide the workflow and scripts you used for analysis atleast as supplementary material with your research article.    
+Kindly cite all the packages and tools that were used in your analysis as listed at the end of each document in `sessionInfo`. Also make sure that you provide the workflow and scripts you used for analysis atleast as supplementary material with your research article.    
 Check [Quick-R](http://www.statmethods.net/).  
+
+## General overview  
+
+<center>![ microbiome R package](images/Overview.png)</center> 
 
 ## Structure    
 
-Let us create few folders to organize the analysis. While this can be personal preference, make sure you write the structure to guide others who do not know your data well. This is important like the *old days* hand-writing should be readable to understand.      
+Let us create few folders to organize the analysis. While this can be personal preference, make sure you write the structure to guide others who do not know your data well.  
 
 ```{r, eval=FALSE}
 
@@ -52,10 +56,10 @@ library(dplyr) # data handling
 
 ## Making a phyloseq object  
 
-This is the basis for the analyses. In the phyloseq object, information on OTUs, taxonomy of OTUs, the phylogenetic tree and metadata is stored. A single object with all this information provides a convinient way of handling, manipulating and visualizing data.  
-For more infromation: [phyloseq](http://joey711.github.io/phyloseq/import-data) 
+This is the basis for the analyses demonstrated in this tutorial. In the phyloseq object, information on OTU abundances, taxonomy of OTUs, the phylogenetic tree and metadata is stored. A single object with all this information provides a convinient way of handling, manipulating and visualizing data.  
+For more infromation: [phyloseq](http://joey711.github.io/phyloseq/import-data)  
 
-Please remember that the metadata (i.e. mapping) file has to be in *.csv format (columns have sample attributes). The `read_phylseq` function from microbiome package requires metadata in *.csv format.  
+Please remember that the metadata (i.e. mapping) file has to be in *.csv* format (columns have sample attributes). The `read_phylseq` function from microbiome package requires metadata in *.csv* format.  
 
 **Things to be done in QIIME terminal (if required):**
 **Important Note 2**: If you have error in loading the biom files stating **JSON or HDF5** then you need to convert it in to a JSON format.  
@@ -63,7 +67,9 @@ Please remember that the metadata (i.e. mapping) file has to be in *.csv format 
 For this, use the following command within the QIIME terminal and not in R!  
 
 ````{r}
+
 # biom convert -i NGTaxMerged.biom -o ngtax_json.biom --table-type "OTU table" --to-json    
+
 ```
 
 For more information on the biom format please  [click here](http://biom-format.org/documentation/biom_conversion.html). 
@@ -71,8 +77,7 @@ For more information on the biom format please  [click here](http://biom-format.
 **Important Note 3**: The most recent version of NG-Tax does not have this issue. 
 
 **NOTE**     
-Update to latest version of microbiome package to use the `read_phyloseq` function. This function can be used for reading other outputs (like .shared and consensus taxonomy files from mothur) into phyloseq object.     
-
+The `read_phyloseq` function can be used for reading other outputs (like .shared and consensus taxonomy files from mothur) into phyloseq object. type `?read_phyloseq` in the console pane for more information.      
 ## Read input to phyloseq object
 
 ```{r, eval=TRUE}
@@ -83,7 +88,7 @@ pseq1 <- read_phyloseq(otu.file = "./input_data/NGTaxMerged_conv.biom", taxonomy
 
 ```
 
-Notice above, we use relative path and not `D:/myproject/input/mybiom.biom`. This is important! With an RStudio project, the project folder is considered the root folder and any folders within this folder will be the branches to access data. Hence, sharing the project folder with your article, users can conviniently re-run your analysis without having to paly around with location of files.  
+Notice above, we use relative path and not `D:/myproject/input/mybiom.biom`. This is important! With an [RStudio project](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects), the project folder is considered the root folder and any folders within this folder will be the branches to access data. Hence, sharing the Rproject folder with your article, users can conviniently re-run your analysis without having to paly around with location of files.  
 
 ## Read the tree file.
 
@@ -100,7 +105,7 @@ treefile_p1 <- read.tree("./input_data/combinedTree.tre")
 
 ```{r, eval=FALSE}
 ps0 <-merge_phyloseq(pseq1,treefile_p1)
-# ps1 is the first phyloseq object.
+# ps0 is the first phyloseq object.
 
 rank_names(ps0) # we check the taxonomic rank information 
 
@@ -213,7 +218,6 @@ What do you see from this plot?
 ### Distribution of OTUs    
 
 ```{r}
-
 # We make a data table with information on the OTUs
 ps0_df_taxa <- data.table(tax_table(ps0), 
                         OTUabundance = taxa_sums(ps0), 
@@ -224,7 +228,6 @@ ps1_tax_plot <- ggplot(ps0_df_taxa, aes(OTUabundance)) +
   theme_bw()
 
 print(ps1_tax_plot)
-
 
 ```
 
@@ -237,10 +240,10 @@ taxasums <- rowSums(otu_table(ps0))
 taxatable <- as.data.frame.matrix(tax_table(ps0))
 
 # we use this also as an example of plotting using ggplot. 
-# taxatable id data.frame.
-# It consists of seven columns viz. Kingdom, Phylum, Class, Order Family Genus Species
-# we will add the taxa sums to taxatable.
+# taxatable is the data.frame.
+# It consists of seven columns viz. Kingdom, Phylum, Class, Order, Family, Genus, Species.
 
+# we will add the taxa sums to taxatable.
 taxatable$taxasums <- taxasums
 colnames(taxatable)
 # Notice that we added taxasums as last column.
@@ -276,13 +279,13 @@ ggarrange(tax_plot1,
           common.legend =  T,
           labels = "auto")
 
-# From a to be we have layered out plot with new features, power of ggplot2.  
+# From a to d, we have layered the plot with new features, power of ggplot2.  
 
 ggsave("./figures/Distribution of OTUs.pdf", height = 4, width = 6)
 
 ```
 
-Keep an eype for this type of plotting stratergy in later sections for more practice.   
+Keep an eye for this type of plotting stratergy in later sections for more practice.   
 
 Another way to identify dominant and rare OTUs in the dataset is as follows:  
 
@@ -355,7 +358,7 @@ The samples here are
 * Mucus   
 * Sebum  
 
-Although these all are host-associated samples, there is large variation in microbiota composition between body site.   
+Although these all are host-associated samples, there is large variation in microbiota composition between body sites.   
 
 [Analyses of the Microbial Diversity across the Human Microbiome](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0032118)  
 [Structure, function and diversity of the healthy human microbiome](https://www.nature.com/articles/nature11234)  
