@@ -53,7 +53,7 @@ library(igraph)
 
 ```{r}
 
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 ```
 
@@ -77,7 +77,7 @@ ps1.stool.otu <- prune_taxa(taxa_sums(ps1.stool) > 100, ps1.stool)
 # Add taxonomic classification to OTU ID
 ps1.stool.otu.f <- microbiomeutilities::format_to_besthit(ps1.stool.otu)
 
-head(tax_table(ps1.stool))
+head(tax_table(ps1.stool.otu))
 ```
 
 Check the difference in two phyloseq objects.  
@@ -105,9 +105,9 @@ tax.c <- as.data.frame(tax_table(ps1.stool.otu.f)@.Data)#extract the taxonomy in
 
 head(tax.c)
 
-saveRDS(otu.c, "input_data/stool.otu.c.rds")
-saveRDS(tax.c, "input_data/stool.tax.c.rds")
-
+# use this only for first attempt to run it on server to save time
+#saveRDS(otu.c, "input_data/stool.otu.c.rds")
+#saveRDS(tax.c, "input_data/stool.tax.c.rds")
 
 ```
 
@@ -122,7 +122,7 @@ This step is heavy on computational memory and very slow. For this workshop we h
 
 # In practice, use more repetitions
 set.seed(1244)
-net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50))
+net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50)) # reps have to increases for real data
 
 # saveRDS(net.c, "input_data/net.c.rds")
 
@@ -139,8 +139,10 @@ net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50))
 The output of `spiec.easi` is stored in *./input_data/* as *stool.net.c.rds*. Read this file in R and follow the steps below.  
 
 ```{r}
+# the PC has low processing power, you can read the otuput created by us present in the input_data folder.
 
-net.c <- readRDS("input_data/stool.net.c.rds")
+net.c <- readRDS("input_data/stool.net.rds")
+class(net.c)
 n.c <- symBeta(getOptBeta(net.c))
 
 ```
@@ -183,7 +185,6 @@ coords.fdr = layout_with_fr(stool.ig)
 ### igraph network  
 
 ```{r}
-
 E(stool.ig)[weight > 0]$color<-"steelblue" #now color the edges based on their values positive is steelblue
 E(stool.ig)[weight < 0]$color<-"orange"  #now color the edges based on their values
 
@@ -219,13 +220,24 @@ mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a
 
 p <- ggnet2(stool.net, node.color = "Phylum", 
             label = TRUE, node.size = "nodesize", 
-            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+            label.size = 2, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
 
 p 
+```
 
+This is difficult to interpret. One way is to remove nodes that are connected to few other nodes. We can use degree as a network statisitic. 
+
+```{r}
+
+stl.mb <- degree.distribution(stool.ig)
+plot(0:(length(stl.mb)-1), stl.mb, ylim=c(0,.35), type='b', 
+      ylab="Frequency", xlab="Degree", main="Degree Distributions")
+
+# we will look at only taxa connect more than 10 others
 p <- ggnet2(stool.net, node.color = "Phylum", 
-            label = TRUE, node.size = 2, 
-            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+            label = TRUE, 
+            label.size = 3, edge.color = "color",
+            size = "degree", size.min = 10) + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
 
 p 
 
@@ -246,7 +258,6 @@ positive=length(betaMat[betaMat>0])/2
 negative=length(betaMat[betaMat<0])/2 
 
 total=length(betaMat[betaMat!=0])/2 
-
 
 ```
 
@@ -336,7 +347,7 @@ modulesFiveOtus=modules$names[modulesFiveIndices]
 modulesSixIndices=which(modules$membership==6)
 modulesSixOtus=modules$names[modulesSixIndices]
 
-print(modulesFiveOtus)
+print(modulesOneOtus)
 
 ```
 

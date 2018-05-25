@@ -27,7 +27,7 @@ library(dplyr) # data handling
   
 ```{r}
 
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 # use print option to see the data saved as phyloseq object.
 
@@ -39,7 +39,9 @@ print(ps1)
 
 ```{r, fig.height= 6, fig.width=20, warning=FALSE, message= FALSE}
 
+
 ps1.com <- ps1
+taxa_names(ps1.com) <- paste0("Seq_", rownames(tax_table(ps1.com)))
 
 # We need to set Palette
 taxic <- as.data.frame(ps1.com@tax_table)  # this will help in setting large color options
@@ -57,7 +59,7 @@ tax_table(ps1.com) <- new.tax  # incroporate into phyloseq Object
 
 
 # now edit the unclassified taxa
-# tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "f__", "Family"] <- "Unclassified family"
+tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "", "Family"] <- "Unclassified family"
 
 
 # We will also remove the 'f__' patterns for cleaner labels
@@ -79,7 +81,7 @@ ps1.com@phy_tree <- NULL
 
 # Second merge at family level 
 
-ps1.com.fam <- aggregate_taxa(ps1.com, "Family", top = 10)
+ps1.com.fam <- microbiome::aggregate_taxa(ps1.com, "Family", top = 10)
 
 plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") + 
     scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
@@ -104,13 +106,9 @@ Make it relative abundance
 # the previous pseq object ps1.com.fam is only counts.
 
 # Use traqnsform function of microbiome to convert it to rel abun.
+ps1.com.fam.rel <- microbiome::transform(ps1.com.fam, "compositional")
 
-ps1.com.rel <- microbiome::transform(ps1.com, "compositional")
-
-ps1.com.fam2 <- aggregate_taxa(ps1.com.rel, "Family", top = 10)
-
-
-plot.composition.relAbun <- plot_composition(ps1.com.fam2, 
+plot.composition.relAbun <- plot_composition(ps1.com.fam.rel, 
                                              sample.sort = "scientific_name", 
                                              x.label = "env_material") + theme(legend.position = "bottom") + scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
     theme(axis.text.x = element_text(angle = 90)) + 
@@ -195,22 +193,22 @@ Following is an example of customizing the plot using ggpubr.
 
 ```{r}
 
-
-ps_df <- microbiomeutilities::phy_to_ldf(ps1.com, transform.counts = "compositional")
+# we use count data at family level from the barplot for counts
+ps_df <- microbiomeutilities::phy_to_ldf(ps1.com.fam, transform.counts = "compositional")
 
 colnames(ps_df)
 # this data.frame can be used to customize several plots.  
 
-# example boxplot at phylum level
+# example boxplot at family level
 
 p.box <- ggstripchart(ps_df, "scientific_name", "Abundance", 
-                      facet.by = "Phylum", color = "scientific_name",
-                      palette = "jco")
+                      facet.by = "Family", color = "body_product",
+                      palette = "jco"
+                      )
 
 p.box + rremove("x.text")
 
 ```
-
 
 
 ```{r}

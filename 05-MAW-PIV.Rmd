@@ -41,7 +41,7 @@ For more information:
 ```{r}
 
 # read non rarefied data
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 # read rarefied data
 ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
@@ -55,10 +55,9 @@ ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
 
 Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important. However, it is sensitive to the sequencing depth. If a sample is sequenced more than the others then it may have many OTUs (most of them unique) consequently affecting the unifrac dissimilarity estimation.  
 
-Previous section we check for sparsity and it was high. One decision that needs to be done is if singletons and OTUs represented with low number of reads arereal observations or sequecing artifacts?  
-Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads are discarded. We can check how much sparsity can be reduced by removing OTUs with low prevelance and abundance.  
+Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads are discarded. If you have you won data you try the following code. For data from NG-tax we will skip this step as we have no singletons.    
 
-```{r}
+```{r, eval=FALSE}
 # if we remove OTUs that are detected atleast 10 times in 5% of the samples
 ps0.rar.filtered <- core(ps0.rar.rds, detection = 10, prevalence = 0.05)
 
@@ -68,17 +67,18 @@ summarize_phyloseq(ps0.rar.filtered)
 
 ```
 
+*For data from OTU picking*  
 Since the data used here consists of different body sites with distinct biological properties, the results of ordination do not change a lot by filtering "rare" OTUs. Once again, knowing the biology of your samples and making choices rationally and documenting them is crucial.  
-
+Feel free to use the OTU-picking strategy phyloseq object to investigate yourself.  
 
 ```{r}
 
-ordu.unwt.uni <- ordinate(ps0.rar.filtered, "PCoA", "unifrac", weighted=F)
+ordu.unwt.uni <- ordinate(ps0.rar.rds, "PCoA", "unifrac", weighted=F)
 
 # check for Eigen values 
 # barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
 
-unwt.unifrac <- plot_ordination(ps0.rar.filtered, 
+unwt.unifrac <- plot_ordination(ps0.rar.rds, 
                                      ordu.unwt.uni, color="scientific_name") 
 unwt.unifrac <- unwt.unifrac + ggtitle("Unweighted UniFrac") + geom_point(size = 2)
 unwt.unifrac <- unwt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
@@ -113,7 +113,9 @@ print(wt.unifrac + stat_ellipse())
 
 The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
-Another important aspect regarding weighted unifrac is its property of having heavier weights for abunant taxa. To detect changes in moderately abundant lineages an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
+You can try repeating this analysis with phyloseq object from OTU-picking approach. 
+
+Another important aspect regarding weighted unifrac is its property of having heavier weights for abundant taxa. To detect changes in moderately abundant lineages, an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
 
 **To reiterate:** It is crucial to understand the biological features of the samples. Although these are exploratory approaches, it is important to differentiate between biological signal and technical artifacts.  
 
