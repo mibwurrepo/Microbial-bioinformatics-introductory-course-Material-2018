@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="composition-plots.html">
-<link rel="next" href="core-microbiota.html">
+<link rel="prev" href="linear-models-the-role-of-covariates.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -194,203 +194,192 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="beta-diversity-metrics" class="section level1">
-<h1><span class="header-section-number">5</span> Beta diversity metrics</h1>
-<p>Beta-diversity: Measures for differences between samples from different groups to identify if there are differences in the overall community composition and structure.</p>
-<p><strong>Load packages and data</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbiome) <span class="co"># data analysis and visualisation</span>
-<span class="kw">library</span>(phyloseq) <span class="co"># also the basis of data object. Data analysis and visualisation</span>
-<span class="kw">library</span>(RColorBrewer) <span class="co"># nice color options</span>
-<span class="kw">library</span>(ggpubr) <span class="co"># publication quality figures, based on ggplot2</span>
-<span class="kw">library</span>(dplyr) <span class="co"># data handling  </span></code></pre></div>
-<p>For more information:</p>
-<p><a href="http://ordination.okstate.edu/overview.htm">Ordination</a>.</p>
-<p><a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible</a>.</p>
-<p><a href="https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y">Normalisation and data transformation</a>.</p>
-<p><a href="http://www.davidzeleny.net/anadat-r/doku.php/en:ordination">What is Constrained and Unconstrained Ordination</a>.</p>
-<p><a href="https://www.frontiersin.org/articles/10.3389/fmicb.2017.02224/full">Microbiome Datasets Are Compositional: And This Is Not Optional</a></p>
-<p><a href="http://www.nrcresearchpress.com/doi/full/10.1139/cjm-2015-0821#.WvIJZIiFM2w">Compositional analysis: a valid approach to analyze microbiome high-throughput sequencing data</a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read non rarefied data</span>
-ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps.ng.tax.rds&quot;</span>)
+<div id="advanced-models-of-differential-abundance" class="section level1">
+<h1><span class="header-section-number">10</span> Advanced models of differential abundance</h1>
+<p>GLMs are the basis for advanced testing of differential abundance in sequencing data. This is necessary, as the sequencing data sets deviate from symmetric, continuous, Gaussian assumptions in many ways.</p>
+<p>Sequencing data consists of discrete counts:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">abundances</span>(d)[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">3</span>])</code></pre></div>
+<pre><code>##                              Sample-1 Sample-2 Sample-3
+## Actinomycetaceae                   11       67       21
+## Aerococcus                          1        1        1
+## Aeromonas                           1        1        1
+## Akkermansia                      1167     6127     4235
+## Alcaligenes faecalis et rel.       90      126      188</code></pre>
+<p>The data is sparse:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">log10</span>(<span class="dv">1</span> +<span class="st"> </span><span class="kw">abundances</span>(d)), <span class="dv">100</span>)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/pooled3-1.png" width="768" /></p>
+<p>Long tails of rare taxa:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
+medians &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abundances</span>(d),<span class="dv">1</span>,median)/<span class="fl">1e3</span>
+A &lt;-<span class="st"> </span><span class="kw">melt</span>(<span class="kw">abundances</span>(d))
+A$Var1 &lt;-<span class="st"> </span><span class="kw">factor</span>(A$Var1, <span class="dt">levels =</span> <span class="kw">rev</span>(<span class="kw">names</span>(<span class="kw">sort</span>(medians))))
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(A, <span class="kw">aes</span>(<span class="dt">x =</span> Var1, <span class="dt">y =</span> value)) +
+<span class="st">        </span><span class="kw">geom_boxplot</span>() +
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Abundance (reads)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Taxonomic Group&quot;</span>) +
+<span class="st">    </span><span class="kw">scale_y_log10</span>()
+    
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/tail-1.png" width="200px" /></p>
+<p>Overdispersion (variance exceeds the mean):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">means &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abundances</span>(d),<span class="dv">1</span>,mean)
+variances &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abundances</span>(d),<span class="dv">1</span>,var)
 
-<span class="co"># read rarefied data</span>
-ps0.rar.rds &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps0.rar.rds&quot;</span>)
-<span class="co"># use print option to see the data saved as phyloseq object.</span></code></pre></div>
-<div id="phylogenetic-beta-diversity-metrics" class="section level2">
-<h2><span class="header-section-number">5.1</span> Phylogenetic beta-diversity metrics</h2>
-<div id="unweighted-unifrac" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Unweighted Unifrac</h3>
-<p>Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important. However, it is sensitive to the sequencing depth. If a sample is sequenced more than the others then it may have many OTUs (most of them unique) consequently affecting the unifrac dissimilarity estimation.</p>
-<p>Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads are discarded. If you have you won data you try the following code. For data from NG-tax we will skip this step as we have no singletons.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if we remove OTUs that are detected atleast 10 times in 5% of the samples</span>
-ps0.rar.filtered &lt;-<span class="st"> </span><span class="kw">core</span>(ps0.rar.rds, <span class="dt">detection =</span> <span class="dv">10</span>, <span class="dt">prevalence =</span> <span class="fl">0.05</span>)
+<span class="co"># Calculate mean and variance over samples for each taxon</span>
+<span class="kw">library</span>(reshape2)
+<span class="kw">library</span>(dplyr)
+df &lt;-<span class="st"> </span><span class="kw">melt</span>(<span class="kw">abundances</span>(d))
+<span class="kw">names</span>(df) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Taxon&quot;</span>, <span class="st">&quot;Sample&quot;</span>, <span class="st">&quot;Reads&quot;</span>)
+df &lt;-<span class="st"> </span>df %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Taxon) %&gt;%
+<span class="st">             </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Reads),
+                   <span class="dt">variance =</span> <span class="kw">var</span>(Reads))
 
-<span class="kw">summarize_phyloseq</span>(ps0.rar.filtered)
+<span class="co"># Illustrate overdispersion</span>
+<span class="kw">library</span>(scales)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x =</span> mean, <span class="dt">y =</span> variance)) +
+<span class="st">       </span><span class="kw">geom_point</span>() +
+<span class="st">       </span><span class="kw">geom_abline</span>(<span class="kw">aes</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>)) +
+<span class="st">       </span><span class="kw">scale_x_log10</span>(<span class="dt">labels =</span> scales::scientific) +
+<span class="st">       </span><span class="kw">scale_y_log10</span>(<span class="dt">labels =</span> scales::scientific) +
+<span class="st">       </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Overdispersion (variance &gt; mean)&quot;</span>)
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/pooled_overdispersion-1.png" width="200px" /></p>
+<div id="deseq2-differential-abundance-testing-for-sequencing-data" class="section level2">
+<h2><span class="header-section-number">10.1</span> DESeq2: differential abundance testing for sequencing data</h2>
+<p>DESeq2 analysis can accommodate those particular assumptions about sequencing data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Start by converting phyloseq object to deseq2 format</span>
+<span class="kw">library</span>(DESeq2)
+ds2 &lt;-<span class="st"> </span><span class="kw">phyloseq_to_deseq2</span>(d, ~<span class="st"> </span>group +<span class="st"> </span>nationality)
 
-<span class="co"># we reduce the sparsity considerably. </span></code></pre></div>
-<p><em>For data from OTU picking</em><br />
-Since the data used here consists of different body sites with distinct biological properties, the results of ordination do not change a lot by filtering “rare” OTUs. Once again, knowing the biology of your samples and making choices rationally and documenting them is crucial.<br />
-Feel free to use the OTU-picking strategy phyloseq object to investigate yourself.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ordu.unwt.uni &lt;-<span class="st"> </span><span class="kw">ordinate</span>(ps0.rar.rds, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="dt">weighted=</span>F)
+<span class="co"># Run DESeq2 analysis (all taxa at once!)</span>
+dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(ds2)
 
-<span class="co"># check for Eigen values </span>
-<span class="co"># barplot(ordu.unwt.uni$values$Eigenvalues[1:10])</span>
+<span class="co"># Investigate results</span>
+res &lt;-<span class="st"> </span><span class="kw">results</span>(dds)
+deseq.results &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(res)
+df &lt;-<span class="st"> </span>deseq.results
+df$taxon &lt;-<span class="st"> </span><span class="kw">rownames</span>(df)
+df &lt;-<span class="st"> </span>df %&gt;%<span class="st"> </span><span class="kw">arrange</span>(log2FoldChange, padj)
 
-unwt.unifrac &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(ps0.rar.rds, 
-                                     ordu.unwt.uni, <span class="dt">color=</span><span class="st">&quot;scientific_name&quot;</span>) 
-unwt.unifrac &lt;-<span class="st"> </span>unwt.unifrac +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Unweighted UniFrac&quot;</span>) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)
-unwt.unifrac &lt;-<span class="st"> </span>unwt.unifrac +<span class="st"> </span><span class="kw">theme_classic</span>() +<span class="st"> </span><span class="kw">scale_color_brewer</span>(<span class="st">&quot;Location&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Set2&quot;</span>)
-<span class="kw">print</span>(unwt.unifrac)</code></pre></div>
-<p><img src="05-MAW-PIV_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Try repeating the above ordination using non-filtered phyloseq object.</p>
-</div>
-<div id="weighted-unifrac" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> Weighted Unifrac</h3>
-<p>Weighted Unifrac will consider the abundances of different taxa.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.rel &lt;-<span class="st"> </span>microbiome::<span class="kw">transform</span>(ps1, <span class="st">&quot;compositional&quot;</span>)
+<span class="co"># Print the results; flitered and sorted by pvalue and effectsize</span>
+<span class="kw">library</span>(knitr)
+df &lt;-<span class="st"> </span>df %&gt;%<span class="st"> </span><span class="kw">filter</span>(pvalue &lt;<span class="st"> </span><span class="fl">0.05</span> &amp;<span class="st"> </span>log2FoldChange &gt;<span class="st"> </span><span class="fl">1.5</span>) %&gt;%
+<span class="st">             </span><span class="kw">arrange</span>(pvalue, log2FoldChange)
+knitr::<span class="kw">kable</span>(df, <span class="dt">digits =</span> <span class="dv">5</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">baseMean</th>
+<th align="right">log2FoldChange</th>
+<th align="right">lfcSE</th>
+<th align="right">stat</th>
+<th align="right">pvalue</th>
+<th align="right">padj</th>
+<th align="left">taxon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1870.08336</td>
+<td align="right">1.89495</td>
+<td align="right">0.12667</td>
+<td align="right">14.95965</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Clostridium difficile et rel.</td>
+</tr>
+<tr class="even">
+<td align="right">1015.44245</td>
+<td align="right">2.12453</td>
+<td align="right">0.18359</td>
+<td align="right">11.57241</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Klebisiella pneumoniae et rel.</td>
+</tr>
+<tr class="odd">
+<td align="right">3335.72902</td>
+<td align="right">3.02549</td>
+<td align="right">0.28380</td>
+<td align="right">10.66044</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Mitsuokella multiacida et rel.</td>
+</tr>
+<tr class="even">
+<td align="right">1519.25023</td>
+<td align="right">1.60976</td>
+<td align="right">0.18026</td>
+<td align="right">8.93027</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Enterobacter aerogenes et rel.</td>
+</tr>
+<tr class="odd">
+<td align="right">2848.86627</td>
+<td align="right">1.77112</td>
+<td align="right">0.22906</td>
+<td align="right">7.73226</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Megasphaera elsdenii et rel.</td>
+</tr>
+<tr class="even">
+<td align="right">321.24275</td>
+<td align="right">2.86529</td>
+<td align="right">0.37602</td>
+<td align="right">7.61997</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Serratia</td>
+</tr>
+<tr class="odd">
+<td align="right">19.97851</td>
+<td align="right">2.24305</td>
+<td align="right">0.31335</td>
+<td align="right">7.15820</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Aquabacterium</td>
+</tr>
+<tr class="even">
+<td align="right">173.00079</td>
+<td align="right">1.80120</td>
+<td align="right">0.26252</td>
+<td align="right">6.86114</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Haemophilus</td>
+</tr>
+</tbody>
+</table>
+<p>For comparison purposes, assess significances and effect sizes based on Wilcoxon test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test.taxa &lt;-<span class="st"> </span><span class="kw">taxa</span>(d)
+pvalue.wilcoxon &lt;-<span class="st"> </span><span class="kw">c</span>()
+foldchange &lt;-<span class="st"> </span><span class="kw">c</span>()
+for (taxa in test.taxa) {
+  <span class="co"># Create a new data frame for each taxonomic group</span>
+  df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Abundance =</span> <span class="kw">abundances</span>(d)[taxa,],
+                   <span class="dt">Log10_Abundance =</span> <span class="kw">log10</span>(<span class="dv">1</span> +<span class="st"> </span><span class="kw">abundances</span>(d)[taxa,]),
+                   <span class="dt">Group =</span> <span class="kw">meta</span>(d)$nationality)
+  <span class="co"># Calculate pvalue and effect size (difference beween log means)       </span>
+  pvalue.wilcoxon[[taxa]] &lt;-<span class="st"> </span><span class="kw">wilcox.test</span>(Abundance ~<span class="st"> </span>Group, <span class="dt">data =</span> df)$p.value
+  foldchange[[taxa]] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(Log10_Abundance ~<span class="st"> </span>Group, <span class="dt">data =</span> df))[[<span class="dv">2</span>]]
+}
+<span class="co"># Correct p-values for multiple testing</span>
+pvalue.wilcoxon.adjusted &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(pvalue.wilcoxon)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(deseq.results$padj, pvalue.wilcoxon.adjusted,
+  <span class="dt">xlab =</span> <span class="st">&quot;DESeq2 adjusted p-value&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;Wilcoxon adjusted p-value&quot;</span>,
+  <span class="dt">main =</span> <span class="st">&quot;P-value comparison&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">0.05</span>, <span class="dt">h =</span> <span class="fl">0.05</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 
-ordu.wt.uni &lt;-<span class="st"> </span><span class="kw">ordinate</span>(ps1.rel , <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="dt">weighted=</span>T)
-
-<span class="co"># check for Eigen values </span>
-<span class="co"># barplot(ordu.unwt.uni$values$Eigenvalues[1:10])</span>
-
-wt.unifrac &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(ps1.rel, 
-                                     ordu.wt.uni, <span class="dt">color=</span><span class="st">&quot;scientific_name&quot;</span>) 
-wt.unifrac &lt;-<span class="st"> </span>wt.unifrac +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Weighted UniFrac&quot;</span>) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)
-wt.unifrac &lt;-<span class="st"> </span>wt.unifrac +<span class="st"> </span><span class="kw">theme_classic</span>() +<span class="st"> </span><span class="kw">scale_color_brewer</span>(<span class="st">&quot;Location&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Set2&quot;</span>)
-<span class="kw">print</span>(wt.unifrac)</code></pre></div>
-<p><img src="05-MAW-PIV_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(wt.unifrac +<span class="st"> </span><span class="kw">stat_ellipse</span>())</code></pre></div>
-<p><img src="05-MAW-PIV_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
-<p>The figure brings forward an important characteristics of microbiome data called the ‘Horse-shoe effect’. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 <a href="http://msystems.asm.org/content/2/1/e00166-16">Uncovering the Horseshoe Effect in Microbial Analyses</a>.</p>
-<p>You can try repeating this analysis with phyloseq object from OTU-picking approach.</p>
-<p>Another important aspect regarding weighted unifrac is its property of having heavier weights for abundant taxa. To detect changes in moderately abundant lineages, an extenstion called generalized (UniFrac distance)(<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/</a>) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.</p>
-<p><strong>To reiterate:</strong> It is crucial to understand the biological features of the samples. Although these are exploratory approaches, it is important to differentiate between biological signal and technical artifacts.</p>
-</div>
-</div>
-<div id="population-level-density-landscapes" class="section level2">
-<h2><span class="header-section-number">5.2</span> Population-level Density landscapes</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">plot_landscape</span>(ps1.rel, 
-                    <span class="st">&quot;NMDS&quot;</span>, 
-                    <span class="st">&quot;bray&quot;</span>, 
-                    <span class="dt">col =</span> <span class="st">&quot;scientific_name&quot;</span>) +
-<span class="st">       </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">paste</span>(<span class="st">&quot;NMDS / Bray-Curtis&quot;</span>))   
-
-p &lt;-<span class="st"> </span>p +<span class="st"> </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>)+<span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;#e0ecf4&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#6e016b&quot;</span>) </code></pre></div>
-<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;,
-## which will replace the existing scale.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p </code></pre></div>
-<p><img src="05-MAW-PIV_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Bray-Curtis dissimilarity does not consider phylogenetic relationships between OTUs. There are several distance methods and a list can be obtained by typying <code>?distanceMethodList</code> in the console pane.</p>
-<p>Section on multivariate analysis will be discussed on Day3.</p>
-</div>
-<div id="permanova" class="section level2">
-<h2><span class="header-section-number">5.3</span> PERMANOVA</h2>
-<p>Permutational multivariate analysis of variance <a href="https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841">further reading</a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vegan)</code></pre></div>
-<pre><code>## Loading required package: permute</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.5-1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">metadf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(ps1.rel))
-
-unifrac.dist &lt;-<span class="st"> </span><span class="kw">UniFrac</span>(ps1.rel, 
-                        <span class="dt">weighted =</span> <span class="ot">TRUE</span>, 
-                        <span class="dt">normalized =</span> <span class="ot">TRUE</span>,  
-                        <span class="dt">parallel =</span> <span class="ot">FALSE</span>, 
-                        <span class="dt">fast =</span> <span class="ot">TRUE</span>)
-
-permanova &lt;-<span class="st"> </span><span class="kw">adonis</span>(unifrac.dist ~<span class="st"> </span>scientific_name, <span class="dt">data =</span> metadf)
-
-permanova</code></pre></div>
-<pre><code>## 
-## Call:
-## adonis(formula = unifrac.dist ~ scientific_name, data = metadf) 
-## 
-## Permutation: free
-## Number of permutations: 999
-## 
-## Terms added sequentially (first to last)
-## 
-##                  Df SumsOfSqs MeanSqs F.Model     R2 Pr(&gt;F)    
-## scientific_name   3    71.912 23.9705  376.03 0.7059  0.001 ***
-## Residuals       470    29.960  0.0637         0.2941           
-## Total           473   101.872                 1.0000           
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-</div>
-<div id="checking-the-homogeneity-condition" class="section level2">
-<h2><span class="header-section-number">5.4</span> Checking the homogeneity condition</h2>
-<p>Type <code>?betadisper</code> in R console for more information.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps.disper &lt;-<span class="st"> </span><span class="kw">betadisper</span>(unifrac.dist, metadf$scientific_name)
-<span class="kw">permutest</span>(ps.disper, <span class="dt">pairwise =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## 
-## Permutation test for homogeneity of multivariate dispersions
-## Permutation: free
-## Number of permutations: 999
-## 
-## Response: Distances
-##            Df Sum Sq Mean Sq      F N.Perm Pr(&gt;F)    
-## Groups      3 1.0014 0.33381 31.889    999  0.001 ***
-## Residuals 470 4.9200 0.01047                         
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Pairwise comparisons:
-## (Observed p-value below diagonal, permuted p-value above diagonal)
-##                          human gut metagenome human oral metagenome
-## human gut metagenome                                     1.0000e-03
-## human oral metagenome              8.3027e-05                      
-## human skin metagenome              2.8177e-06            2.4596e-02
-## human vaginal metagenome           3.1013e-18            1.4078e-10
-##                          human skin metagenome human vaginal metagenome
-## human gut metagenome                1.0000e-03                    0.001
-## human oral metagenome               2.4000e-02                    0.001
-## human skin metagenome                                             0.005
-## human vaginal metagenome            7.0275e-03</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.4 (2018-03-15)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 7 x64 (build 7601) Service Pack 1
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=Dutch_Netherlands.1252  LC_CTYPE=Dutch_Netherlands.1252   
-## [3] LC_MONETARY=Dutch_Netherlands.1252 LC_NUMERIC=C                      
-## [5] LC_TIME=Dutch_Netherlands.1252    
-## 
-## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
-## 
-## other attached packages:
-##  [1] vegan_2.5-1          lattice_0.20-35      permute_0.9-4       
-##  [4] dplyr_0.7.4          ggpubr_0.1.6         magrittr_1.5        
-##  [7] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
-## [10] phyloseq_1.22.3     
-## 
-## loaded via a namespace (and not attached):
-##  [1] xfun_0.1            purrr_0.2.4         reshape2_1.4.3     
-##  [4] splines_3.4.4       rhdf5_2.22.0        colorspace_1.3-2   
-##  [7] htmltools_0.3.6     stats4_3.4.4        mgcv_1.8-23        
-## [10] yaml_2.1.19         survival_2.42-3     rlang_0.2.0        
-## [13] pillar_1.2.2        withr_2.1.2         glue_1.2.0         
-## [16] BiocGenerics_0.24.0 bindrcpp_0.2.2      foreach_1.4.4      
-## [19] plyr_1.8.4          bindr_0.1.1         stringr_1.3.1      
-## [22] zlibbioc_1.24.0     Biostrings_2.46.0   munsell_0.4.3      
-## [25] gtable_0.2.0        codetools_0.2-15    evaluate_0.10.1    
-## [28] labeling_0.3        Biobase_2.38.0      knitr_1.20         
-## [31] IRanges_2.12.0      biomformat_1.7.0    parallel_3.4.4     
-## [34] Rcpp_0.12.16        backports_1.1.2     scales_0.5.0       
-## [37] S4Vectors_0.16.0    jsonlite_1.5        XVector_0.18.0     
-## [40] digest_0.6.15       Rtsne_0.13          stringi_1.1.7      
-## [43] bookdown_0.7        grid_3.4.4          ade4_1.7-11        
-## [46] rprojroot_1.3-2     tools_3.4.4         lazyeval_0.2.1     
-## [49] tibble_1.4.2        cluster_2.0.7-1     tidyr_0.8.0        
-## [52] ape_5.1             pkgconfig_2.0.1     MASS_7.3-50        
-## [55] Matrix_1.2-14       data.table_1.11.2   assertthat_0.2.0   
-## [58] rmarkdown_1.9       iterators_1.0.9     R6_2.2.2           
-## [61] multtest_2.34.0     igraph_1.2.1        nlme_3.1-137       
-## [64] compiler_3.4.4</code></pre>
+<span class="kw">plot</span>(deseq.results$log2FoldChange, foldchange, 
+  <span class="dt">xlab =</span> <span class="st">&quot;DESeq2&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;Linear model&quot;</span>,
+  <span class="dt">main =</span> <span class="st">&quot;Effect size comparison&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/pooled_pcomp-1.png" width="960" /></p>
 
 </div>
 </div>
@@ -399,8 +388,8 @@ permanova</code></pre></div>
           </div>
         </div>
       </div>
-<a href="composition-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="core-microbiota.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-models-the-role-of-covariates.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

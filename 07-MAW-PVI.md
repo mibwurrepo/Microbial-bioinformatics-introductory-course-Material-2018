@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-14"
+date: "2018-05-25"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -52,7 +52,7 @@ library(igraph)
 
 
 ```r
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 ```
 
 **Select only stool samples**  
@@ -74,25 +74,25 @@ ps1.stool.otu <- prune_taxa(taxa_sums(ps1.stool) > 100, ps1.stool)
 # Add taxonomic classification to OTU ID
 ps1.stool.otu.f <- microbiomeutilities::format_to_besthit(ps1.stool.otu)
 
-head(tax_table(ps1.stool))
+head(tax_table(ps1.stool.otu))
 ```
 
 ```
-## Taxonomy Table:     [6 taxa by 7 taxonomic ranks]:
-##         Kingdom    Phylum           Class                  
-## 4440970 "Bacteria" "TM7"            "TM7-3"                
-## 4299136 "Bacteria" "TM7"            "TM7-3"                
-## 627481  "Bacteria" "TM7"            "TM7-3"                
-## 86812   "Bacteria" "Proteobacteria" "Epsilonproteobacteria"
-## 4442127 "Bacteria" "Proteobacteria" "Epsilonproteobacteria"
-## 4425150 "Bacteria" "Proteobacteria" "Epsilonproteobacteria"
-##         Order               Family               Genus           Species
-## 4440970 "CW040"             "F16"                NA              NA     
-## 4299136 "CW040"             "F16"                NA              NA     
-## 627481  "I025"              "Rs-045"             NA              NA     
-## 86812   "Campylobacterales" "Campylobacteraceae" "Campylobacter" NA     
-## 4442127 "Campylobacterales" "Campylobacteraceae" "Campylobacter" NA     
-## 4425150 "Campylobacterales" "Campylobacteraceae" "Campylobacter" NA
+## Taxonomy Table:     [6 taxa by 6 taxonomic ranks]:
+##            Domain     Phylum          Class         Order          
+## 9410491526 "Bacteria" "Bacteroidetes" "Bacteroidia" "Bacteroidales"
+## 9410491516 "Bacteria" "Bacteroidetes" "Bacteroidia" "Bacteroidales"
+## 9410492612 "Bacteria" "Bacteroidetes" "Bacteroidia" "Bacteroidales"
+## 9410491521 "Bacteria" "Bacteroidetes" "Bacteroidia" "Bacteroidales"
+## 9410491824 "Bacteria" "Bacteroidetes" "Bacteroidia" "Bacteroidales"
+## 9410491817 "Bacteria" "Bacteroidetes" "Bacteroidia" "Bacteroidales"
+##            Family           Genus        
+## 9410491526 "Bacteroidaceae" "Bacteroides"
+## 9410491516 "Bacteroidaceae" "Bacteroides"
+## 9410492612 "Bacteroidaceae" "Bacteroides"
+## 9410491521 "Bacteroidaceae" "Bacteroides"
+## 9410491824 "Bacteroidaceae" "Bacteroides"
+## 9410491817 "Bacteroidaceae" "Bacteroides"
 ```
 
 Check the difference in two phyloseq objects.  
@@ -121,32 +121,33 @@ head(tax.c)
 ```
 
 ```
-##                          Domain         Phylum              Class
-## OTU-359809:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-## OTU-215097:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-## OTU-179261:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-## OTU-41229:Sutterella   Bacteria Proteobacteria Betaproteobacteria
-## OTU-4371362:Sutterella Bacteria Proteobacteria Betaproteobacteria
-## OTU-178885:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-##                                  Order         Family      Genus
-## OTU-359809:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-## OTU-215097:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-## OTU-179261:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-## OTU-41229:Sutterella   Burkholderiales Alcaligenaceae Sutterella
-## OTU-4371362:Sutterella Burkholderiales Alcaligenaceae Sutterella
-## OTU-178885:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-##                              Species               best_hit
-## OTU-359809:Sutterella  g__Sutterella  OTU-359809:Sutterella
-## OTU-215097:Sutterella  g__Sutterella  OTU-215097:Sutterella
-## OTU-179261:Sutterella  g__Sutterella  OTU-179261:Sutterella
-## OTU-41229:Sutterella   g__Sutterella   OTU-41229:Sutterella
-## OTU-4371362:Sutterella g__Sutterella OTU-4371362:Sutterella
-## OTU-178885:Sutterella  g__Sutterella  OTU-178885:Sutterella
+##                              Domain        Phylum       Class
+## OTU-9410491526:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491516:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410492612:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491521:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491824:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491817:Bacteroides Bacteria Bacteroidetes Bacteroidia
+##                                    Order         Family       Genus
+## OTU-9410491526:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491516:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410492612:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491521:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491824:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491817:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+##                                              best_hit
+## OTU-9410491526:Bacteroides OTU-9410491526:Bacteroides
+## OTU-9410491516:Bacteroides OTU-9410491516:Bacteroides
+## OTU-9410492612:Bacteroides OTU-9410492612:Bacteroides
+## OTU-9410491521:Bacteroides OTU-9410491521:Bacteroides
+## OTU-9410491824:Bacteroides OTU-9410491824:Bacteroides
+## OTU-9410491817:Bacteroides OTU-9410491817:Bacteroides
 ```
 
 ```r
-saveRDS(otu.c, "input_data/stool.otu.c.rds")
-saveRDS(tax.c, "input_data/stool.tax.c.rds")
+# use this only for first attempt to run it on server to save time
+#saveRDS(otu.c, "input_data/stool.otu.c.rds")
+#saveRDS(tax.c, "input_data/stool.tax.c.rds")
 ```
 
 
@@ -160,7 +161,7 @@ This step is heavy on computational memory and very slow. For this workshop we h
 ```r
 # In practice, use more repetitions
 set.seed(1244)
-net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50))
+net.c <- spiec.easi(otu.c, method='mb', icov.select.params=list(rep.num=50)) # reps have to increases for real data
 
 # saveRDS(net.c, "input_data/net.c.rds")
 
@@ -176,7 +177,17 @@ The output of `spiec.easi` is stored in *./input_data/* as *stool.net.c.rds*. Re
 
 
 ```r
-net.c <- readRDS("input_data/stool.net.c.rds")
+# the PC has low processing power, you can read the otuput created by us present in the input_data folder.
+
+net.c <- readRDS("input_data/stool.net.rds")
+class(net.c)
+```
+
+```
+## [1] "select"
+```
+
+```r
 n.c <- symBeta(getOptBeta(net.c))
 ```
 
@@ -199,17 +210,17 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH 8ab2cf9 UNW- 506 1865 -- 
+## IGRAPH 3493795 UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 8ab2cf9 (vertex names):
-## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
-## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
-## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          
-## [4] OTU-359809:Sutterella--OTU-193233:Bacteroides           
-## [5] OTU-359809:Sutterella--OTU-544859:f__Ruminococcaceae    
-## [6] OTU-359809:Sutterella--OTU-1740499:Phascolarctobacterium
-## [7] OTU-215097:Sutterella--OTU-320291:Bacteroides           
-## [8] OTU-215097:Sutterella--OTU-300650:Prevotella            
+## + edges from 3493795 (vertex names):
+## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
+## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
+## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
+## [4] OTU-9410491526:Bacteroides--OTU-941049949:Bacteroides    
+## [5] OTU-9410491526:Bacteroides--OTU-9410491514:Bacteroides   
+## [6] OTU-9410491526:Bacteroides--OTU-9410491513:Bacteroides   
+## [7] OTU-9410491526:Bacteroides--OTU-9410491574:Parasutterella
+## [8] OTU-9410491516:Bacteroides--OTU-9410491522:Bacteroides   
 ## + ... omitted several edges
 ```
 
@@ -260,7 +271,7 @@ colnames(tax_table(ps1.stool.otu.f))
 
 ```
 ## [1] "Domain"   "Phylum"   "Class"    "Order"    "Family"   "Genus"   
-## [7] "Species"  "best_hit"
+## [7] "best_hit"
 ```
 
 ```r
@@ -277,22 +288,46 @@ mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a
 
 p <- ggnet2(stool.net, node.color = "Phylum", 
             label = TRUE, node.size = "nodesize", 
-            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+            label.size = 2, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
 
 p 
 ```
 
 <img src="07-MAW-PVI_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
-```r
-p <- ggnet2(stool.net, node.color = "Phylum", 
-            label = TRUE, node.size = 2, 
-            label.size = 1, edge.color = "color") + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+This is difficult to interpret. One way is to remove nodes that are connected to few other nodes. We can use degree as a network statisitic. 
 
+
+```r
+stl.mb <- degree.distribution(stool.ig)
+plot(0:(length(stl.mb)-1), stl.mb, ylim=c(0,.35), type='b', 
+      ylab="Frequency", xlab="Degree", main="Degree Distributions")
+```
+
+<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+
+```r
+# we will look at only taxa connect more than 10 others
+p <- ggnet2(stool.net, node.color = "Phylum", 
+            label = TRUE, 
+            label.size = 3, edge.color = "color",
+            size = "degree", size.min = 10) + guides(color=guide_legend(title="Phylum"), size = FALSE) + mycolors
+```
+
+```
+## size.min removed 521 nodes out of 679
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for
+## 'colour', which will replace the existing scale.
+```
+
+```r
 p 
 ```
 
-<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-17-2.png" width="672" />
+<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-18-2.png" width="672" />
 
 ## Network properties  
 
@@ -320,8 +355,8 @@ net.c
 ```
 ## Model: Meinshausen & Buhlmann Graph Estimation (mb)
 ## selection criterion: stars 
-## Graph dimension: 506 
-## sparsity level 0.01459711
+## Graph dimension: 679 
+## sparsity level 0.01066118
 ```
 
 ```r
@@ -335,7 +370,7 @@ stool.ig.mod <- graph.adjacency(mod.net, mode='undirected', add.rownames = TRUE)
 plot(stool.ig.mod) # we can see all the attributes and weights
 ```
 
-<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 ```r
 stool.net.mod <- asNetwork(stool.ig.mod)
@@ -363,7 +398,7 @@ p <- ggnet2(stool.net.mod, node.color = "Phylum",
 p 
 ```
 
-<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 Identify modularity in networks.  
 
@@ -375,18 +410,18 @@ print(modules)
 ```
 
 ```
-## IGRAPH clustering fast greedy, groups: 9, mod: 0.5
+## IGRAPH clustering fast greedy, groups: 12, mod: 0.47
 ## + groups:
 ##   $`1`
-##    [1] "OTU-178885:Sutterella"           
-##    [2] "OTU-529652:Sutterella"           
-##    [3] "OTU-1135084:Bacteroides"         
-##    [4] "OTU-196632:Clostridium"          
-##    [5] "OTU-187668:Clostridium"          
-##    [6] "OTU-176994:f__Ruminococcaceae"   
-##    [7] "OTU-197649:Lachnospira"          
-##    [8] "OTU-195752:Lachnospira"          
-##    [9] "OTU-194734:Coprococcus"          
+##    [1] "OTU-9410492646:Bacteroides"          
+##    [2] "OTU-9410492641:Bacteroides"          
+##    [3] "OTU-9410492645:Bacteroides"          
+##    [4] "OTU-9410491981:Parabacteroides"      
+##    [5] "OTU-9410491974:Bacteroides"          
+##    [6] "OTU-9410491978:Bacteroides"          
+##    [7] "OTU-9410491977:Parabacteroides"      
+##    [8] "OTU-9410491976:Bacteroides"          
+##    [9] "OTU-9410492922:Bacteroides"          
 ##   + ... omitted several groups/vertices
 ```
 
@@ -395,7 +430,7 @@ modularity(modules)
 ```
 
 ```
-## [1] 0.5044993
+## [1] 0.4725467
 ```
 
 ```r
@@ -404,7 +439,7 @@ V(stool.ig.mod)$color=modules$membership
 plot(stool.ig.mod, col = modules, vertex.size = 4, vertex.label = NA)
 ```
 
-<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 ```r
 stool.net.mod %v% "membership" <- modules$membership
@@ -423,7 +458,7 @@ p <- ggnet2(stool.net.mod, node.color = "membership",
 p 
 ```
 
-<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-2.png" width="672" />
+<img src="07-MAW-PVI_files/figure-html/unnamed-chunk-23-2.png" width="672" />
 
 Check which OTUs are part of different modules.  
 
@@ -444,91 +479,35 @@ modulesFiveOtus=modules$names[modulesFiveIndices]
 modulesSixIndices=which(modules$membership==6)
 modulesSixOtus=modules$names[modulesSixIndices]
 
-print(modulesFiveOtus)
+print(modulesOneOtus)
 ```
 
 ```
-##  [1] "OTU-181239:Bacteroides"           
-##  [2] "OTU-192684:Bacteroides"           
-##  [3] "OTU-178810:Bacteroides"           
-##  [4] "OTU-194341:Bacteroides"           
-##  [5] "OTU-187623:Bacteroides"           
-##  [6] "OTU-197537:Bacteroides"           
-##  [7] "OTU-174036:Bacteroides"           
-##  [8] "OTU-176034:Bacteroides"           
-##  [9] "OTU-772282:f__Rikenellaceae"      
-## [10] "OTU-4325533:f__Rikenellaceae"     
-## [11] "OTU-850586:Odoribacter"           
-## [12] "OTU-180082:Parabacteroides"       
-## [13] "OTU-361170:Bilophila"             
-## [14] "OTU-544859:f__Ruminococcaceae"    
-## [15] "OTU-332185:f__Ruminococcaceae"    
-## [16] "OTU-196713:f__Ruminococcaceae"    
-## [17] "OTU-554303:f__Ruminococcaceae"    
-## [18] "OTU-213487:f__Ruminococcaceae"    
-## [19] "OTU-178015:f__Ruminococcaceae"    
-## [20] "OTU-180067:f__Ruminococcaceae"    
-## [21] "OTU-190303:f__Ruminococcaceae"    
-## [22] "OTU-193915:f__Ruminococcaceae"    
-## [23] "OTU-195222:f__Ruminococcaceae"    
-## [24] "OTU-198404:f__Ruminococcaceae"    
-## [25] "OTU-191872:f__Ruminococcaceae"    
-## [26] "OTU-184876:Lachnospira"           
-## [27] "OTU-210542:Lachnospira"           
-## [28] "OTU-302503:f__Ruminococcaceae"    
-## [29] "OTU-1978955:f__Ruminococcaceae"   
-## [30] "OTU-177359:Coprococcus"           
-## [31] "OTU-187248:f__Lachnospiraceae"    
-## [32] "OTU-185588:f__Lachnospiraceae"    
-## [33] "OTU-331150:f__Lachnospiraceae"    
-## [34] "OTU-190188:f__Lachnospiraceae"    
-## [35] "OTU-185937:f__Lachnospiraceae"    
-## [36] "OTU-195120:f__Lachnospiraceae"    
-## [37] "OTU-212481:f__Lachnospiraceae"    
-## [38] "OTU-531888:f__Lachnospiraceae"    
-## [39] "OTU-192127:f__Lachnospiraceae"    
-## [40] "OTU-192515:Ruminococcus"          
-## [41] "OTU-178742:f__Ruminococcaceae"    
-## [42] "OTU-367176:Oscillospira"          
-## [43] "OTU-199422:Oscillospira"          
-## [44] "OTU-196553:Oscillospira"          
-## [45] "OTU-184511:Faecalibacterium"      
-## [46] "OTU-183157:Faecalibacterium"      
-## [47] "OTU-185244:Faecalibacterium"      
-## [48] "OTU-174846:Faecalibacterium"      
-## [49] "OTU-184000:Faecalibacterium"      
-## [50] "OTU-365717:Faecalibacterium"      
-## [51] "OTU-194626:f__Ruminococcaceae"    
-## [52] "OTU-186723:f__Ruminococcaceae"    
-## [53] "OTU-183048:f__Ruminococcaceae"    
-## [54] "OTU-42372:[Eubacterium]"          
-## [55] "OTU-191718:f__Erysipelotrichaceae"
-## [56] "OTU-592616:f__Erysipelotrichaceae"
-## [57] "OTU-357930:Dialister"             
-## [58] "OTU-4354173:Veillonella"          
-## [59] "OTU-190902:[Ruminococcus]"        
-## [60] "OTU-179408:[Ruminococcus]"        
-## [61] "OTU-189403:[Ruminococcus]"        
-## [62] "OTU-182506:[Ruminococcus]"        
-## [63] "OTU-196370:[Ruminococcus]"        
-## [64] "OTU-186652:Dorea"                 
-## [65] "OTU-179905:f__Lachnospiraceae"    
-## [66] "OTU-183865:f__Lachnospiraceae"    
-## [67] "OTU-177237:Roseburia"             
-## [68] "OTU-195207:Roseburia"             
-## [69] "OTU-177515:Roseburia"             
-## [70] "OTU-194177:f__Lachnospiraceae"    
-## [71] "OTU-186263:f__Lachnospiraceae"    
-## [72] "OTU-198930:f__Lachnospiraceae"    
-## [73] "OTU-180312:f__Lachnospiraceae"    
-## [74] "OTU-531675:Blautia"               
-## [75] "OTU-183903:Blautia"               
-## [76] "OTU-198646:Blautia"               
-## [77] "OTU-181756:Blautia"               
-## [78] "OTU-194615:Blautia"               
-## [79] "OTU-192153:f__Lachnospiraceae"    
-## [80] "OTU-183969:f__Lachnospiraceae"    
-## [81] "OTU-573110:f__Lachnospiraceae"
+##  [1] "OTU-9410492646:Bacteroides"          
+##  [2] "OTU-9410492641:Bacteroides"          
+##  [3] "OTU-9410492645:Bacteroides"          
+##  [4] "OTU-9410491981:Parabacteroides"      
+##  [5] "OTU-9410491974:Bacteroides"          
+##  [6] "OTU-9410491978:Bacteroides"          
+##  [7] "OTU-9410491977:Parabacteroides"      
+##  [8] "OTU-9410491976:Bacteroides"          
+##  [9] "OTU-9410492922:Bacteroides"          
+## [10] "OTU-9410492638:__"                   
+## [11] "OTU-9410492639:__"                   
+## [12] "OTU-941049940:Butyricimonas"         
+## [13] "OTU-9410491975:Alistipes"            
+## [14] "OTU-9410491971:Rikenellaceae"        
+## [15] "OTU-9410491972:Rikenellaceae"        
+## [16] "OTU-9410492644:Alloprevotella"       
+## [17] "OTU-9410491758:Alloprevotella"       
+## [18] "OTU-9410491980:Prevotella"           
+## [19] "OTU-9410492643:Ruminococcaceae"      
+## [20] "OTU-9410492640:Ruminococcaceae"      
+## [21] "OTU-9410492921:Phascolarctobacterium"
+## [22] "OTU-9410492647:Phascolarctobacterium"
+## [23] "OTU-941049538:Sutterella"            
+## [24] "OTU-941049552:uncultured"            
+## [25] "OTU-9410492642:uncultured"
 ```
 
 ### Good reads for ecological networks  
@@ -566,16 +545,16 @@ sessionInfo()
 ##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
 ##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.4     
 ## [10] dplyr_0.7.4          ggpubr_0.1.6         magrittr_1.5        
-## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1       
+## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
 ## [16] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Biobase_2.38.0             viridis_0.5.1             
+##  [1] viridis_0.5.1              Biobase_2.38.0            
 ##  [3] tidyr_0.8.0                viridisLite_0.3.0         
 ##  [5] VGAM_1.0-5                 jsonlite_1.5              
 ##  [7] splines_3.4.4              foreach_1.4.4             
 ##  [9] assertthat_0.2.0           stats4_3.4.4              
-## [11] yaml_2.1.18                ggrepel_0.7.0             
+## [11] yaml_2.1.19                ggrepel_0.8.0             
 ## [13] pillar_1.2.2               backports_1.1.2           
 ## [15] lattice_0.20-35            glue_1.2.0                
 ## [17] digest_0.6.15              XVector_0.18.0            
@@ -586,26 +565,27 @@ sessionInfo()
 ## [27] zlibbioc_1.24.0            purrr_0.2.4               
 ## [29] Rtsne_0.13                 huge_1.2.7                
 ## [31] tibble_1.4.2               mgcv_1.8-23               
-## [33] IRanges_2.12.0             BiocGenerics_0.24.0       
-## [35] lazyeval_0.2.1             survival_2.42-3           
-## [37] evaluate_0.10.1            nlme_3.1-137              
-## [39] MASS_7.3-49                vegan_2.5-1               
-## [41] tools_3.4.4                data.table_1.11.2         
-## [43] formatR_1.5                stringr_1.3.0             
-## [45] S4Vectors_0.16.0           munsell_0.4.3             
-## [47] cluster_2.0.7-1            Biostrings_2.46.0         
-## [49] ade4_1.7-11                compiler_3.4.4            
-## [51] rlang_0.2.0                rhdf5_2.22.0              
-## [53] grid_3.4.4                 iterators_1.0.9           
-## [55] biomformat_1.7.0           rmarkdown_1.9             
-## [57] gtable_0.2.0               codetools_0.2-15          
-## [59] multtest_2.34.0            reshape2_1.4.3            
-## [61] R6_2.2.2                   gridExtra_2.3             
-## [63] knitr_1.20                 bindr_0.1.1               
-## [65] rprojroot_1.3-2            permute_0.9-4             
-## [67] ape_5.1                    stringi_1.1.7             
-## [69] parallel_3.4.4             Rcpp_0.12.16              
-## [71] tidyselect_0.2.4           xfun_0.1
+## [33] IRanges_2.12.0             withr_2.1.2               
+## [35] BiocGenerics_0.24.0        lazyeval_0.2.1            
+## [37] survival_2.42-3            evaluate_0.10.1           
+## [39] nlme_3.1-137               MASS_7.3-50               
+## [41] vegan_2.5-1                tools_3.4.4               
+## [43] data.table_1.11.2          formatR_1.5               
+## [45] stringr_1.3.1              S4Vectors_0.16.0          
+## [47] munsell_0.4.3              cluster_2.0.7-1           
+## [49] Biostrings_2.46.0          ade4_1.7-11               
+## [51] compiler_3.4.4             rlang_0.2.0               
+## [53] rhdf5_2.22.0               grid_3.4.4                
+## [55] iterators_1.0.9            biomformat_1.7.0          
+## [57] rmarkdown_1.9              gtable_0.2.0              
+## [59] codetools_0.2-15           multtest_2.34.0           
+## [61] reshape2_1.4.3             R6_2.2.2                  
+## [63] gridExtra_2.3              knitr_1.20                
+## [65] bindr_0.1.1                rprojroot_1.3-2           
+## [67] permute_0.9-4              ape_5.1                   
+## [69] stringi_1.1.7              parallel_3.4.4            
+## [71] Rcpp_0.12.16               tidyselect_0.2.4          
+## [73] xfun_0.1
 ```
 
 

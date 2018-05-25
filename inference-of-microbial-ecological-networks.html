@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-14">
+<meta name="date" content="2018-05-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="core-microbiota.html">
-
+<link rel="next" href="differential-abundance-testing-univariate-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -110,22 +110,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#preparing-for-the-course"><i class="fa fa-check"></i><b>1.1</b> Preparing for the course</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#useful-functions"><i class="fa fa-check"></i><b>1.2</b> Useful functions</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#useful-functionsresources"><i class="fa fa-check"></i><b>1.2</b> Useful functions/resources</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#focus"><i class="fa fa-check"></i><b>1.3</b> Focus</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#target-audience"><i class="fa fa-check"></i><b>1.4</b> Target audience</a></li>
 <li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#license"><i class="fa fa-check"></i><b>1.5</b> License</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html"><i class="fa fa-check"></i><b>2</b> Set-up and Pre-processing</a><ul>
-<li class="chapter" data-level="2.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>2.1</b> Structure</a></li>
-<li class="chapter" data-level="2.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#making-a-phyloseq-object"><i class="fa fa-check"></i><b>2.2</b> Making a phyloseq object</a></li>
-<li class="chapter" data-level="2.3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-input-to-phyloseq-object"><i class="fa fa-check"></i><b>2.3</b> Read input to phyloseq object</a></li>
-<li class="chapter" data-level="2.4" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>2.4</b> Read the tree file.</a></li>
-<li class="chapter" data-level="2.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>2.5</b> Merge into phyloseq object.</a></li>
-<li class="chapter" data-level="2.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-test-data"><i class="fa fa-check"></i><b>2.6</b> Read test data</a></li>
-<li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#pre-processing-data-check"><i class="fa fa-check"></i><b>2.7</b> Pre-processing data check</a><ul>
-<li class="chapter" data-level="2.7.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#sequencing-depth"><i class="fa fa-check"></i><b>2.7.1</b> Sequencing depth</a></li>
-<li class="chapter" data-level="2.7.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#distribution-of-otus"><i class="fa fa-check"></i><b>2.7.2</b> Distribution of OTUs</a></li>
-</ul></li>
+<li class="chapter" data-level="2.1" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-or-asvs-or-sotus"><i class="fa fa-check"></i><b>2.1</b> OTU or ASVs or sOTUs</a></li>
+<li class="chapter" data-level="2.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#general-overview"><i class="fa fa-check"></i><b>2.2</b> General overview</a></li>
+<li class="chapter" data-level="2.3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>2.3</b> Structure</a></li>
+<li class="chapter" data-level="2.4" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#making-a-phyloseq-object"><i class="fa fa-check"></i><b>2.4</b> Making a phyloseq object</a></li>
+<li class="chapter" data-level="2.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>2.5</b> Read the tree file.</a></li>
+<li class="chapter" data-level="2.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>2.6</b> Merge into phyloseq object.</a></li>
+<li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.7</b> Read data from OTU-picking stratergy</a></li>
+<li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.8</b> Variablity</a></li>
+<li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.9</b> OTU-picking stratergy</a></li>
+<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stragey"><i class="fa fa-check"></i><b>2.10</b> NG-tax stragey</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>3</b> Alpha diversities</a><ul>
 <li class="chapter" data-level="3.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>3.1</b> Equal sample sums</a></li>
@@ -169,6 +169,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.3.2" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#network-plot-1"><i class="fa fa-check"></i><b>7.3.2</b> Network plot</a></li>
 <li class="chapter" data-level="7.3.3" data-path="inference-of-microbial-ecological-networks.html"><a href="inference-of-microbial-ecological-networks.html#good-reads-for-ecological-networks"><i class="fa fa-check"></i><b>7.3.3</b> Good reads for ecological networks</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="differential-abundance-testing-univariate-data.html"><a href="differential-abundance-testing-univariate-data.html"><i class="fa fa-check"></i><b>8</b> Differential abundance testing: univariate data</a></li>
+<li class="chapter" data-level="9" data-path="linear-models-the-role-of-covariates.html"><a href="linear-models-the-role-of-covariates.html"><i class="fa fa-check"></i><b>9</b> Linear models: the role of covariates</a><ul>
+<li class="chapter" data-level="9.1" data-path="linear-models-the-role-of-covariates.html"><a href="linear-models-the-role-of-covariates.html#generalized-linear-models-a-very-brief-overview"><i class="fa fa-check"></i><b>9.1</b> Generalized linear models: a very brief overview</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="advanced-models-of-differential-abundance.html"><a href="advanced-models-of-differential-abundance.html"><i class="fa fa-check"></i><b>10</b> Advanced models of differential abundance</a><ul>
+<li class="chapter" data-level="10.1" data-path="advanced-models-of-differential-abundance.html"><a href="advanced-models-of-differential-abundance.html#deseq2-differential-abundance-testing-for-sequencing-data"><i class="fa fa-check"></i><b>10.1</b> DESeq2: differential abundance testing for sequencing data</a></li>
 </ul></li>
 </ul>
 
@@ -217,7 +224,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;briatte/
 <span class="kw">library</span>(ggnet)
 <span class="kw">library</span>(igraph)</code></pre></div>
 <p><strong>Read data</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps1.rds&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./phyobjects/ps.ng.tax.rds&quot;</span>)</code></pre></div>
 <p><strong>Select only stool samples</strong></p>
 <p>We will subset our data to include only stool samples.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.stool &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ps1, bodysite ==<span class="st"> &quot;Stool&quot;</span>)</code></pre></div>
@@ -227,22 +234,22 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;briatte/
 <span class="co"># Add taxonomic classification to OTU ID</span>
 ps1.stool.otu.f &lt;-<span class="st"> </span>microbiomeutilities::<span class="kw">format_to_besthit</span>(ps1.stool.otu)
 
-<span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool))</code></pre></div>
-<pre><code>## Taxonomy Table:     [6 taxa by 7 taxonomic ranks]:
-##         Kingdom    Phylum           Class                  
-## 4440970 &quot;Bacteria&quot; &quot;TM7&quot;            &quot;TM7-3&quot;                
-## 4299136 &quot;Bacteria&quot; &quot;TM7&quot;            &quot;TM7-3&quot;                
-## 627481  &quot;Bacteria&quot; &quot;TM7&quot;            &quot;TM7-3&quot;                
-## 86812   &quot;Bacteria&quot; &quot;Proteobacteria&quot; &quot;Epsilonproteobacteria&quot;
-## 4442127 &quot;Bacteria&quot; &quot;Proteobacteria&quot; &quot;Epsilonproteobacteria&quot;
-## 4425150 &quot;Bacteria&quot; &quot;Proteobacteria&quot; &quot;Epsilonproteobacteria&quot;
-##         Order               Family               Genus           Species
-## 4440970 &quot;CW040&quot;             &quot;F16&quot;                NA              NA     
-## 4299136 &quot;CW040&quot;             &quot;F16&quot;                NA              NA     
-## 627481  &quot;I025&quot;              &quot;Rs-045&quot;             NA              NA     
-## 86812   &quot;Campylobacterales&quot; &quot;Campylobacteraceae&quot; &quot;Campylobacter&quot; NA     
-## 4442127 &quot;Campylobacterales&quot; &quot;Campylobacteraceae&quot; &quot;Campylobacter&quot; NA     
-## 4425150 &quot;Campylobacterales&quot; &quot;Campylobacteraceae&quot; &quot;Campylobacter&quot; NA</code></pre>
+<span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool.otu))</code></pre></div>
+<pre><code>## Taxonomy Table:     [6 taxa by 6 taxonomic ranks]:
+##            Domain     Phylum          Class         Order          
+## 9410491526 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
+## 9410491516 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
+## 9410492612 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
+## 9410491521 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
+## 9410491824 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
+## 9410491817 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
+##            Family           Genus        
+## 9410491526 &quot;Bacteroidaceae&quot; &quot;Bacteroides&quot;
+## 9410491516 &quot;Bacteroidaceae&quot; &quot;Bacteroides&quot;
+## 9410492612 &quot;Bacteroidaceae&quot; &quot;Bacteroides&quot;
+## 9410491521 &quot;Bacteroidaceae&quot; &quot;Bacteroides&quot;
+## 9410491824 &quot;Bacteroidaceae&quot; &quot;Bacteroides&quot;
+## 9410491817 &quot;Bacteroidaceae&quot; &quot;Bacteroides&quot;</code></pre>
 <p>Check the difference in two phyloseq objects.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f))</code></pre></div>
 <div id="prepare-data-for-spieceasi" class="section level2">
@@ -259,29 +266,30 @@ ps1.stool.otu.f &lt;-<span class="st"> </span>microbiomeutilities::<span class="
 tax.c &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f)@.Data)<span class="co">#extract the taxonomy information</span>
 
 <span class="kw">head</span>(tax.c)</code></pre></div>
-<pre><code>##                          Domain         Phylum              Class
-## OTU-359809:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-## OTU-215097:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-## OTU-179261:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-## OTU-41229:Sutterella   Bacteria Proteobacteria Betaproteobacteria
-## OTU-4371362:Sutterella Bacteria Proteobacteria Betaproteobacteria
-## OTU-178885:Sutterella  Bacteria Proteobacteria Betaproteobacteria
-##                                  Order         Family      Genus
-## OTU-359809:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-## OTU-215097:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-## OTU-179261:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-## OTU-41229:Sutterella   Burkholderiales Alcaligenaceae Sutterella
-## OTU-4371362:Sutterella Burkholderiales Alcaligenaceae Sutterella
-## OTU-178885:Sutterella  Burkholderiales Alcaligenaceae Sutterella
-##                              Species               best_hit
-## OTU-359809:Sutterella  g__Sutterella  OTU-359809:Sutterella
-## OTU-215097:Sutterella  g__Sutterella  OTU-215097:Sutterella
-## OTU-179261:Sutterella  g__Sutterella  OTU-179261:Sutterella
-## OTU-41229:Sutterella   g__Sutterella   OTU-41229:Sutterella
-## OTU-4371362:Sutterella g__Sutterella OTU-4371362:Sutterella
-## OTU-178885:Sutterella  g__Sutterella  OTU-178885:Sutterella</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveRDS</span>(otu.c, <span class="st">&quot;input_data/stool.otu.c.rds&quot;</span>)
-<span class="kw">saveRDS</span>(tax.c, <span class="st">&quot;input_data/stool.tax.c.rds&quot;</span>)</code></pre></div>
+<pre><code>##                              Domain        Phylum       Class
+## OTU-9410491526:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491516:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410492612:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491521:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491824:Bacteroides Bacteria Bacteroidetes Bacteroidia
+## OTU-9410491817:Bacteroides Bacteria Bacteroidetes Bacteroidia
+##                                    Order         Family       Genus
+## OTU-9410491526:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491516:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410492612:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491521:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491824:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+## OTU-9410491817:Bacteroides Bacteroidales Bacteroidaceae Bacteroides
+##                                              best_hit
+## OTU-9410491526:Bacteroides OTU-9410491526:Bacteroides
+## OTU-9410491516:Bacteroides OTU-9410491516:Bacteroides
+## OTU-9410492612:Bacteroides OTU-9410492612:Bacteroides
+## OTU-9410491521:Bacteroides OTU-9410491521:Bacteroides
+## OTU-9410491824:Bacteroides OTU-9410491824:Bacteroides
+## OTU-9410491817:Bacteroides OTU-9410491817:Bacteroides</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use this only for first attempt to run it on server to save time</span>
+<span class="co">#saveRDS(otu.c, &quot;input_data/stool.otu.c.rds&quot;)</span>
+<span class="co">#saveRDS(tax.c, &quot;input_data/stool.tax.c.rds&quot;)</span></code></pre></div>
 </div>
 <div id="spiec-easi-network-reconstruction" class="section level2">
 <h2><span class="header-section-number">7.2</span> SPIEC-EASI network reconstruction</h2>
@@ -290,7 +298,7 @@ tax.c &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span 
 This step is heavy on computational memory and very slow. For this workshop we have already have the output and will skip this chuck.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># In practice, use more repetitions</span>
 <span class="kw">set.seed</span>(<span class="dv">1244</span>)
-net.c &lt;-<span class="st"> </span><span class="kw">spiec.easi</span>(otu.c, <span class="dt">method=</span><span class="st">&#39;mb&#39;</span>, <span class="dt">icov.select.params=</span><span class="kw">list</span>(<span class="dt">rep.num=</span><span class="dv">50</span>))
+net.c &lt;-<span class="st"> </span><span class="kw">spiec.easi</span>(otu.c, <span class="dt">method=</span><span class="st">&#39;mb&#39;</span>, <span class="dt">icov.select.params=</span><span class="kw">list</span>(<span class="dt">rep.num=</span><span class="dv">50</span>)) <span class="co"># reps have to increases for real data</span>
 
 <span class="co"># saveRDS(net.c, &quot;input_data/net.c.rds&quot;)</span>
 
@@ -299,8 +307,12 @@ net.c &lt;-<span class="st"> </span><span class="kw">spiec.easi</span>(otu.c, <s
 ## Create graph object and get edge values  </code></pre></div>
 <p><strong>We have save the output of net.c to save time</strong></p>
 <p>The output of <code>spiec.easi</code> is stored in <em>./input_data/</em> as <em>stool.net.c.rds</em>. Read this file in R and follow the steps below.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">net.c &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;input_data/stool.net.c.rds&quot;</span>)
-n.c &lt;-<span class="st"> </span><span class="kw">symBeta</span>(<span class="kw">getOptBeta</span>(net.c))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the PC has low processing power, you can read the otuput created by us present in the input_data folder.</span>
+
+net.c &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;input_data/stool.net.rds&quot;</span>)
+<span class="kw">class</span>(net.c)</code></pre></div>
+<pre><code>## [1] &quot;select&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n.c &lt;-<span class="st"> </span><span class="kw">symBeta</span>(<span class="kw">getOptBeta</span>(net.c))</code></pre></div>
 <p><strong>Add names to IDs</strong><br />
 We also add abundance values to vertex (nodes).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(n.c) &lt;-<span class="st"> </span><span class="kw">rownames</span>(n.c) &lt;-<span class="st"> </span><span class="kw">colnames</span>(otu.c)
@@ -310,17 +322,17 @@ vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw
 <h3><span class="header-section-number">7.2.1</span> Prepare data for plotting</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.ig &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(n.c, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>, <span class="dt">weighted =</span> <span class="ot">TRUE</span>)
 stool.ig <span class="co"># we can see all the attributes and weights</span></code></pre></div>
-<pre><code>## IGRAPH 8ab2cf9 UNW- 506 1865 -- 
+<pre><code>## IGRAPH 3493795 UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 8ab2cf9 (vertex names):
-## [1] OTU-359809:Sutterella--OTU-211706:Bacteroides           
-## [2] OTU-359809:Sutterella--OTU-198711:Bacteroides           
-## [3] OTU-359809:Sutterella--OTU-1105984:Bacteroides          
-## [4] OTU-359809:Sutterella--OTU-193233:Bacteroides           
-## [5] OTU-359809:Sutterella--OTU-544859:f__Ruminococcaceae    
-## [6] OTU-359809:Sutterella--OTU-1740499:Phascolarctobacterium
-## [7] OTU-215097:Sutterella--OTU-320291:Bacteroides           
-## [8] OTU-215097:Sutterella--OTU-300650:Prevotella            
+## + edges from 3493795 (vertex names):
+## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
+## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
+## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
+## [4] OTU-9410491526:Bacteroides--OTU-941049949:Bacteroides    
+## [5] OTU-9410491526:Bacteroides--OTU-9410491514:Bacteroides   
+## [6] OTU-9410491526:Bacteroides--OTU-9410491513:Bacteroides   
+## [7] OTU-9410491526:Bacteroides--OTU-9410491574:Parasutterella
+## [8] OTU-9410491516:Bacteroides--OTU-9410491522:Bacteroides   
 ## + ... omitted several edges</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#plot(stool.ig)</span></code></pre></div>
 <p>set the layout option</p>
@@ -341,7 +353,7 @@ network::<span class="kw">set.edge.attribute</span>(stool.net, <span class="st">
 <p>Start adding taxonomic information.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f))</code></pre></div>
 <pre><code>## [1] &quot;Domain&quot;   &quot;Phylum&quot;   &quot;Class&quot;    &quot;Order&quot;    &quot;Family&quot;   &quot;Genus&quot;   
-## [7] &quot;Species&quot;  &quot;best_hit&quot;</code></pre>
+## [7] &quot;best_hit&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phyla &lt;-<span class="st"> </span><span class="kw">map_levels</span>(<span class="kw">colnames</span>(otu.c), <span class="dt">from =</span> <span class="st">&quot;best_hit&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Phylum&quot;</span>, <span class="kw">tax_table</span>(ps1.stool.otu.f))
 stool.net %v%<span class="st"> &quot;Phylum&quot;</span> &lt;-<span class="st"> </span>phyla
 stool.net %v%<span class="st"> &quot;nodesize&quot;</span> &lt;-<span class="st"> </span>vsize</code></pre></div>
@@ -352,16 +364,25 @@ stool.net %v%<span class="st"> &quot;nodesize&quot;</span> &lt;-<span class="st"
 
 p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
             <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="st">&quot;nodesize&quot;</span>, 
-            <span class="dt">label.size =</span> <span class="dv">1</span>, <span class="dt">edge.color =</span> <span class="st">&quot;color&quot;</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
+            <span class="dt">label.size =</span> <span class="dv">2</span>, <span class="dt">edge.color =</span> <span class="st">&quot;color&quot;</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
 
 p </code></pre></div>
 <p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
-            <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="dv">2</span>, 
-            <span class="dt">label.size =</span> <span class="dv">1</span>, <span class="dt">edge.color =</span> <span class="st">&quot;color&quot;</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
-
-p </code></pre></div>
-<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<p>This is difficult to interpret. One way is to remove nodes that are connected to few other nodes. We can use degree as a network statisitic.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stl.mb &lt;-<span class="st"> </span><span class="kw">degree.distribution</span>(stool.ig)
+<span class="kw">plot</span>(<span class="dv">0</span>:(<span class="kw">length</span>(stl.mb)-<span class="dv">1</span>), stl.mb, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">35</span>), <span class="dt">type=</span><span class="st">&#39;b&#39;</span>, 
+      <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Degree&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Degree Distributions&quot;</span>)</code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we will look at only taxa connect more than 10 others</span>
+p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
+            <span class="dt">label =</span> <span class="ot">TRUE</span>, 
+            <span class="dt">label.size =</span> <span class="dv">3</span>, <span class="dt">edge.color =</span> <span class="st">&quot;color&quot;</span>,
+            <span class="dt">size =</span> <span class="st">&quot;degree&quot;</span>, <span class="dt">size.min =</span> <span class="dv">10</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors</code></pre></div>
+<pre><code>## size.min removed 521 nodes out of 679</code></pre>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
+## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p </code></pre></div>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
 </div>
 </div>
 <div id="network-properties" class="section level2">
@@ -380,8 +401,8 @@ total=<span class="kw">length</span>(betaMat[betaMat!=<span class="dv">0</span>]
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">net.c</code></pre></div>
 <pre><code>## Model: Meinshausen &amp; Buhlmann Graph Estimation (mb)
 ## selection criterion: stars 
-## Graph dimension: 506 
-## sparsity level 0.01459711</code></pre>
+## Graph dimension: 679 
+## sparsity level 0.01066118</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod.net &lt;-<span class="st"> </span>net.c$refit
 
 <span class="kw">colnames</span>(mod.net) &lt;-<span class="st"> </span><span class="kw">rownames</span>(mod.net) &lt;-<span class="st"> </span><span class="kw">colnames</span>(otu.c)<span class="co">#you can remove this </span>
@@ -390,7 +411,7 @@ vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw
 
 stool.ig.mod &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(mod.net, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>)
 <span class="kw">plot</span>(stool.ig.mod) <span class="co"># we can see all the attributes and weights</span></code></pre></div>
-<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.net.mod &lt;-<span class="st"> </span><span class="kw">asNetwork</span>(stool.ig.mod)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phyla &lt;-<span class="st"> </span><span class="kw">map_levels</span>(<span class="kw">colnames</span>(otu.c), <span class="dt">from =</span> <span class="st">&quot;best_hit&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Phylum&quot;</span>, <span class="kw">tax_table</span>(ps1.stool.otu.f))
 stool.net.mod %v%<span class="st"> &quot;Phylum&quot;</span> &lt;-<span class="st"> </span>phyla
@@ -405,30 +426,30 @@ p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net.mod, <s
             <span class="dt">label.size =</span> <span class="dv">2</span>) +<span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Phylum&quot;</span>), <span class="dt">size =</span> <span class="ot">FALSE</span>) +<span class="st"> </span>mycolors
 
 p </code></pre></div>
-<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Identify modularity in networks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modules =<span class="kw">cluster_fast_greedy</span>(stool.ig.mod)
 
 <span class="kw">print</span>(modules)</code></pre></div>
-<pre><code>## IGRAPH clustering fast greedy, groups: 9, mod: 0.5
+<pre><code>## IGRAPH clustering fast greedy, groups: 12, mod: 0.47
 ## + groups:
 ##   $`1`
-##    [1] &quot;OTU-178885:Sutterella&quot;           
-##    [2] &quot;OTU-529652:Sutterella&quot;           
-##    [3] &quot;OTU-1135084:Bacteroides&quot;         
-##    [4] &quot;OTU-196632:Clostridium&quot;          
-##    [5] &quot;OTU-187668:Clostridium&quot;          
-##    [6] &quot;OTU-176994:f__Ruminococcaceae&quot;   
-##    [7] &quot;OTU-197649:Lachnospira&quot;          
-##    [8] &quot;OTU-195752:Lachnospira&quot;          
-##    [9] &quot;OTU-194734:Coprococcus&quot;          
+##    [1] &quot;OTU-9410492646:Bacteroides&quot;          
+##    [2] &quot;OTU-9410492641:Bacteroides&quot;          
+##    [3] &quot;OTU-9410492645:Bacteroides&quot;          
+##    [4] &quot;OTU-9410491981:Parabacteroides&quot;      
+##    [5] &quot;OTU-9410491974:Bacteroides&quot;          
+##    [6] &quot;OTU-9410491978:Bacteroides&quot;          
+##    [7] &quot;OTU-9410491977:Parabacteroides&quot;      
+##    [8] &quot;OTU-9410491976:Bacteroides&quot;          
+##    [9] &quot;OTU-9410492922:Bacteroides&quot;          
 ##   + ... omitted several groups/vertices</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">modularity</span>(modules)</code></pre></div>
-<pre><code>## [1] 0.5044993</code></pre>
+<pre><code>## [1] 0.4725467</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(stool.ig.mod)$color=modules$membership
 
 <span class="kw">plot</span>(stool.ig.mod, <span class="dt">col =</span> modules, <span class="dt">vertex.size =</span> <span class="dv">4</span>, <span class="dt">vertex.label =</span> <span class="ot">NA</span>)</code></pre></div>
-<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.net.mod %v%<span class="st"> &quot;membership&quot;</span> &lt;-<span class="st"> </span>modules$membership
 
 p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net.mod, <span class="dt">node.color =</span> <span class="st">&quot;membership&quot;</span>, 
@@ -437,7 +458,7 @@ p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net.mod, <s
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p </code></pre></div>
-<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
 <p>Check which OTUs are part of different modules.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modulesOneIndices=<span class="kw">which</span>(modules$membership==<span class="dv">1</span>)
 modulesOneOtus=modules$names[modulesOneIndices]
@@ -454,88 +475,32 @@ modulesFiveOtus=modules$names[modulesFiveIndices]
 modulesSixIndices=<span class="kw">which</span>(modules$membership==<span class="dv">6</span>)
 modulesSixOtus=modules$names[modulesSixIndices]
 
-<span class="kw">print</span>(modulesFiveOtus)</code></pre></div>
-<pre><code>##  [1] &quot;OTU-181239:Bacteroides&quot;           
-##  [2] &quot;OTU-192684:Bacteroides&quot;           
-##  [3] &quot;OTU-178810:Bacteroides&quot;           
-##  [4] &quot;OTU-194341:Bacteroides&quot;           
-##  [5] &quot;OTU-187623:Bacteroides&quot;           
-##  [6] &quot;OTU-197537:Bacteroides&quot;           
-##  [7] &quot;OTU-174036:Bacteroides&quot;           
-##  [8] &quot;OTU-176034:Bacteroides&quot;           
-##  [9] &quot;OTU-772282:f__Rikenellaceae&quot;      
-## [10] &quot;OTU-4325533:f__Rikenellaceae&quot;     
-## [11] &quot;OTU-850586:Odoribacter&quot;           
-## [12] &quot;OTU-180082:Parabacteroides&quot;       
-## [13] &quot;OTU-361170:Bilophila&quot;             
-## [14] &quot;OTU-544859:f__Ruminococcaceae&quot;    
-## [15] &quot;OTU-332185:f__Ruminococcaceae&quot;    
-## [16] &quot;OTU-196713:f__Ruminococcaceae&quot;    
-## [17] &quot;OTU-554303:f__Ruminococcaceae&quot;    
-## [18] &quot;OTU-213487:f__Ruminococcaceae&quot;    
-## [19] &quot;OTU-178015:f__Ruminococcaceae&quot;    
-## [20] &quot;OTU-180067:f__Ruminococcaceae&quot;    
-## [21] &quot;OTU-190303:f__Ruminococcaceae&quot;    
-## [22] &quot;OTU-193915:f__Ruminococcaceae&quot;    
-## [23] &quot;OTU-195222:f__Ruminococcaceae&quot;    
-## [24] &quot;OTU-198404:f__Ruminococcaceae&quot;    
-## [25] &quot;OTU-191872:f__Ruminococcaceae&quot;    
-## [26] &quot;OTU-184876:Lachnospira&quot;           
-## [27] &quot;OTU-210542:Lachnospira&quot;           
-## [28] &quot;OTU-302503:f__Ruminococcaceae&quot;    
-## [29] &quot;OTU-1978955:f__Ruminococcaceae&quot;   
-## [30] &quot;OTU-177359:Coprococcus&quot;           
-## [31] &quot;OTU-187248:f__Lachnospiraceae&quot;    
-## [32] &quot;OTU-185588:f__Lachnospiraceae&quot;    
-## [33] &quot;OTU-331150:f__Lachnospiraceae&quot;    
-## [34] &quot;OTU-190188:f__Lachnospiraceae&quot;    
-## [35] &quot;OTU-185937:f__Lachnospiraceae&quot;    
-## [36] &quot;OTU-195120:f__Lachnospiraceae&quot;    
-## [37] &quot;OTU-212481:f__Lachnospiraceae&quot;    
-## [38] &quot;OTU-531888:f__Lachnospiraceae&quot;    
-## [39] &quot;OTU-192127:f__Lachnospiraceae&quot;    
-## [40] &quot;OTU-192515:Ruminococcus&quot;          
-## [41] &quot;OTU-178742:f__Ruminococcaceae&quot;    
-## [42] &quot;OTU-367176:Oscillospira&quot;          
-## [43] &quot;OTU-199422:Oscillospira&quot;          
-## [44] &quot;OTU-196553:Oscillospira&quot;          
-## [45] &quot;OTU-184511:Faecalibacterium&quot;      
-## [46] &quot;OTU-183157:Faecalibacterium&quot;      
-## [47] &quot;OTU-185244:Faecalibacterium&quot;      
-## [48] &quot;OTU-174846:Faecalibacterium&quot;      
-## [49] &quot;OTU-184000:Faecalibacterium&quot;      
-## [50] &quot;OTU-365717:Faecalibacterium&quot;      
-## [51] &quot;OTU-194626:f__Ruminococcaceae&quot;    
-## [52] &quot;OTU-186723:f__Ruminococcaceae&quot;    
-## [53] &quot;OTU-183048:f__Ruminococcaceae&quot;    
-## [54] &quot;OTU-42372:[Eubacterium]&quot;          
-## [55] &quot;OTU-191718:f__Erysipelotrichaceae&quot;
-## [56] &quot;OTU-592616:f__Erysipelotrichaceae&quot;
-## [57] &quot;OTU-357930:Dialister&quot;             
-## [58] &quot;OTU-4354173:Veillonella&quot;          
-## [59] &quot;OTU-190902:[Ruminococcus]&quot;        
-## [60] &quot;OTU-179408:[Ruminococcus]&quot;        
-## [61] &quot;OTU-189403:[Ruminococcus]&quot;        
-## [62] &quot;OTU-182506:[Ruminococcus]&quot;        
-## [63] &quot;OTU-196370:[Ruminococcus]&quot;        
-## [64] &quot;OTU-186652:Dorea&quot;                 
-## [65] &quot;OTU-179905:f__Lachnospiraceae&quot;    
-## [66] &quot;OTU-183865:f__Lachnospiraceae&quot;    
-## [67] &quot;OTU-177237:Roseburia&quot;             
-## [68] &quot;OTU-195207:Roseburia&quot;             
-## [69] &quot;OTU-177515:Roseburia&quot;             
-## [70] &quot;OTU-194177:f__Lachnospiraceae&quot;    
-## [71] &quot;OTU-186263:f__Lachnospiraceae&quot;    
-## [72] &quot;OTU-198930:f__Lachnospiraceae&quot;    
-## [73] &quot;OTU-180312:f__Lachnospiraceae&quot;    
-## [74] &quot;OTU-531675:Blautia&quot;               
-## [75] &quot;OTU-183903:Blautia&quot;               
-## [76] &quot;OTU-198646:Blautia&quot;               
-## [77] &quot;OTU-181756:Blautia&quot;               
-## [78] &quot;OTU-194615:Blautia&quot;               
-## [79] &quot;OTU-192153:f__Lachnospiraceae&quot;    
-## [80] &quot;OTU-183969:f__Lachnospiraceae&quot;    
-## [81] &quot;OTU-573110:f__Lachnospiraceae&quot;</code></pre>
+<span class="kw">print</span>(modulesOneOtus)</code></pre></div>
+<pre><code>##  [1] &quot;OTU-9410492646:Bacteroides&quot;          
+##  [2] &quot;OTU-9410492641:Bacteroides&quot;          
+##  [3] &quot;OTU-9410492645:Bacteroides&quot;          
+##  [4] &quot;OTU-9410491981:Parabacteroides&quot;      
+##  [5] &quot;OTU-9410491974:Bacteroides&quot;          
+##  [6] &quot;OTU-9410491978:Bacteroides&quot;          
+##  [7] &quot;OTU-9410491977:Parabacteroides&quot;      
+##  [8] &quot;OTU-9410491976:Bacteroides&quot;          
+##  [9] &quot;OTU-9410492922:Bacteroides&quot;          
+## [10] &quot;OTU-9410492638:__&quot;                   
+## [11] &quot;OTU-9410492639:__&quot;                   
+## [12] &quot;OTU-941049940:Butyricimonas&quot;         
+## [13] &quot;OTU-9410491975:Alistipes&quot;            
+## [14] &quot;OTU-9410491971:Rikenellaceae&quot;        
+## [15] &quot;OTU-9410491972:Rikenellaceae&quot;        
+## [16] &quot;OTU-9410492644:Alloprevotella&quot;       
+## [17] &quot;OTU-9410491758:Alloprevotella&quot;       
+## [18] &quot;OTU-9410491980:Prevotella&quot;           
+## [19] &quot;OTU-9410492643:Ruminococcaceae&quot;      
+## [20] &quot;OTU-9410492640:Ruminococcaceae&quot;      
+## [21] &quot;OTU-9410492921:Phascolarctobacterium&quot;
+## [22] &quot;OTU-9410492647:Phascolarctobacterium&quot;
+## [23] &quot;OTU-941049538:Sutterella&quot;            
+## [24] &quot;OTU-941049552:uncultured&quot;            
+## [25] &quot;OTU-9410492642:uncultured&quot;</code></pre>
 </div>
 <div id="good-reads-for-ecological-networks" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Good reads for ecological networks</h3>
@@ -562,16 +527,16 @@ modulesSixOtus=modules$names[modulesSixIndices]
 ##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
 ##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.4     
 ## [10] dplyr_0.7.4          ggpubr_0.1.6         magrittr_1.5        
-## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1       
+## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
 ## [16] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Biobase_2.38.0             viridis_0.5.1             
+##  [1] viridis_0.5.1              Biobase_2.38.0            
 ##  [3] tidyr_0.8.0                viridisLite_0.3.0         
 ##  [5] VGAM_1.0-5                 jsonlite_1.5              
 ##  [7] splines_3.4.4              foreach_1.4.4             
 ##  [9] assertthat_0.2.0           stats4_3.4.4              
-## [11] yaml_2.1.18                ggrepel_0.7.0             
+## [11] yaml_2.1.19                ggrepel_0.8.0             
 ## [13] pillar_1.2.2               backports_1.1.2           
 ## [15] lattice_0.20-35            glue_1.2.0                
 ## [17] digest_0.6.15              XVector_0.18.0            
@@ -582,26 +547,27 @@ modulesSixOtus=modules$names[modulesSixIndices]
 ## [27] zlibbioc_1.24.0            purrr_0.2.4               
 ## [29] Rtsne_0.13                 huge_1.2.7                
 ## [31] tibble_1.4.2               mgcv_1.8-23               
-## [33] IRanges_2.12.0             BiocGenerics_0.24.0       
-## [35] lazyeval_0.2.1             survival_2.42-3           
-## [37] evaluate_0.10.1            nlme_3.1-137              
-## [39] MASS_7.3-49                vegan_2.5-1               
-## [41] tools_3.4.4                data.table_1.11.2         
-## [43] formatR_1.5                stringr_1.3.0             
-## [45] S4Vectors_0.16.0           munsell_0.4.3             
-## [47] cluster_2.0.7-1            Biostrings_2.46.0         
-## [49] ade4_1.7-11                compiler_3.4.4            
-## [51] rlang_0.2.0                rhdf5_2.22.0              
-## [53] grid_3.4.4                 iterators_1.0.9           
-## [55] biomformat_1.7.0           rmarkdown_1.9             
-## [57] gtable_0.2.0               codetools_0.2-15          
-## [59] multtest_2.34.0            reshape2_1.4.3            
-## [61] R6_2.2.2                   gridExtra_2.3             
-## [63] knitr_1.20                 bindr_0.1.1               
-## [65] rprojroot_1.3-2            permute_0.9-4             
-## [67] ape_5.1                    stringi_1.1.7             
-## [69] parallel_3.4.4             Rcpp_0.12.16              
-## [71] tidyselect_0.2.4           xfun_0.1</code></pre>
+## [33] IRanges_2.12.0             withr_2.1.2               
+## [35] BiocGenerics_0.24.0        lazyeval_0.2.1            
+## [37] survival_2.42-3            evaluate_0.10.1           
+## [39] nlme_3.1-137               MASS_7.3-50               
+## [41] vegan_2.5-1                tools_3.4.4               
+## [43] data.table_1.11.2          formatR_1.5               
+## [45] stringr_1.3.1              S4Vectors_0.16.0          
+## [47] munsell_0.4.3              cluster_2.0.7-1           
+## [49] Biostrings_2.46.0          ade4_1.7-11               
+## [51] compiler_3.4.4             rlang_0.2.0               
+## [53] rhdf5_2.22.0               grid_3.4.4                
+## [55] iterators_1.0.9            biomformat_1.7.0          
+## [57] rmarkdown_1.9              gtable_0.2.0              
+## [59] codetools_0.2-15           multtest_2.34.0           
+## [61] reshape2_1.4.3             R6_2.2.2                  
+## [63] gridExtra_2.3              knitr_1.20                
+## [65] bindr_0.1.1                rprojroot_1.3-2           
+## [67] permute_0.9-4              ape_5.1                   
+## [69] stringi_1.1.7              parallel_3.4.4            
+## [71] Rcpp_0.12.16               tidyselect_0.2.4          
+## [73] xfun_0.1</code></pre>
 
 </div>
 </div>
@@ -611,8 +577,8 @@ modulesSixOtus=modules$names[modulesSixIndices]
           </div>
         </div>
       </div>
-<a href="core-microbiota.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="core-microbiota.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="differential-abundance-testing-univariate-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -653,6 +619,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

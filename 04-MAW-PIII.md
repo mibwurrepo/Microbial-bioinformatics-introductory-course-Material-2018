@@ -1,14 +1,14 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-14"
+date: "2018-05-25"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
 
 # Composition plots  
 
-Barplots are an easy and intuitive way of visualising the composition of your samples. However, the way this is implented in phyloseq causes problems with the order of the taxa in the legend at higher taxonomic levels.
+Barplots are a simple way of visualising the composition of your samples.    
 
 We will use the filtered phyloseq object from **Set-up and Pre-processing** section.  
 
@@ -26,7 +26,7 @@ library(dplyr) # data handling
   
 
 ```r
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 # use print option to see the data saved as phyloseq object.
 
@@ -35,10 +35,10 @@ print(ps1)
 
 ```
 ## phyloseq-class experiment-level object
-## otu_table()   OTU Table:         [ 3690 taxa and 474 samples ]
-## sample_data() Sample Data:       [ 474 samples by 31 sample variables ]
-## tax_table()   Taxonomy Table:    [ 3690 taxa by 7 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 3690 tips and 3689 internal nodes ]
+## otu_table()   OTU Table:         [ 4710 taxa and 474 samples ]
+## sample_data() Sample Data:       [ 474 samples by 30 sample variables ]
+## tax_table()   Taxonomy Table:    [ 4710 taxa by 6 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 4710 tips and 4709 internal nodes ]
 ```
 
 ## Barplot counts 
@@ -46,6 +46,7 @@ print(ps1)
 
 ```r
 ps1.com <- ps1
+taxa_names(ps1.com) <- paste0("Seq_", rownames(tax_table(ps1.com)))
 
 # We need to set Palette
 taxic <- as.data.frame(ps1.com@tax_table)  # this will help in setting large color options
@@ -58,8 +59,7 @@ colnames(taxic)  # You can see that we now have extra taxonomy levels.
 ```
 
 ```
-## [1] "Kingdom" "Phylum"  "Class"   "Order"   "Family"  "Genus"   "Species"
-## [8] "OTU"
+## [1] "Domain" "Phylum" "Class"  "Order"  "Family" "Genus"  "OTU"
 ```
 
 ```r
@@ -70,7 +70,7 @@ tax_table(ps1.com) <- new.tax  # incroporate into phyloseq Object
 
 
 # now edit the unclassified taxa
-# tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "f__", "Family"] <- "Unclassified family"
+tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "", "Family"] <- "Unclassified family"
 
 
 # We will also remove the 'f__' patterns for cleaner labels
@@ -92,7 +92,7 @@ ps1.com@phy_tree <- NULL
 
 # Second merge at family level 
 
-ps1.com.fam <- aggregate_taxa(ps1.com, "Family", top = 10)
+ps1.com.fam <- microbiome::aggregate_taxa(ps1.com, "Family", top = 10)
 
 plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") + 
     scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
@@ -108,8 +108,7 @@ plot.composition.COuntAbun
 #ggsave("./Test_Outputfiles/Family_barplot_CountAbundance.pdf", height = 6, width = 8)
 ```
 
-
-This plot is based on the reads/sample. You can see the reads are not evenly distributed over the samples, nevertheless their overall composition seems to be the same. The only thing that is different is the scaling. You don't need any other normalisation alogorithms. To check this in the next step we plot the relative abundance.
+This plot is based on the reads per sample. In the next step, we plot the relative abundance.
 
 ## Barplot relative abundance 
 
@@ -120,13 +119,9 @@ Make it relative abundance
 # the previous pseq object ps1.com.fam is only counts.
 
 # Use traqnsform function of microbiome to convert it to rel abun.
+ps1.com.fam.rel <- microbiome::transform(ps1.com.fam, "compositional")
 
-ps1.com.rel <- microbiome::transform(ps1.com, "compositional")
-
-ps1.com.fam2 <- aggregate_taxa(ps1.com.rel, "Family", top = 10)
-
-
-plot.composition.relAbun <- plot_composition(ps1.com.fam2, 
+plot.composition.relAbun <- plot_composition(ps1.com.fam.rel, 
                                              sample.sort = "scientific_name", 
                                              x.label = "env_material") + theme(legend.position = "bottom") + scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
     theme(axis.text.x = element_text(angle = 90)) + 
@@ -165,10 +160,10 @@ p.com <- p.com + rremove("x.text")
 ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 ```
 
-for more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
+For more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
 
-
-## Heatmaps
+## Heatmaps  
+These are a good alternative to barplots.  
 
 
 ```r
@@ -216,7 +211,8 @@ Following is an example of customizing the plot using ggpubr.
 
 
 ```r
-ps_df <- microbiomeutilities::phy_to_ldf(ps1.com, transform.counts = "compositional")
+# we use count data at family level from the barplot for counts
+ps_df <- microbiomeutilities::phy_to_ldf(ps1.com.fam, transform.counts = "compositional")
 ```
 
 ```
@@ -228,44 +224,40 @@ colnames(ps_df)
 ```
 
 ```
-##  [1] "OTUID"                       "Kingdom"                    
-##  [3] "Phylum"                      "Class"                      
-##  [5] "Order"                       "Family"                     
-##  [7] "Genus"                       "Species"                    
-##  [9] "OTU"                         "Sam_rep"                    
-## [11] "Abundance"                   "X.SampleID"                 
-## [13] "BarcodeSequence"             "LinkerPrimerSequence"       
-## [15] "run_prefix"                  "body_habitat"               
-## [17] "body_product"                "body_site"                  
-## [19] "bodysite"                    "dna_extracted"              
-## [21] "elevation"                   "env"                        
-## [23] "env_biome"                   "env_feature"                
-## [25] "env_material"                "env_package"                
-## [27] "geo_loc_name"                "host_common_name"           
-## [29] "host_scientific_name"        "host_subject_id"            
-## [31] "host_taxid"                  "latitude"                   
-## [33] "longitude"                   "physical_specimen_location" 
-## [35] "physical_specimen_remaining" "psn"                        
-## [37] "public"                      "sample_type"                
-## [39] "scientific_name"             "sequencecenter"             
-## [41] "title"                       "Description"
+##  [1] "OTUID"                       "Family"                     
+##  [3] "OTU"                         "Sam_rep"                    
+##  [5] "Abundance"                   "BarcodeSequence"            
+##  [7] "LinkerPrimerSequence"        "run_prefix"                 
+##  [9] "body_habitat"                "body_product"               
+## [11] "body_site"                   "bodysite"                   
+## [13] "dna_extracted"               "elevation"                  
+## [15] "env"                         "env_biome"                  
+## [17] "env_feature"                 "env_material"               
+## [19] "env_package"                 "geo_loc_name"               
+## [21] "host_common_name"            "host_scientific_name"       
+## [23] "host_subject_id"             "host_taxid"                 
+## [25] "latitude"                    "longitude"                  
+## [27] "physical_specimen_location"  "physical_specimen_remaining"
+## [29] "psn"                         "public"                     
+## [31] "sample_type"                 "scientific_name"            
+## [33] "sequencecenter"              "title"                      
+## [35] "Description"
 ```
 
 ```r
 # this data.frame can be used to customize several plots.  
 
-# example boxplot at phylum level
+# example boxplot at family level
 
 p.box <- ggstripchart(ps_df, "scientific_name", "Abundance", 
-                      facet.by = "Phylum", color = "scientific_name",
-                      palette = "jco")
+                      facet.by = "Family", color = "body_product",
+                      palette = "jco"
+                      )
 
 p.box + rremove("x.text")
 ```
 
 <img src="04-MAW-PIII_files/figure-html/unnamed-chunk-8-1.png" width="672" />
-
-
 
 
 
@@ -291,10 +283,10 @@ sessionInfo()
 ## other attached packages:
 ## [1] bindrcpp_0.2.2       dplyr_0.7.4          ggpubr_0.1.6        
 ## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
-## [7] ggplot2_2.2.1        phyloseq_1.22.3     
+## [7] ggplot2_2.2.1.9000   phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] ggrepel_0.7.0              Rcpp_0.12.16              
+##  [1] ggrepel_0.8.0              Rcpp_0.12.16              
 ##  [3] ape_5.1                    lattice_0.20-35           
 ##  [5] tidyr_0.8.0                Biostrings_2.46.0         
 ##  [7] assertthat_0.2.0           rprojroot_1.3-2           
@@ -307,30 +299,30 @@ sessionInfo()
 ## [21] vegan_2.5-1                S4Vectors_0.16.0          
 ## [23] Matrix_1.2-14              rmarkdown_1.9             
 ## [25] labeling_0.3               splines_3.4.4             
-## [27] Rtsne_0.13                 stringr_1.3.0             
+## [27] Rtsne_0.13                 stringr_1.3.1             
 ## [29] igraph_1.2.1               pheatmap_1.0.8            
 ## [31] munsell_0.4.3              compiler_3.4.4            
 ## [33] xfun_0.1                   pkgconfig_2.0.1           
 ## [35] BiocGenerics_0.24.0        multtest_2.34.0           
 ## [37] mgcv_1.8-23                htmltools_0.3.6           
 ## [39] tidyselect_0.2.4           biomformat_1.7.0          
-## [41] tibble_1.4.2               gridExtra_2.3             
+## [41] gridExtra_2.3              tibble_1.4.2              
 ## [43] bookdown_0.7               IRanges_2.12.0            
-## [45] codetools_0.2-15           permute_0.9-4             
-## [47] viridisLite_0.3.0          MASS_7.3-49               
-## [49] grid_3.4.4                 nlme_3.1-137              
-## [51] jsonlite_1.5               gtable_0.2.0              
-## [53] scales_0.5.0               stringi_1.1.7             
-## [55] XVector_0.18.0             reshape2_1.4.3            
-## [57] viridis_0.5.1              ggsci_2.8                 
-## [59] iterators_1.0.9            tools_3.4.4               
-## [61] microbiomeutilities_0.99.0 ade4_1.7-11               
-## [63] Biobase_2.38.0             glue_1.2.0                
-## [65] purrr_0.2.4                parallel_3.4.4            
-## [67] survival_2.42-3            yaml_2.1.18               
-## [69] colorspace_1.3-2           rhdf5_2.22.0              
-## [71] cluster_2.0.7-1            knitr_1.20                
-## [73] bindr_0.1.1
+## [45] codetools_0.2-15           viridisLite_0.3.0         
+## [47] permute_0.9-4              withr_2.1.2               
+## [49] MASS_7.3-50                grid_3.4.4                
+## [51] nlme_3.1-137               jsonlite_1.5              
+## [53] gtable_0.2.0               scales_0.5.0              
+## [55] stringi_1.1.7              XVector_0.18.0            
+## [57] reshape2_1.4.3             viridis_0.5.1             
+## [59] ggsci_2.9                  iterators_1.0.9           
+## [61] tools_3.4.4                microbiomeutilities_0.99.0
+## [63] ade4_1.7-11                Biobase_2.38.0            
+## [65] glue_1.2.0                 purrr_0.2.4               
+## [67] parallel_3.4.4             survival_2.42-3           
+## [69] yaml_2.1.19                colorspace_1.3-2          
+## [71] rhdf5_2.22.0               cluster_2.0.7-1           
+## [73] knitr_1.20                 bindr_0.1.1
 ```
 
 

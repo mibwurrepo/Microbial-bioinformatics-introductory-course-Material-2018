@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-14"
+date: "2018-05-25"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -40,7 +40,7 @@ For more information:
 
 ```r
 # read non rarefied data
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 # read rarefied data
 ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
@@ -53,8 +53,7 @@ ps0.rar.rds <- readRDS("./phyobjects/ps0.rar.rds")
 
 Unweighted Unifrac is based on presence/absence of different taxa and abundance is not important. However, it is sensitive to the sequencing depth. If a sample is sequenced more than the others then it may have many OTUs (most of them unique) consequently affecting the unifrac dissimilarity estimation.  
 
-Previous section we check for sparsity and it was high. One decision that needs to be done is if singletons and OTUs represented with low number of reads arereal observations or sequecing artifacts?  
-Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads are discarded. We can check how much sparsity can be reduced by removing OTUs with low prevelance and abundance.  
+Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads are discarded. If you have you won data you try the following code. For data from NG-tax we will skip this step as we have no singletons.    
 
 
 ```r
@@ -62,68 +61,22 @@ Usually, using subOTU/ASV approaches many singletons/OTUs with very low reads ar
 ps0.rar.filtered <- core(ps0.rar.rds, detection = 10, prevalence = 0.05)
 
 summarize_phyloseq(ps0.rar.filtered)
-```
 
-```
-## Compositional = NO
-## 1] Min. number of reads = 22 
-## 2] Max. number of reads = 1995 
-## 3] Total number of reads = 677175 
-## 4] Average number of reads = 1465.74675324675 
-## 5] Median number of reads = 1588 
-## 7] Sparsity = 0.777836917181179 
-## 6] Any OTU sum to 1 or less? NO 
-## 8] Number of singletons = 0 
-## 9] Percent of OTUs that are singletons 0 
-## 10] Number of sample variables are: 31 
-## X.SampleID 
-## BarcodeSequence 
-## LinkerPrimerSequence 
-## run_prefix 
-## body_habitat 
-## body_product 
-## body_site 
-## bodysite 
-## dna_extracted 
-## elevation 
-## env 
-## env_biome 
-## env_feature 
-## env_material 
-## env_package 
-## geo_loc_name 
-## host_common_name 
-## host_scientific_name 
-## host_subject_id 
-## host_taxid 
-## latitude 
-## longitude 
-## physical_specimen_location 
-## physical_specimen_remaining 
-## psn 
-## public 
-## sample_type 
-## scientific_name 
-## sequencecenter 
-## title 
-## Description
-```
-
-```r
 # we reduce the sparsity considerably. 
 ```
 
+*For data from OTU picking*  
 Since the data used here consists of different body sites with distinct biological properties, the results of ordination do not change a lot by filtering "rare" OTUs. Once again, knowing the biology of your samples and making choices rationally and documenting them is crucial.  
-
+Feel free to use the OTU-picking strategy phyloseq object to investigate yourself.  
 
 
 ```r
-ordu.unwt.uni <- ordinate(ps0.rar.filtered, "PCoA", "unifrac", weighted=F)
+ordu.unwt.uni <- ordinate(ps0.rar.rds, "PCoA", "unifrac", weighted=F)
 
 # check for Eigen values 
 # barplot(ordu.unwt.uni$values$Eigenvalues[1:10])
 
-unwt.unifrac <- plot_ordination(ps0.rar.filtered, 
+unwt.unifrac <- plot_ordination(ps0.rar.rds, 
                                      ordu.unwt.uni, color="scientific_name") 
 unwt.unifrac <- unwt.unifrac + ggtitle("Unweighted UniFrac") + geom_point(size = 2)
 unwt.unifrac <- unwt.unifrac + theme_classic() + scale_color_brewer("Location", palette = "Set2")
@@ -164,7 +117,9 @@ print(wt.unifrac + stat_ellipse())
 
 The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
-Another important aspect regarding weighted unifrac is its property of having heavier weights for abunant taxa. To detect changes in moderately abundant lineages an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
+You can try repeating this analysis with phyloseq object from OTU-picking approach. 
+
+Another important aspect regarding weighted unifrac is its property of having heavier weights for abundant taxa. To detect changes in moderately abundant lineages, an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
 
 **To reiterate:** It is crucial to understand the biological features of the samples. Although these are exploratory approaches, it is important to differentiate between biological signal and technical artifacts.  
 
@@ -241,10 +196,10 @@ permanova
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##                  Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)    
-## scientific_name   3    61.496 20.4985  410.98 0.72401  0.001 ***
-## Residuals       470    23.442  0.0499         0.27599           
-## Total           473    84.938                 1.00000           
+##                  Df SumsOfSqs MeanSqs F.Model     R2 Pr(>F)    
+## scientific_name   3    71.912 23.9705  376.03 0.7059  0.001 ***
+## Residuals       470    29.960  0.0637         0.2941           
+## Total           473   101.872                 1.0000           
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -266,9 +221,9 @@ permutest(ps.disper, pairwise = TRUE)
 ## Number of permutations: 999
 ## 
 ## Response: Distances
-##            Df Sum Sq  Mean Sq      F N.Perm Pr(>F)    
-## Groups      3 0.9125 0.304150 22.998    999  0.001 ***
-## Residuals 470 6.2158 0.013225                         
+##            Df Sum Sq Mean Sq      F N.Perm Pr(>F)    
+## Groups      3 1.0014 0.33381 31.889    999  0.001 ***
+## Residuals 470 4.9200 0.01047                         
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -276,14 +231,14 @@ permutest(ps.disper, pairwise = TRUE)
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##                          human gut metagenome human oral metagenome
 ## human gut metagenome                                     1.0000e-03
-## human oral metagenome              6.4361e-08                      
-## human vaginal metagenome           2.0164e-07            3.0628e-16
-## human skin metagenome              1.7519e-01            7.3652e-02
-##                          human vaginal metagenome human skin metagenome
-## human gut metagenome                   1.0000e-03                 0.171
-## human oral metagenome                  1.0000e-03                 0.077
-## human vaginal metagenome                                          0.001
-## human skin metagenome                  1.8573e-04
+## human oral metagenome              8.3027e-05                      
+## human skin metagenome              2.8177e-06            2.4596e-02
+## human vaginal metagenome           3.1013e-18            1.4078e-10
+##                          human skin metagenome human vaginal metagenome
+## human gut metagenome                1.0000e-03                    0.001
+## human oral metagenome               2.4000e-02                    0.001
+## human skin metagenome                                             0.005
+## human vaginal metagenome            7.0275e-03
 ```
 
 
@@ -310,31 +265,32 @@ sessionInfo()
 ## other attached packages:
 ##  [1] vegan_2.5-1          lattice_0.20-35      permute_0.9-4       
 ##  [4] dplyr_0.7.4          ggpubr_0.1.6         magrittr_1.5        
-##  [7] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1       
+##  [7] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
 ## [10] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] xfun_0.1            purrr_0.2.4         reshape2_1.4.3     
 ##  [4] splines_3.4.4       rhdf5_2.22.0        colorspace_1.3-2   
-##  [7] htmltools_0.3.6     stats4_3.4.4        yaml_2.1.18        
-## [10] mgcv_1.8-23         survival_2.42-3     rlang_0.2.0        
-## [13] pillar_1.2.2        glue_1.2.0          BiocGenerics_0.24.0
-## [16] bindrcpp_0.2.2      bindr_0.1.1         foreach_1.4.4      
-## [19] plyr_1.8.4          stringr_1.3.0       zlibbioc_1.24.0    
-## [22] Biostrings_2.46.0   munsell_0.4.3       gtable_0.2.0       
-## [25] codetools_0.2-15    evaluate_0.10.1     labeling_0.3       
-## [28] Biobase_2.38.0      knitr_1.20          IRanges_2.12.0     
-## [31] biomformat_1.7.0    parallel_3.4.4      Rcpp_0.12.16       
-## [34] backports_1.1.2     scales_0.5.0        S4Vectors_0.16.0   
-## [37] jsonlite_1.5        XVector_0.18.0      digest_0.6.15      
-## [40] stringi_1.1.7       Rtsne_0.13          bookdown_0.7       
-## [43] grid_3.4.4          ade4_1.7-11         rprojroot_1.3-2    
-## [46] tools_3.4.4         lazyeval_0.2.1      tibble_1.4.2       
-## [49] cluster_2.0.7-1     tidyr_0.8.0         ape_5.1            
-## [52] pkgconfig_2.0.1     MASS_7.3-49         Matrix_1.2-14      
-## [55] data.table_1.11.2   assertthat_0.2.0    rmarkdown_1.9      
-## [58] iterators_1.0.9     R6_2.2.2            multtest_2.34.0    
-## [61] igraph_1.2.1        nlme_3.1-137        compiler_3.4.4
+##  [7] htmltools_0.3.6     stats4_3.4.4        mgcv_1.8-23        
+## [10] yaml_2.1.19         survival_2.42-3     rlang_0.2.0        
+## [13] pillar_1.2.2        withr_2.1.2         glue_1.2.0         
+## [16] BiocGenerics_0.24.0 bindrcpp_0.2.2      foreach_1.4.4      
+## [19] plyr_1.8.4          bindr_0.1.1         stringr_1.3.1      
+## [22] zlibbioc_1.24.0     Biostrings_2.46.0   munsell_0.4.3      
+## [25] gtable_0.2.0        codetools_0.2-15    evaluate_0.10.1    
+## [28] labeling_0.3        Biobase_2.38.0      knitr_1.20         
+## [31] IRanges_2.12.0      biomformat_1.7.0    parallel_3.4.4     
+## [34] Rcpp_0.12.16        backports_1.1.2     scales_0.5.0       
+## [37] S4Vectors_0.16.0    jsonlite_1.5        XVector_0.18.0     
+## [40] digest_0.6.15       Rtsne_0.13          stringi_1.1.7      
+## [43] bookdown_0.7        grid_3.4.4          ade4_1.7-11        
+## [46] rprojroot_1.3-2     tools_3.4.4         lazyeval_0.2.1     
+## [49] tibble_1.4.2        cluster_2.0.7-1     tidyr_0.8.0        
+## [52] ape_5.1             pkgconfig_2.0.1     MASS_7.3-50        
+## [55] Matrix_1.2-14       data.table_1.11.2   assertthat_0.2.0   
+## [58] rmarkdown_1.9       iterators_1.0.9     R6_2.2.2           
+## [61] multtest_2.34.0     igraph_1.2.1        nlme_3.1-137       
+## [64] compiler_3.4.4
 ```
 
 
