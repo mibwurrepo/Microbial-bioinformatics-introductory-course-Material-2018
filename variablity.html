@@ -210,7 +210,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## Scale for &#39;x&#39; is already present. Adding another scale for &#39;x&#39;, which
 ## will replace the existing scale.</code></pre>
 <p><img src="02_Comparison_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
-<p>From the above two plots, we see that there are several OTUs which are present in less than 20% samples and have high C.V. The OTU-picking approach seems to be noisy and NG-Tax approach seems to have less noise, although with little high ASVs identified even after filtering for low abundant reads. Thus, the ASVs identified by NG-Tax are of high confidence as they seem to be reprsented by high number of sequences in the raw data.</p>
+<p>From the above two plots, we see that there are several OTUs which a have high C.V. The OTU-picking approach seems to be noisy and NG-Tax approach seems to have less noise, although with little high ASVs identified even after filtering for low abundant reads. Thus, the ASVs identified by NG-Tax are of high confidence as they seem to be reprsented by high number of sequences in the raw data.</p>
 <p>Let us check for distribution of numer of sequences retained after OTU picking anf NG-tax approach.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_seqdepth.otu &lt;-<span class="st"> </span><span class="kw">plot_read_distribution</span>(ps.otu, <span class="st">&quot;scientific_name&quot;</span>, <span class="st">&quot;density&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;Done plotting&quot;</code></pre>
