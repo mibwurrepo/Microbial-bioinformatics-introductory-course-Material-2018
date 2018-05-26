@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-25"
+date: "2018-05-26"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -268,27 +268,29 @@ sessionInfo()
 ```
 ## R version 3.4.4 (2018-03-15)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## Running under: Windows 10 x64 (build 16299)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=Dutch_Netherlands.1252  LC_CTYPE=Dutch_Netherlands.1252   
-## [3] LC_MONETARY=Dutch_Netherlands.1252 LC_NUMERIC=C                      
-## [5] LC_TIME=Dutch_Netherlands.1252    
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2.2       dplyr_0.7.4          ggpubr_0.1.6        
-## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
+## [1] bindrcpp_0.2.2       dplyr_0.7.5          ggpubr_0.1.6        
+## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10012
 ## [7] ggplot2_2.2.1.9000   phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] ggrepel_0.8.0              Rcpp_0.12.16              
+##  [1] ggrepel_0.8.0              Rcpp_0.12.17              
 ##  [3] ape_5.1                    lattice_0.20-35           
-##  [5] tidyr_0.8.0                Biostrings_2.46.0         
+##  [5] tidyr_0.8.1                Biostrings_2.46.0         
 ##  [7] assertthat_0.2.0           rprojroot_1.3-2           
 ##  [9] digest_0.6.15              foreach_1.4.4             
 ## [11] R6_2.2.2                   plyr_1.8.4                
@@ -296,32 +298,32 @@ sessionInfo()
 ## [15] evaluate_0.10.1            pillar_1.2.2              
 ## [17] zlibbioc_1.24.0            rlang_0.2.0               
 ## [19] lazyeval_0.2.1             data.table_1.11.2         
-## [21] vegan_2.5-1                S4Vectors_0.16.0          
-## [23] Matrix_1.2-14              rmarkdown_1.9             
+## [21] vegan_2.5-2                S4Vectors_0.16.0          
+## [23] Matrix_1.2-12              rmarkdown_1.9             
 ## [25] labeling_0.3               splines_3.4.4             
 ## [27] Rtsne_0.13                 stringr_1.3.1             
-## [29] igraph_1.2.1               pheatmap_1.0.8            
+## [29] pheatmap_1.0.10            igraph_1.2.1              
 ## [31] munsell_0.4.3              compiler_3.4.4            
 ## [33] xfun_0.1                   pkgconfig_2.0.1           
 ## [35] BiocGenerics_0.24.0        multtest_2.34.0           
 ## [37] mgcv_1.8-23                htmltools_0.3.6           
-## [39] tidyselect_0.2.4           biomformat_1.7.0          
+## [39] biomformat_1.6.0           tidyselect_0.2.4          
 ## [41] gridExtra_2.3              tibble_1.4.2              
 ## [43] bookdown_0.7               IRanges_2.12.0            
 ## [45] codetools_0.2-15           viridisLite_0.3.0         
 ## [47] permute_0.9-4              withr_2.1.2               
-## [49] MASS_7.3-50                grid_3.4.4                
-## [51] nlme_3.1-137               jsonlite_1.5              
+## [49] MASS_7.3-49                grid_3.4.4                
+## [51] nlme_3.1-131.1             jsonlite_1.5              
 ## [53] gtable_0.2.0               scales_0.5.0              
-## [55] stringi_1.1.7              XVector_0.18.0            
+## [55] stringi_1.2.2              XVector_0.18.0            
 ## [57] reshape2_1.4.3             viridis_0.5.1             
 ## [59] ggsci_2.9                  iterators_1.0.9           
 ## [61] tools_3.4.4                microbiomeutilities_0.99.0
 ## [63] ade4_1.7-11                Biobase_2.38.0            
 ## [65] glue_1.2.0                 purrr_0.2.4               
-## [67] parallel_3.4.4             survival_2.42-3           
+## [67] parallel_3.4.4             survival_2.41-3           
 ## [69] yaml_2.1.19                colorspace_1.3-2          
-## [71] rhdf5_2.22.0               cluster_2.0.7-1           
+## [71] rhdf5_2.22.0               cluster_2.0.6             
 ## [73] knitr_1.20                 bindr_0.1.1
 ```
 

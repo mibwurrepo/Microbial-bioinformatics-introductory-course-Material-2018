@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="differential-abundance-testing-for-univariate-data.html">
-<link rel="next" href="advanced-models-for-differential-abundance.html">
+<link rel="prev" href="linear-models-the-role-of-covariates.html">
+<link rel="next" href="further-exercises.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -209,18 +209,87 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-models-the-role-of-covariates" class="section level1">
-<h1><span class="header-section-number">9</span> Linear models: the role of covariates</h1>
-<p>This section provides hands-on introduction to linear (and generalized linear) models.</p>
-<p><strong>Task Fit linear model to compare abundance between the two groups.</strong> You can use functions lm or glm, for instance.</p>
-<div id="fitting-a-linear-model" class="section level2">
-<h2><span class="header-section-number">9.1</span> Fitting a linear model</h2>
-<p>Let us compare two groups with a linear model. We use Log10 abundances since this is closer to the Gaussian assumptions than the absolute count data. Fit a linear model with Gaussian variation as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</code></pre></div>
+<div id="advanced-models-for-differential-abundance" class="section level1">
+<h1><span class="header-section-number">10</span> Advanced models for differential abundance</h1>
+<p>GLMs are the basis for advanced testing of differential abundance in sequencing data. This is necessary, as the sequencing data sets deviate from symmetric, continuous, Gaussian assumptions in many ways.</p>
+<div id="particular-properties-of-taxonomic-profiling-data" class="section level2">
+<h2><span class="header-section-number">10.1</span> Particular properties of taxonomic profiling data</h2>
+<div id="discrete-count-data" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Discrete count data</h3>
+<p>Sequencing data consists of discrete counts:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">abundances</span>(d)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<pre><code>##                              Sample-1 Sample-2 Sample-3
+## Actinomycetaceae                   11       67       21
+## Aerococcus                          1        1        1
+## Aeromonas                           1        1        1
+## Akkermansia                      1167     6127     4235
+## Alcaligenes faecalis et rel.       90      126      188</code></pre>
 </div>
-<div id="interpreting-linear-model-output" class="section level2">
-<h2><span class="header-section-number">9.2</span> Interpreting linear model output</h2>
-<p>Investigate the model coefficients:</p>
+<div id="sparsity" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> Sparsity</h3>
+<p>The data is sparse:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">log10</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">abundances</span>(d)), <span class="dv">100</span>)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/pooled3-1.png" width="768" /></p>
+</div>
+<div id="rarity" class="section level3">
+<h3><span class="header-section-number">10.1.3</span> Rarity</h3>
+<p>Long tails of rare taxa:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
+medians &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abundances</span>(d),<span class="dv">1</span>,median)<span class="op">/</span><span class="fl">1e3</span>
+A &lt;-<span class="st"> </span><span class="kw">melt</span>(<span class="kw">abundances</span>(d))
+A<span class="op">$</span>Var1 &lt;-<span class="st"> </span><span class="kw">factor</span>(A<span class="op">$</span>Var1, <span class="dt">levels =</span> <span class="kw">rev</span>(<span class="kw">names</span>(<span class="kw">sort</span>(medians))))
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(A, <span class="kw">aes</span>(<span class="dt">x =</span> Var1, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Abundance (reads)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Taxonomic Group&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_y_log10</span>()
+    
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/tail-1.png" width="600px" /></p>
+</div>
+<div id="overdispersion" class="section level3">
+<h3><span class="header-section-number">10.1.4</span> Overdispersion</h3>
+<p>Variance exceeds the mean:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">means &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abundances</span>(d),<span class="dv">1</span>,mean)
+variances &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">abundances</span>(d),<span class="dv">1</span>,var)
+
+<span class="co"># Calculate mean and variance over samples for each taxon</span>
+<span class="kw">library</span>(reshape2)
+<span class="kw">library</span>(dplyr)
+df &lt;-<span class="st"> </span><span class="kw">melt</span>(<span class="kw">abundances</span>(d))
+<span class="kw">names</span>(df) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Taxon&quot;</span>, <span class="st">&quot;Sample&quot;</span>, <span class="st">&quot;Reads&quot;</span>)
+df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Taxon) <span class="op">%&gt;%</span>
+<span class="st">             </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Reads),
+                   <span class="dt">variance =</span> <span class="kw">var</span>(Reads))
+
+<span class="co"># Illustrate overdispersion</span>
+<span class="kw">library</span>(scales)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x =</span> mean, <span class="dt">y =</span> variance)) <span class="op">+</span>
+<span class="st">       </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">       </span><span class="kw">geom_abline</span>(<span class="kw">aes</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">       </span><span class="kw">scale_x_log10</span>(<span class="dt">labels =</span> scales<span class="op">::</span>scientific) <span class="op">+</span>
+<span class="st">       </span><span class="kw">scale_y_log10</span>(<span class="dt">labels =</span> scales<span class="op">::</span>scientific) <span class="op">+</span>
+<span class="st">       </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Overdispersion (variance &gt; mean)&quot;</span>)
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/pooled_overdispersion-1.png" width="600px" /></p>
+</div>
+</div>
+<div id="generalized-linear-models-a-brief-overview" class="section level2">
+<h2><span class="header-section-number">10.2</span> Generalized linear models: a brief overview</h2>
+<p>Let us briefly discuss the ideas underlying generalized linear models.</p>
+<p>The Generalized linear model (GLM) allows a richer family of probability distributions to describe the data. Intuitively speaking, GLMs allow the modeling of nonlinear, nonsymmetric, and nongaussian associations. GLMs consist of three elements:</p>
+<ul>
+<li><p>A probability distribution for the data (from exponential family)</p></li>
+<li><p>A linear predictor targeting the mean, or expectation: <span class="math inline">\(Xb\)</span></p></li>
+<li><p>A link function g such that <span class="math inline">\(E(Y) = \mu = g^{-1}(Xb)\)</span>.</p></li>
+</ul>
+<p>Let us fit Poisson with (natural) log-link. Fit abundance (read counts) assuming that the data is Poisson distributed, and the logarithm of its mean, or expectation, is obtained with a linear model. We ignore covariates in this example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load again the example data</span>
+d &lt;-<span class="st"> </span>dietswap
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Abundance =</span> <span class="kw">abundances</span>(d)[taxa,],
+                 <span class="dt">Group =</span> <span class="kw">meta</span>(d)<span class="op">$</span>nationality)
+
+res &lt;-<span class="st"> </span><span class="kw">glm</span>(Abundance <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)</code></pre></div>
+<p>Investigate the model output:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">summary</span>(res)<span class="op">$</span>coefficients, <span class="dt">digits =</span> <span class="dv">5</span>)</code></pre></div>
 <table>
 <thead>
@@ -228,109 +297,166 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <th></th>
 <th align="right">Estimate</th>
 <th align="right">Std. Error</th>
-<th align="right">t value</th>
-<th align="right">Pr(&gt;|t|)</th>
+<th align="right">z value</th>
+<th align="right">Pr(&gt;|z|)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>(Intercept)</td>
-<td align="right">2.06864</td>
-<td align="right">0.01500</td>
-<td align="right">137.89729</td>
-<td align="right">0.00000</td>
-</tr>
-<tr class="even">
-<td>GroupAFR</td>
-<td align="right">0.08065</td>
-<td align="right">0.02246</td>
-<td align="right">3.59001</td>
-<td align="right">0.00041</td>
+<td align="right">5.02355</td>
+<td align="right">0.00544</td>
+<td align="right">922.6545</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
-<p>The intercept equals to the mean in the first group:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AAM&quot;</span>)<span class="op">$</span>Log10_Abundance))</code></pre></div>
-<pre><code>## [1] 2.068637</code></pre>
-<p>The group term equals to the difference between group means:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AFR&quot;</span>)<span class="op">$</span>Log10_Abundance) <span class="op">-</span>
-<span class="st">      </span><span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AAM&quot;</span>)<span class="op">$</span>Log10_Abundance))</code></pre></div>
-<pre><code>## [1] 0.080646</code></pre>
-<p>Note that the linear model (default) significance equals to t-test assuming equal variances.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">t.test</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df, <span class="dt">var.equal=</span><span class="ot">TRUE</span>)<span class="op">$</span>p.value)</code></pre></div>
-<pre><code>## [1] 0.0004077211</code></pre>
+<p>Note the link between mean and estimated coefficient (<span class="math inline">\(\mu = e^{\alpha}\)</span>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(df<span class="op">$</span>Abundance)</code></pre></div>
+<pre><code>## [1] 151.9505</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="kw">coef</span>(res))</code></pre></div>
+<pre><code>## (Intercept) 
+##    151.9505</code></pre>
 </div>
-<div id="covariate-testing" class="section level2">
-<h2><span class="header-section-number">9.3</span> Covariate testing</h2>
-<p><strong>Task: Investigate how sex and bmi affect the results. </strong></p>
-<p>An important advantage of linear and generalized linear models, compared to plain t-test is that they allow incorporating additional variables, such as potential confounders (age, BMI, gender..):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a covariate:</span>
-df<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">meta</span>(d)<span class="op">$</span>sex
-df<span class="op">$</span>bmi_group &lt;-<span class="st"> </span><span class="kw">meta</span>(d)<span class="op">$</span>bmi_group
+<div id="deseq2-differential-abundance-testing-for-sequencing-data" class="section level2">
+<h2><span class="header-section-number">10.3</span> DESeq2: differential abundance testing for sequencing data</h2>
+<p>DESeq2 analysis can accommodate those particular assumptions about sequencing data. For details, see the <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8">original publication</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Start by converting phyloseq object to deseq2 format</span>
+<span class="kw">library</span>(DESeq2)
+d &lt;-<span class="st"> </span>dietswap <span class="co"># Phyloseq data</span>
+ds2 &lt;-<span class="st"> </span><span class="kw">phyloseq_to_deseq2</span>(d, <span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>nationality)
 
-<span class="co"># Fit the model:</span>
-res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>bmi_group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</code></pre></div>
-<p>We can even include interaction terms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group <span class="op">*</span><span class="st"> </span>sex <span class="op">*</span><span class="st"> </span>bmi_group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)
-<span class="kw">kable</span>(<span class="kw">coefficients</span>(res))</code></pre></div>
+<span class="co"># Run DESeq2 analysis (all taxa at once!)</span>
+dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(ds2)
+
+<span class="co"># Investigate results</span>
+res &lt;-<span class="st"> </span><span class="kw">results</span>(dds)
+deseq.results &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(res)
+df &lt;-<span class="st"> </span>deseq.results
+df<span class="op">$</span>taxon &lt;-<span class="st"> </span><span class="kw">rownames</span>(df)
+df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(log2FoldChange, padj)
+
+<span class="co"># Print the results; flitered and sorted by pvalue and effectsize</span>
+<span class="kw">library</span>(knitr)
+df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(pvalue <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>log2FoldChange <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span>) <span class="op">%&gt;%</span>
+<span class="st">             </span><span class="kw">arrange</span>(pvalue, log2FoldChange)
+knitr<span class="op">::</span><span class="kw">kable</span>(df, <span class="dt">digits =</span> <span class="dv">5</span>)</code></pre></div>
 <table>
 <thead>
 <tr class="header">
-<th></th>
-<th align="right">x</th>
+<th align="right">baseMean</th>
+<th align="right">log2FoldChange</th>
+<th align="right">lfcSE</th>
+<th align="right">stat</th>
+<th align="right">pvalue</th>
+<th align="right">padj</th>
+<th align="left">taxon</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>(Intercept)</td>
-<td align="right">2.0812548</td>
+<td align="right">1870.08336</td>
+<td align="right">1.89495</td>
+<td align="right">0.12667</td>
+<td align="right">14.95965</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Clostridium difficile et rel.</td>
 </tr>
 <tr class="even">
-<td>GroupAFR</td>
-<td align="right">0.0233341</td>
+<td align="right">1015.44245</td>
+<td align="right">2.12453</td>
+<td align="right">0.18359</td>
+<td align="right">11.57241</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Klebisiella pneumoniae et rel.</td>
 </tr>
 <tr class="odd">
-<td>sexMale</td>
-<td align="right">0.0090777</td>
+<td align="right">3335.72902</td>
+<td align="right">3.02549</td>
+<td align="right">0.28380</td>
+<td align="right">10.66044</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Mitsuokella multiacida et rel.</td>
 </tr>
 <tr class="even">
-<td>bmi_groupoverweight</td>
-<td align="right">-0.0075846</td>
+<td align="right">1519.25023</td>
+<td align="right">1.60976</td>
+<td align="right">0.18026</td>
+<td align="right">8.93027</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Enterobacter aerogenes et rel.</td>
 </tr>
 <tr class="odd">
-<td>bmi_groupobese</td>
-<td align="right">-0.0203030</td>
+<td align="right">2848.86627</td>
+<td align="right">1.77112</td>
+<td align="right">0.22906</td>
+<td align="right">7.73226</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Megasphaera elsdenii et rel.</td>
 </tr>
 <tr class="even">
-<td>GroupAFR:sexMale</td>
-<td align="right">0.0375102</td>
+<td align="right">321.24275</td>
+<td align="right">2.86529</td>
+<td align="right">0.37602</td>
+<td align="right">7.61997</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Serratia</td>
 </tr>
 <tr class="odd">
-<td>GroupAFR:bmi_groupoverweight</td>
-<td align="right">-0.0467722</td>
+<td align="right">19.97851</td>
+<td align="right">2.24305</td>
+<td align="right">0.31335</td>
+<td align="right">7.15820</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Aquabacterium</td>
 </tr>
 <tr class="even">
-<td>GroupAFR:bmi_groupobese</td>
-<td align="right">0.1209742</td>
-</tr>
-<tr class="odd">
-<td>sexMale:bmi_groupoverweight</td>
-<td align="right">-0.0295655</td>
-</tr>
-<tr class="even">
-<td>sexMale:bmi_groupobese</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td>GroupAFR:sexMale:bmi_groupoverweight</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:sexMale:bmi_groupobese</td>
-<td align="right">NA</td>
+<td align="right">173.00079</td>
+<td align="right">1.80120</td>
+<td align="right">0.26252</td>
+<td align="right">6.86114</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="left">Haemophilus</td>
 </tr>
 </tbody>
 </table>
+<p>For comparison purposes, assess significances and effect sizes based on Wilcoxon test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test.taxa &lt;-<span class="st"> </span><span class="kw">taxa</span>(d)
+pvalue.wilcoxon &lt;-<span class="st"> </span><span class="kw">c</span>()
+foldchange &lt;-<span class="st"> </span><span class="kw">c</span>()
+<span class="cf">for</span> (taxa <span class="cf">in</span> test.taxa) {
+  <span class="co"># Create a new data frame for each taxonomic group</span>
+  df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Abundance =</span> <span class="kw">abundances</span>(d)[taxa,],
+                   <span class="dt">Log10_Abundance =</span> <span class="kw">log10</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">abundances</span>(d)[taxa,]),
+                   <span class="dt">Group =</span> <span class="kw">meta</span>(d)<span class="op">$</span>nationality)
+  <span class="co"># Calculate pvalue and effect size (difference beween log means)       </span>
+  pvalue.wilcoxon[[taxa]] &lt;-<span class="st"> </span><span class="kw">wilcox.test</span>(Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df)<span class="op">$</span>p.value
+  foldchange[[taxa]] &lt;-<span class="st"> </span><span class="kw">coef</span>(<span class="kw">lm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df))[[<span class="dv">2</span>]]
+}
+<span class="co"># Correct p-values for multiple testing</span>
+pvalue.wilcoxon.adjusted &lt;-<span class="st"> </span><span class="kw">p.adjust</span>(pvalue.wilcoxon)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(deseq.results<span class="op">$</span>padj, pvalue.wilcoxon.adjusted,
+  <span class="dt">xlab =</span> <span class="st">&quot;DESeq2 adjusted p-value&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;Wilcoxon adjusted p-value&quot;</span>,
+  <span class="dt">main =</span> <span class="st">&quot;P-value comparison&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">0.05</span>, <span class="dt">h =</span> <span class="fl">0.05</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+
+<span class="kw">plot</span>(deseq.results<span class="op">$</span>log2FoldChange, foldchange, 
+  <span class="dt">xlab =</span> <span class="st">&quot;DESeq2&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;Linear model&quot;</span>,
+  <span class="dt">main =</span> <span class="st">&quot;Effect size comparison&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/pooled_pcomp-1.png" width="960" /></p>
+<p>For systematic comparisons between various methods for differential abundance testing, see <a href="https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y">this paper</a>.</p>
 </div>
 </div>
             </section>
@@ -338,8 +464,8 @@ res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <s
           </div>
         </div>
       </div>
-<a href="differential-abundance-testing-for-univariate-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="advanced-models-for-differential-abundance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-models-the-role-of-covariates.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="further-exercises.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="differential-abundance-testing-for-univariate-data.html">
-<link rel="next" href="advanced-models-for-differential-abundance.html">
+<link rel="prev" href="advanced-models-for-differential-abundance.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -209,137 +209,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-models-the-role-of-covariates" class="section level1">
-<h1><span class="header-section-number">9</span> Linear models: the role of covariates</h1>
-<p>This section provides hands-on introduction to linear (and generalized linear) models.</p>
-<p><strong>Task Fit linear model to compare abundance between the two groups.</strong> You can use functions lm or glm, for instance.</p>
-<div id="fitting-a-linear-model" class="section level2">
-<h2><span class="header-section-number">9.1</span> Fitting a linear model</h2>
-<p>Let us compare two groups with a linear model. We use Log10 abundances since this is closer to the Gaussian assumptions than the absolute count data. Fit a linear model with Gaussian variation as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</code></pre></div>
-</div>
-<div id="interpreting-linear-model-output" class="section level2">
-<h2><span class="header-section-number">9.2</span> Interpreting linear model output</h2>
-<p>Investigate the model coefficients:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">summary</span>(res)<span class="op">$</span>coefficients, <span class="dt">digits =</span> <span class="dv">5</span>)</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">Estimate</th>
-<th align="right">Std. Error</th>
-<th align="right">t value</th>
-<th align="right">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td align="right">2.06864</td>
-<td align="right">0.01500</td>
-<td align="right">137.89729</td>
-<td align="right">0.00000</td>
-</tr>
-<tr class="even">
-<td>GroupAFR</td>
-<td align="right">0.08065</td>
-<td align="right">0.02246</td>
-<td align="right">3.59001</td>
-<td align="right">0.00041</td>
-</tr>
-</tbody>
-</table>
-<p>The intercept equals to the mean in the first group:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AAM&quot;</span>)<span class="op">$</span>Log10_Abundance))</code></pre></div>
-<pre><code>## [1] 2.068637</code></pre>
-<p>The group term equals to the difference between group means:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AFR&quot;</span>)<span class="op">$</span>Log10_Abundance) <span class="op">-</span>
-<span class="st">      </span><span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AAM&quot;</span>)<span class="op">$</span>Log10_Abundance))</code></pre></div>
-<pre><code>## [1] 0.080646</code></pre>
-<p>Note that the linear model (default) significance equals to t-test assuming equal variances.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">t.test</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df, <span class="dt">var.equal=</span><span class="ot">TRUE</span>)<span class="op">$</span>p.value)</code></pre></div>
-<pre><code>## [1] 0.0004077211</code></pre>
-</div>
-<div id="covariate-testing" class="section level2">
-<h2><span class="header-section-number">9.3</span> Covariate testing</h2>
-<p><strong>Task: Investigate how sex and bmi affect the results. </strong></p>
-<p>An important advantage of linear and generalized linear models, compared to plain t-test is that they allow incorporating additional variables, such as potential confounders (age, BMI, gender..):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a covariate:</span>
-df<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">meta</span>(d)<span class="op">$</span>sex
-df<span class="op">$</span>bmi_group &lt;-<span class="st"> </span><span class="kw">meta</span>(d)<span class="op">$</span>bmi_group
+<div id="further-exercises" class="section level1">
+<h1><span class="header-section-number">11</span> Further exercises</h1>
+<p>When done with the differential abundance testing examples, you can investigate the use of the following standard methods for microbiome studies.</p>
+<ul>
+<li>Compositionality effect: compare the effect of CLR transformation (microbiome::clr) on microbiome ordination with PCoA. Prepare PCoA with Bray-Curtis distances for compositional data; and PCoA with euclidean distances for CLR-transformed data (microbiome::transform). For examples, see <a href="http://microbiome.github.io/microbiome/Landscaping.html">microbiome tutorial</a>.</li>
+</ul>
 
-<span class="co"># Fit the model:</span>
-res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>bmi_group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</code></pre></div>
-<p>We can even include interaction terms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group <span class="op">*</span><span class="st"> </span>sex <span class="op">*</span><span class="st"> </span>bmi_group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)
-<span class="kw">kable</span>(<span class="kw">coefficients</span>(res))</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">x</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td align="right">2.0812548</td>
-</tr>
-<tr class="even">
-<td>GroupAFR</td>
-<td align="right">0.0233341</td>
-</tr>
-<tr class="odd">
-<td>sexMale</td>
-<td align="right">0.0090777</td>
-</tr>
-<tr class="even">
-<td>bmi_groupoverweight</td>
-<td align="right">-0.0075846</td>
-</tr>
-<tr class="odd">
-<td>bmi_groupobese</td>
-<td align="right">-0.0203030</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:sexMale</td>
-<td align="right">0.0375102</td>
-</tr>
-<tr class="odd">
-<td>GroupAFR:bmi_groupoverweight</td>
-<td align="right">-0.0467722</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:bmi_groupobese</td>
-<td align="right">0.1209742</td>
-</tr>
-<tr class="odd">
-<td>sexMale:bmi_groupoverweight</td>
-<td align="right">-0.0295655</td>
-</tr>
-<tr class="even">
-<td>sexMale:bmi_groupobese</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td>GroupAFR:sexMale:bmi_groupoverweight</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:sexMale:bmi_groupobese</td>
-<td align="right">NA</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="differential-abundance-testing-for-univariate-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="advanced-models-for-differential-abundance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="advanced-models-for-differential-abundance.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

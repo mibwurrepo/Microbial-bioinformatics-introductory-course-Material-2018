@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-25"
+date: "2018-05-26"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -210,9 +210,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH 3493795 UNW- 679 2454 -- 
+## IGRAPH 4f7e8f8 UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 3493795 (vertex names):
+## + edges from 4f7e8f8 (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
@@ -528,14 +528,16 @@ sessionInfo()
 ```
 ## R version 3.4.4 (2018-03-15)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## Running under: Windows 10 x64 (build 16299)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=Dutch_Netherlands.1252  LC_CTYPE=Dutch_Netherlands.1252   
-## [3] LC_MONETARY=Dutch_Netherlands.1252 LC_NUMERIC=C                      
-## [5] LC_TIME=Dutch_Netherlands.1252    
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
@@ -543,49 +545,49 @@ sessionInfo()
 ## other attached packages:
 ##  [1] scales_0.5.0         sna_2.4              statnet.common_4.0.0
 ##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
-##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.4     
-## [10] dplyr_0.7.4          ggpubr_0.1.6         magrittr_1.5        
-## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
+##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.2     
+## [10] dplyr_0.7.5          ggpubr_0.1.6         magrittr_1.5        
+## [13] RColorBrewer_1.1-2   microbiome_1.1.10012 ggplot2_2.2.1.9000  
 ## [16] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] viridis_0.5.1              Biobase_2.38.0            
-##  [3] tidyr_0.8.0                viridisLite_0.3.0         
+##  [3] tidyr_0.8.1                viridisLite_0.3.0         
 ##  [5] VGAM_1.0-5                 jsonlite_1.5              
 ##  [7] splines_3.4.4              foreach_1.4.4             
 ##  [9] assertthat_0.2.0           stats4_3.4.4              
-## [11] yaml_2.1.19                ggrepel_0.8.0             
+## [11] ggrepel_0.8.0              yaml_2.1.19               
 ## [13] pillar_1.2.2               backports_1.1.2           
 ## [15] lattice_0.20-35            glue_1.2.0                
 ## [17] digest_0.6.15              XVector_0.18.0            
 ## [19] colorspace_1.3-2           htmltools_0.3.6           
-## [21] Matrix_1.2-14              plyr_1.8.4                
+## [21] Matrix_1.2-12              plyr_1.8.4                
 ## [23] microbiomeutilities_0.99.0 pkgconfig_2.0.1           
-## [25] pheatmap_1.0.8             bookdown_0.7              
+## [25] pheatmap_1.0.10            bookdown_0.7              
 ## [27] zlibbioc_1.24.0            purrr_0.2.4               
 ## [29] Rtsne_0.13                 huge_1.2.7                
 ## [31] tibble_1.4.2               mgcv_1.8-23               
 ## [33] IRanges_2.12.0             withr_2.1.2               
 ## [35] BiocGenerics_0.24.0        lazyeval_0.2.1            
-## [37] survival_2.42-3            evaluate_0.10.1           
-## [39] nlme_3.1-137               MASS_7.3-50               
-## [41] vegan_2.5-1                tools_3.4.4               
+## [37] survival_2.41-3            evaluate_0.10.1           
+## [39] nlme_3.1-131.1             MASS_7.3-49               
+## [41] vegan_2.5-2                tools_3.4.4               
 ## [43] data.table_1.11.2          formatR_1.5               
 ## [45] stringr_1.3.1              S4Vectors_0.16.0          
-## [47] munsell_0.4.3              cluster_2.0.7-1           
+## [47] munsell_0.4.3              cluster_2.0.6             
 ## [49] Biostrings_2.46.0          ade4_1.7-11               
 ## [51] compiler_3.4.4             rlang_0.2.0               
 ## [53] rhdf5_2.22.0               grid_3.4.4                
-## [55] iterators_1.0.9            biomformat_1.7.0          
-## [57] rmarkdown_1.9              gtable_0.2.0              
-## [59] codetools_0.2-15           multtest_2.34.0           
-## [61] reshape2_1.4.3             R6_2.2.2                  
-## [63] gridExtra_2.3              knitr_1.20                
-## [65] bindr_0.1.1                rprojroot_1.3-2           
-## [67] permute_0.9-4              ape_5.1                   
-## [69] stringi_1.1.7              parallel_3.4.4            
-## [71] Rcpp_0.12.16               tidyselect_0.2.4          
-## [73] xfun_0.1
+## [55] iterators_1.0.9            biomformat_1.6.0          
+## [57] rmarkdown_1.9              boot_1.3-20               
+## [59] gtable_0.2.0               codetools_0.2-15          
+## [61] multtest_2.34.0            reshape2_1.4.3            
+## [63] R6_2.2.2                   gridExtra_2.3             
+## [65] knitr_1.20                 bindr_0.1.1               
+## [67] rprojroot_1.3-2            permute_0.9-4             
+## [69] ape_5.1                    stringi_1.2.2             
+## [71] parallel_3.4.4             Rcpp_0.12.17              
+## [73] tidyselect_0.2.4           xfun_0.1
 ```
 
 
