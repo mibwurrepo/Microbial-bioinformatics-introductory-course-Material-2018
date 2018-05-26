@@ -210,9 +210,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH 4f7e8f8 UNW- 679 2454 -- 
+## IGRAPH ae7cfb1 UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 4f7e8f8 (vertex names):
+## + edges from ae7cfb1 (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
