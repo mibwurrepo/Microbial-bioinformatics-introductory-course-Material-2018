@@ -195,7 +195,7 @@ Notices the **Sparsity** it is high for both approaches, the data has many zeros
 
 ## Variablity  
 
-We will check the spread of variation for taxa identifed using both approaches. Coefficient of variation, i.e. sd(x)/mean(x) is a widely used approach to measure spread in the data.  
+We will check the spread of variation for taxa identifed using both approaches. Coefficient of variation (C.V), i.e. sd(x)/mean(x) is a widely used approach to measure spread in the data.  
 
 Now plot C.V.  
 ```{r}
@@ -212,7 +212,7 @@ p2 <- plot_taxa_cv(ps.otu, plot.type = "scatter")
 p2+ scale_x_log10()
 ```
 
-From the above two plots, we see that there are several OTUs which are present in less than 20% samples and have high C.V. The OTU-picking approach seems to be noisy and NG-Tax approach seems to have less noise, although with little high ASVs identified even after filtering for low abundant reads. Thus, the ASVs identified by NG-Tax are of high confidence as they seem to be reprsented by high number of sequences in the raw data.  
+From the above two plots, we see that there are several OTUs which have high C.V. The OTU-picking approach seems to be noisy and NG-Tax approach seems to have less noise, although with little high ASVs identified even after filtering for low abundant reads. Thus, the ASVs identified by NG-Tax are of high confidence as they seem to be reprsented by high number of sequences in the raw data.  
 
 Let us check for distribution of numer of sequences retained after OTU picking anf NG-tax approach.  
 
