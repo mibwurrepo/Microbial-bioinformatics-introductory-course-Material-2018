@@ -138,6 +138,7 @@ Bray-Curtis dissimilarity does not consider phylogenetic relationships between O
 
 Section on multivariate analysis will be discussed on Day3.  
 
+
 ## PERMANOVA  
 
 Permutational multivariate analysis of variance [further reading](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841)  
@@ -168,6 +169,7 @@ ps.disper <- betadisper(unifrac.dist, metadf$scientific_name)
 permutest(ps.disper, pairwise = TRUE)
 
 ```
+
 
 
 ```{r}
