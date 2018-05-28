@@ -117,7 +117,7 @@ print(wt.unifrac + stat_ellipse())
 
 The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
-You can try repeating this analysis with phyloseq object from OTU-picking approach. 
+You can repeating this analysis with phyloseq object from OTU-picking approach. 
 
 Another important aspect regarding weighted unifrac is its property of having heavier weights for abundant taxa. To detect changes in moderately abundant lineages, an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
 
@@ -150,7 +150,6 @@ p
 Bray-Curtis dissimilarity does not consider phylogenetic relationships between OTUs. There are several distance methods and a list can be obtained by typying `?distanceMethodList` in the console pane.   
 
 Section on multivariate analysis will be discussed on Day3.  
-
 
 ## PERMANOVA  
 
@@ -237,8 +236,8 @@ permutest(ps.disper, pairwise = TRUE)
 ## human vaginal metagenome           3.1013e-18            1.4078e-10
 ##                          human skin metagenome human vaginal metagenome
 ## human gut metagenome                1.0000e-03                    0.001
-## human oral metagenome               3.2000e-02                    0.001
-## human skin metagenome                                             0.008
+## human oral metagenome               2.0000e-02                    0.001
+## human skin metagenome                                             0.004
 ## human vaginal metagenome            7.0275e-03
 ```
 
@@ -269,7 +268,7 @@ sessionInfo()
 ## other attached packages:
 ##  [1] vegan_2.5-2          lattice_0.20-35      permute_0.9-4       
 ##  [4] dplyr_0.7.5          ggpubr_0.1.6         magrittr_1.5        
-##  [7] RColorBrewer_1.1-2   microbiome_1.1.10012 ggplot2_2.2.1.9000  
+##  [7] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
 ## [10] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):

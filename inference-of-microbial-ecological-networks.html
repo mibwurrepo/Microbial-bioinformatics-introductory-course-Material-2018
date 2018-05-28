@@ -119,12 +119,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#general-overview"><i class="fa fa-check"></i><b>2.2</b> General overview</a></li>
 <li class="chapter" data-level="2.3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>2.3</b> Structure</a></li>
 <li class="chapter" data-level="2.4" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#making-a-phyloseq-object"><i class="fa fa-check"></i><b>2.4</b> Making a phyloseq object</a></li>
-<li class="chapter" data-level="2.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>2.5</b> Read the tree file.</a></li>
-<li class="chapter" data-level="2.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>2.6</b> Merge into phyloseq object.</a></li>
-<li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.7</b> Read data from OTU-picking stratergy</a></li>
-<li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.8</b> Variablity</a></li>
-<li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.9</b> OTU-picking stratergy</a></li>
-<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stratergy"><i class="fa fa-check"></i><b>2.10</b> NG-tax stratergy</a></li>
+<li class="chapter" data-level="2.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-input-to-phyloseq-object"><i class="fa fa-check"></i><b>2.5</b> Read input to phyloseq object</a></li>
+<li class="chapter" data-level="2.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>2.6</b> Read the tree file.</a></li>
+<li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>2.7</b> Merge into phyloseq object.</a></li>
+<li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.8</b> Read data from OTU-picking stratergy</a></li>
+<li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.9</b> Variablity</a></li>
+<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.10</b> OTU-picking stratergy</a></li>
+<li class="chapter" data-level="2.11" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stratergy"><i class="fa fa-check"></i><b>2.11</b> NG-tax stratergy</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>3</b> Alpha diversities</a><ul>
 <li class="chapter" data-level="3.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>3.1</b> Equal sample sums</a></li>
@@ -138,7 +139,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>4.2</b> Barplot relative abundance</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>4.2.1</b> Barplot customize</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>4.3</b> Heatmaps</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>5</b> Beta diversity metrics</a><ul>
 <li class="chapter" data-level="5.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>5.1</b> Phylogenetic beta-diversity metrics</a><ul>
@@ -222,7 +222,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="inference-of-microbial-ecological-networks" class="section level1">
 <h1><span class="header-section-number">7</span> Inference of Microbial Ecological Networks</h1>
 <p>More information on <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226">SPIEC-EASI</a>.</p>
-<p>The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.<br />
+<p>The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function.<br />
 This step is heavy on computational memory and slow. Noise filtered OTU-OTU level covariance would be ideal.</p>
 <p><strong>Load packages and data</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
@@ -347,9 +347,9 @@ vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw
 <h3><span class="header-section-number">7.2.1</span> Prepare data for plotting</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.ig &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(n.c, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>, <span class="dt">weighted =</span> <span class="ot">TRUE</span>)
 stool.ig <span class="co"># we can see all the attributes and weights</span></code></pre></div>
-<pre><code>## IGRAPH ff7fd47 UNW- 679 2454 -- 
+<pre><code>## IGRAPH 8d8ab3c UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from ff7fd47 (vertex names):
+## + edges from 8d8ab3c (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
@@ -438,6 +438,7 @@ stool.ig.mod &lt;-<span class="st"> </span><span class="kw">graph.adjacency</spa
 <span class="kw">plot</span>(stool.ig.mod) <span class="co"># we can see all the attributes and weights</span></code></pre></div>
 <p><img src="07-MAW-PVI_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.net.mod &lt;-<span class="st"> </span><span class="kw">asNetwork</span>(stool.ig.mod)</code></pre></div>
+<p>Set vertex attributes. We can color by phyla and set the size of nodes based on log2 abundance.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phyla &lt;-<span class="st"> </span><span class="kw">map_levels</span>(<span class="kw">colnames</span>(otu.c), <span class="dt">from =</span> <span class="st">&quot;best_hit&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;Phylum&quot;</span>, <span class="kw">tax_table</span>(ps1.stool.otu.f))
 stool.net.mod <span class="op">%v%</span><span class="st"> &quot;Phylum&quot;</span> &lt;-<span class="st"> </span>phyla
 stool.net.mod <span class="op">%v%</span><span class="st"> &quot;nodesize&quot;</span> &lt;-<span class="st"> </span>vsize</code></pre></div>
@@ -445,6 +446,8 @@ stool.net.mod <span class="op">%v%</span><span class="st"> &quot;nodesize&quot;<
 <div id="network-plot-1" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Network plot</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mycolors &lt;-<span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#a6cee3&quot;</span>, <span class="st">&quot;#1f78b4&quot;</span>, <span class="st">&quot;#b2df8a&quot;</span>, <span class="st">&quot;#33a02c&quot;</span>,<span class="st">&quot;#fb9a99&quot;</span>,<span class="st">&quot;#e31a1c&quot;</span>,<span class="st">&quot;#fdbf6f&quot;</span>,<span class="st">&quot;#ff7f00&quot;</span>,<span class="st">&quot;#cab2d6&quot;</span>,<span class="st">&quot;#6a3d9a&quot;</span>,<span class="st">&quot;#ffff99&quot;</span>,<span class="st">&quot;#b15928&quot;</span>))
+
+<span class="co"># check the colorpicker in the addins option in RStudio to interactively select color options.  </span>
 
 p &lt;-<span class="st"> </span><span class="kw">ggnet2</span>(stool.net.mod, <span class="dt">node.color =</span> <span class="st">&quot;Phylum&quot;</span>, 
             <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">node.size =</span> <span class="dv">2</span>, 
@@ -554,7 +557,7 @@ modulesSixOtus=modules<span class="op">$</span>names[modulesSixIndices]
 ##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
 ##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.2     
 ## [10] dplyr_0.7.5          ggpubr_0.1.6         magrittr_1.5        
-## [13] RColorBrewer_1.1-2   microbiome_1.1.10012 ggplot2_2.2.1.9000  
+## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
 ## [16] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):

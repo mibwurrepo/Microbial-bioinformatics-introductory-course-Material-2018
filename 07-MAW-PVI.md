@@ -10,7 +10,7 @@ site: bookdown::bookdown_site
 
 More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
 
-The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function.    
 This step is heavy on computational memory and slow. Noise filtered OTU-OTU level covariance would be ideal.     
 
 **Load packages and data**  
@@ -210,9 +210,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH ff7fd47 UNW- 679 2454 -- 
+## IGRAPH 8d8ab3c UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from ff7fd47 (vertex names):
+## + edges from 8d8ab3c (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
@@ -376,7 +376,7 @@ plot(stool.ig.mod) # we can see all the attributes and weights
 stool.net.mod <- asNetwork(stool.ig.mod)
 ```
 
-
+Set vertex attributes. We can color by phyla and set the size of nodes based on log2 abundance.  
 
 
 ```r
@@ -390,6 +390,8 @@ stool.net.mod %v% "nodesize" <- vsize
 
 ```r
 mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"))
+
+# check the colorpicker in the addins option in RStudio to interactively select color options.  
 
 p <- ggnet2(stool.net.mod, node.color = "Phylum", 
             label = TRUE, node.size = 2, 
@@ -520,7 +522,6 @@ print(modulesOneOtus)
 
 
 
-
 ```r
 sessionInfo()
 ```
@@ -547,7 +548,7 @@ sessionInfo()
 ##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
 ##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.2     
 ## [10] dplyr_0.7.5          ggpubr_0.1.6         magrittr_1.5        
-## [13] RColorBrewer_1.1-2   microbiome_1.1.10012 ggplot2_2.2.1.9000  
+## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
 ## [16] phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):

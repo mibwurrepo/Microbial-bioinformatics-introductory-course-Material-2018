@@ -12,7 +12,7 @@ Alpha diversity measures are used to identify within individual taxa richness an
 
 *It is important to note that, alpha diversity indices are sensitive to noise that is inherent to application of polymerase chain reaction and the  sequencing errors.*  
 
-One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First we look at the sampling depth (no. of reads per sample).     
+One has to consider the sequencing depth (how much of the taxa have been sampled) for each sample. If there is a large difference, then it is important to normalize the samples to equal sampling depth. First, we look at the sampling depth (no. of reads per sample).     
 
 **Load packages**  
  
@@ -84,7 +84,7 @@ We will normalize to the lowest depth of at least 2000 reads to keep maximum sam
 
 
 ```r
-set.seed(9242)  # This will help in reprodcuing the filtering and nomalisation. 
+set.seed(9242)  # This will help in reproducing the filtering and nomalisation. 
 
 ps0.rar <- rarefy_even_depth(ps1, sample.size = 2000)
 ```
@@ -494,7 +494,7 @@ sessionInfo()
 ##  [7] dplyr_0.7.5                data.table_1.11.2         
 ##  [9] DT_0.4                     ggpubr_0.1.6              
 ## [11] magrittr_1.5               RColorBrewer_1.1-2        
-## [13] microbiomeutilities_0.99.0 microbiome_1.1.10012      
+## [13] microbiomeutilities_0.99.0 microbiome_1.1.10013      
 ## [15] ggplot2_2.2.1.9000         phyloseq_1.22.3           
 ## 
 ## loaded via a namespace (and not attached):

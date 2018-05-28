@@ -119,12 +119,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#general-overview"><i class="fa fa-check"></i><b>2.2</b> General overview</a></li>
 <li class="chapter" data-level="2.3" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#structure"><i class="fa fa-check"></i><b>2.3</b> Structure</a></li>
 <li class="chapter" data-level="2.4" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#making-a-phyloseq-object"><i class="fa fa-check"></i><b>2.4</b> Making a phyloseq object</a></li>
-<li class="chapter" data-level="2.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>2.5</b> Read the tree file.</a></li>
-<li class="chapter" data-level="2.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>2.6</b> Merge into phyloseq object.</a></li>
-<li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.7</b> Read data from OTU-picking stratergy</a></li>
-<li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.8</b> Variablity</a></li>
-<li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.9</b> OTU-picking stratergy</a></li>
-<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stratergy"><i class="fa fa-check"></i><b>2.10</b> NG-tax stratergy</a></li>
+<li class="chapter" data-level="2.5" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-input-to-phyloseq-object"><i class="fa fa-check"></i><b>2.5</b> Read input to phyloseq object</a></li>
+<li class="chapter" data-level="2.6" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-the-tree-file."><i class="fa fa-check"></i><b>2.6</b> Read the tree file.</a></li>
+<li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#merge-into-phyloseq-object."><i class="fa fa-check"></i><b>2.7</b> Merge into phyloseq object.</a></li>
+<li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.8</b> Read data from OTU-picking stratergy</a></li>
+<li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.9</b> Variablity</a></li>
+<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.10</b> OTU-picking stratergy</a></li>
+<li class="chapter" data-level="2.11" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stratergy"><i class="fa fa-check"></i><b>2.11</b> NG-tax stratergy</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>3</b> Alpha diversities</a><ul>
 <li class="chapter" data-level="3.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>3.1</b> Equal sample sums</a></li>
@@ -138,7 +139,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>4.2</b> Barplot relative abundance</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>4.2.1</b> Barplot customize</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>4.3</b> Heatmaps</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>5</b> Beta diversity metrics</a><ul>
 <li class="chapter" data-level="5.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>5.1</b> Phylogenetic beta-diversity metrics</a><ul>
@@ -274,7 +274,7 @@ guide_italics &lt;-<span class="st"> </span><span class="kw">guides</span>(<span
     <span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>, <span class="dt">angle =</span> <span class="dv">0</span>)))
 
 
-## Now we need to plot at family level, We can do it as follows:
+## Now we need to plot at family level, we can do it as follows:
 
 <span class="co"># first remove the phy_tree</span>
 
@@ -324,12 +324,9 @@ p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="
 p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>) 
 
 <span class="kw">ggsave</span>(<span class="st">&quot;./figures/Composition plots.pdf&quot;</span>, <span class="dt">height =</span> <span class="dv">4</span>, <span class="dt">width =</span> <span class="dv">6</span>)</code></pre></div>
-<p>For more information <a href="http://microbiome.github.io/microbiome/Composition.html">Microbiome tutorial</a></p>
-</div>
-</div>
-<div id="heatmaps" class="section level2">
-<h2><span class="header-section-number">4.3</span> Heatmaps</h2>
-<p>These are a good alternative to barplots.</p>
+<p>For more information <a href="http://microbiome.github.io/microbiome/Composition.html">Microbiome tutorial</a><br />
+## Heatmaps<br />
+These are a good alternative to barplots (if done right).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># base plot</span>
 p.heat &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> OTU)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Abundance)) 
 
@@ -415,7 +412,7 @@ p.box <span class="op">+</span><span class="st"> </span><span class="kw">rremove
 ## 
 ## other attached packages:
 ## [1] bindrcpp_0.2.2       dplyr_0.7.5          ggpubr_0.1.6        
-## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10012
+## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
 ## [7] ggplot2_2.2.1.9000   phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
@@ -457,6 +454,7 @@ p.box <span class="op">+</span><span class="st"> </span><span class="kw">rremove
 ## [71] rhdf5_2.22.0               cluster_2.0.6             
 ## [73] knitr_1.20                 bindr_0.1.1</code></pre>
 
+</div>
 </div>
 </div>
             </section>

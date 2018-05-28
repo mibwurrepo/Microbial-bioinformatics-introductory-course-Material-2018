@@ -84,7 +84,7 @@ guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15
     face = "italic", colour = "Black", angle = 0)))
 
 
-## Now we need to plot at family level, We can do it as follows:
+## Now we need to plot at family level, we can do it as follows:
 
 # first remove the phy_tree
 
@@ -161,9 +161,8 @@ ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 ```
 
 For more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
-
 ## Heatmaps  
-These are a good alternative to barplots.  
+These are a good alternative to barplots (if done right).  
 
 
 ```r
@@ -284,7 +283,7 @@ sessionInfo()
 ## 
 ## other attached packages:
 ## [1] bindrcpp_0.2.2       dplyr_0.7.5          ggpubr_0.1.6        
-## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10012
+## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
 ## [7] ggplot2_2.2.1.9000   phyloseq_1.22.3     
 ## 
 ## loaded via a namespace (and not attached):
