@@ -248,7 +248,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">sample_sums</span>(ps1))</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    2458    6436    8188    9836   10306  115023</code></pre>
-<p>As is evident there is a large difference in the number of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!</p>
+<p>As is evident there is a large difference in the number of reads. Minimum is 2458 and maximum is 115023!! There is a ~47X difference!</p>
 <p>We can plot the rarefaction curve for the observed ASVs in the entire data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out_tab &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">abundances</span>(ps1))
 p &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">rarecurve</span>(out_tab, 
