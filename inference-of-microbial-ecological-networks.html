@@ -253,7 +253,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <p><strong>Select only stool samples</strong></p>
 <p>We will subset our data to include only stool samples.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.stool &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ps1, bodysite <span class="op">==</span><span class="st"> &quot;Stool&quot;</span>)</code></pre></div>
-<p><strong>For testing reduce the number of OTUs</strong></p>
+<p><strong>For testing reduce the number of ASVs</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.stool.otu &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(ps1.stool) <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>, ps1.stool)
 
 <span class="co"># Add taxonomic classification to OTU ID</span>
@@ -347,9 +347,9 @@ vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw
 <h3><span class="header-section-number">7.2.1</span> Prepare data for plotting</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.ig &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(n.c, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>, <span class="dt">weighted =</span> <span class="ot">TRUE</span>)
 stool.ig <span class="co"># we can see all the attributes and weights</span></code></pre></div>
-<pre><code>## IGRAPH 8d8ab3c UNW- 679 2454 -- 
+<pre><code>## IGRAPH 2de9f4a UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 8d8ab3c (vertex names):
+## + edges from 2de9f4a (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    

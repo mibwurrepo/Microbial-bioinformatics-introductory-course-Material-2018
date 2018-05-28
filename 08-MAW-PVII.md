@@ -625,7 +625,7 @@ print(as.data.frame(permanova$aov.tab)["group", "Pr(>F)"])
 ```
 
 ```
-## [1] 0.02
+## [1] 0.03
 ```
 
 ## Checking the homogeneity condition  
@@ -663,14 +663,14 @@ permutest(betadisper(dist, meta$group), pairwise = TRUE)
 ## 
 ## Response: Distances
 ##            Df  Sum Sq   Mean Sq      F N.Perm Pr(>F)
-## Groups      2 0.01254 0.0062718 0.6663    999  0.532
+## Groups      2 0.01254 0.0062718 0.6663    999  0.501
 ## Residuals 219 2.06137 0.0094126                     
 ## 
 ## Pairwise comparisons:
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##         DI      ED    HE
-## DI         0.47100 0.711
-## ED 0.44195         0.300
+## DI         0.40600 0.681
+## ED 0.44195         0.294
 ## HE 0.69375 0.30498
 ```
 

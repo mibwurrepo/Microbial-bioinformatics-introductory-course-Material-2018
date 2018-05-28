@@ -243,7 +243,7 @@ permanova &lt;-<span class="st"> </span><span class="kw">adonis</span>(<span cla
 
 <span class="co"># P-value</span>
 <span class="kw">print</span>(<span class="kw">as.data.frame</span>(permanova<span class="op">$</span>aov.tab)[<span class="st">&quot;group&quot;</span>, <span class="st">&quot;Pr(&gt;F)&quot;</span>])</code></pre></div>
-<pre><code>## [1] 0.02</code></pre>
+<pre><code>## [1] 0.03</code></pre>
 </div>
 <div id="checking-the-homogeneity-condition-1" class="section level2">
 <h2><span class="header-section-number">11.2</span> Checking the homogeneity condition</h2>
@@ -268,14 +268,14 @@ dist &lt;-<span class="st"> </span><span class="kw">vegdist</span>(<span class="
 ## 
 ## Response: Distances
 ##            Df  Sum Sq   Mean Sq      F N.Perm Pr(&gt;F)
-## Groups      2 0.01254 0.0062718 0.6663    999  0.532
+## Groups      2 0.01254 0.0062718 0.6663    999  0.501
 ## Residuals 219 2.06137 0.0094126                     
 ## 
 ## Pairwise comparisons:
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##         DI      ED    HE
-## DI         0.47100 0.711
-## ED 0.44195         0.300
+## DI         0.40600 0.681
+## ED 0.44195         0.294
 ## HE 0.69375 0.30498</code></pre>
 <p>We can also check which taxa contribute most to the community differences. Are these same or different compared to DESeq2?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coef &lt;-<span class="st"> </span><span class="kw">coefficients</span>(permanova)[<span class="st">&quot;group1&quot;</span>,]

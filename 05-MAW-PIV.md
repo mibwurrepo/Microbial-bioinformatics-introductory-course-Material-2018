@@ -237,7 +237,7 @@ permutest(ps.disper, pairwise = TRUE)
 ##                          human skin metagenome human vaginal metagenome
 ## human gut metagenome                1.0000e-03                    0.001
 ## human oral metagenome               2.0000e-02                    0.001
-## human skin metagenome                                             0.004
+## human skin metagenome                                             0.007
 ## human vaginal metagenome            7.0275e-03
 ```
 

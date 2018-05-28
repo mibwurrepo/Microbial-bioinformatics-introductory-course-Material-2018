@@ -65,7 +65,7 @@ ps1.stool <- subset_samples(ps1, bodysite == "Stool")
 ```
 
 
-**For testing reduce the number of OTUs**  
+**For testing reduce the number of ASVs**  
 
 
 ```r
@@ -210,9 +210,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH 8d8ab3c UNW- 679 2454 -- 
+## IGRAPH 2de9f4a UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from 8d8ab3c (vertex names):
+## + edges from 2de9f4a (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
