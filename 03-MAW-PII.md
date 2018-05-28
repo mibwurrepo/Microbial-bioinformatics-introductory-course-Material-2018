@@ -76,7 +76,7 @@ p <- vegan::rarecurve(out_tab,
 
 <img src="03-MAW-PII_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
-Not all samples are reaching a plateau and that few samples have high number of reads and high number of ASVs.  
+Almost all samples are reaching a plateau and few samples have high number of reads and high number of ASVs.    
 Since we are comparing different body sites, some are expected to have low bacterial load.  
 We will normalize to the lowest depth of at least 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This decision will depend on the research question being addressed.  
 
