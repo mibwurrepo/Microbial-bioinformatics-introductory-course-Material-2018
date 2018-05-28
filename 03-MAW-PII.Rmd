@@ -51,7 +51,7 @@ summary(sample_sums(ps1))
 
 ```
 
-As is evident there is a large difference in the number of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!  
+As is evident there is a large difference in the number of reads. Minimum is 2458 and maximum is 115023!! There is a ~47X difference!  
 
 We can plot the rarefaction curve for the observed ASVs in the entire data set.  
 
