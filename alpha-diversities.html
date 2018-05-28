@@ -248,7 +248,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">sample_sums</span>(ps1))</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    2458    6436    8188    9836   10306  115023</code></pre>
-<p>As is evident there is a large difference in the number of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!</p>
+<p>As is evident there is a large difference in the number of reads. Minimum is 2458 and maximum is 115023!! There is a ~47X difference!!</p>
 <p>We can plot the rarefaction curve for the observed ASVs in the entire data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out_tab &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">abundances</span>(ps1))
 p &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">rarecurve</span>(out_tab, 
@@ -256,7 +256,7 @@ p &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">
                       <span class="dt">sample =</span> <span class="kw">min</span>(<span class="kw">rowSums</span>(out_tab), 
                                    <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.6</span>))</code></pre></div>
 <p><img src="03-MAW-PII_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Not all samples are reaching a plateau and that few samples have high number of reads and high number of ASVs.<br />
+<p>Almost all samples are reaching a plateau and few samples have high number of reads and high number of ASVs.<br />
 Since we are comparing different body sites, some are expected to have low bacterial load.<br />
 We will normalize to the lowest depth of at least 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This decision will depend on the research question being addressed.</p>
 <div id="equal-sample-sums" class="section level2">
