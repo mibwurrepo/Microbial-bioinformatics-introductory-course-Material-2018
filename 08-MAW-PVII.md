@@ -1,7 +1,7 @@
 ---
 title: "Differential abundance testing"
 author: "Leo Lahti"
-date: "2018-05-26"
+date: "2018-05-28"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -332,7 +332,7 @@ GroupAFR:sexMale:bmi_groupoverweight            NA
 GroupAFR:sexMale:bmi_groupobese                 NA
 
 
-
+For more examples on using and analysing linear models, see statmethods [regression](https://www.statmethods.net/stats/regression.html) and [ANOVA](See also [statmethods](https://www.statmethods.net/stats/anova.html) tutorials. **Try to adapt those examples on our microbiome example data data sets**.
 
 
 # Advanced models for differential abundance
@@ -440,10 +440,11 @@ associations. GLMs consist of three elements:
 
   - A link function g such that $E(Y) = \mu = g^{-1}(Xb)$.
 
-Let us fit Poisson with (natural) log-link. Fit abundance (read
-counts) assuming that the data is Poisson distributed, and the
+Let us fit Poisson with (natural) log-link just to demonstrate how
+generalized linear models could be fitted in R. We fit the abundance
+(read counts) assuming that the data is Poisson distributed, and the
 logarithm of its mean, or expectation, is obtained with a linear
-model. We ignore covariates in this example.
+model. For further examples in R, you can also check the [statmethods website](https://www.statmethods.net/advstats/glm.html).
 
 
 ```r
@@ -468,7 +469,7 @@ knitr::kable(summary(res)$coefficients, digits = 5)
 (Intercept)     5.02355      0.00544   922.6545          0
 
 
-Note the link between mean and estimated coefficient ($\mu = e^{\alpha}$):
+Note the link between mean and estimated coefficient ($\mu = e^{Xb}$):
 
 
 ```r
@@ -491,8 +492,10 @@ exp(coef(res))
 
 ## DESeq2: differential abundance testing for sequencing data
 
-DESeq2 analysis can accommodate those particular assumptions about
-sequencing data. For details, see the [original publication](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8).
+### Fitting DESeq2
+
+[DESeq2 analysis]((https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) accommodates those particular assumptions about
+sequencing data. 
 
 
 ```r
@@ -505,17 +508,19 @@ ds2 <- phyloseq_to_deseq2(d, ~ group + nationality)
 dds <- DESeq(ds2)
 
 # Investigate results
-res <- results(dds)
-deseq.results <- as.data.frame(res)
-df <- deseq.results
-df$taxon <- rownames(df)
-df <- df %>% arrange(log2FoldChange, padj)
+deseq.results <- as.data.frame(results(dds))
+deseq.results$taxon <- rownames(results(dds))
 
-# Print the results; flitered and sorted by pvalue and effectsize
+# Sort (arrange) by pvalue and effect size
 library(knitr)
-df <- df %>% filter(pvalue < 0.05 & log2FoldChange > 1.5) %>%
-             arrange(pvalue, log2FoldChange)
-knitr::kable(df, digits = 5)
+deseq.results <- deseq.results %>%
+                   arrange(pvalue, log2FoldChange)
+
+# Print the result table
+# Let us only show significant hits
+knitr::kable(deseq.results %>%
+               filter(pvalue < 0.05 & log2FoldChange > 1.5),
+	     digits = 5)
 ```
 
 
@@ -531,6 +536,8 @@ knitr::kable(df, digits = 5)
    19.97851          2.24305   0.31335    7.15820        0      0  Aquabacterium                  
   173.00079          1.80120   0.26252    6.86114        0      0  Haemophilus                    
 
+
+### Comparison between DESeq2 and standard models
 
 For comparison purposes, assess significances and effect sizes based on Wilcoxon test.
 
@@ -575,11 +582,163 @@ abline(0,1)
 For systematic comparisons between various methods for differential abundance testing, see [this paper](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).
 
 
+# Multivariate comparisons of microbial community composition
+
+The above examples focus on comparison per individual taxonomic group. Often, the groups are correlated and we are interested in comparing the overall community composition.
+
+## PERMANOVA  
+
+Permutational multivariate analysis of variance [further reading](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841). See also [statmethods](https://www.statmethods.net/stats/anova.html).
+
+
+```r
+library(vegan)
+```
+
+```
+## Loading required package: permute
+```
+
+```
+## Loading required package: lattice
+```
+
+```
+## This is vegan 2.5-2
+```
+
+```r
+pseq <- dietswap
+
+# Pick relative abundances (compositional) and sample metadata 
+pseq.rel <- microbiome::transform(pseq, "compositional")
+otu <- abundances(pseq.rel)
+meta <- meta(pseq.rel)
+
+# samples x species as input
+library(vegan)
+permanova <- adonis(t(otu) ~ group,
+               data = meta, permutations=99, method = "bray")
+
+# P-value
+print(as.data.frame(permanova$aov.tab)["group", "Pr(>F)"])
+```
+
+```
+## [1] 0.02
+```
+
+## Checking the homogeneity condition  
+
+Type `?betadisper` in R console for more information.  
+
+
+```r
+# Note the assumption of similar multivariate spread among the groups
+# ie. analogous to variance homogeneity
+# Here the groups have signif. different spreads and
+# permanova result may be potentially explained by that.
+dist <- vegdist(t(otu))
+anova(betadisper(dist, meta$group))
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: Distances
+##            Df  Sum Sq   Mean Sq F value Pr(>F)
+## Groups      2 0.01254 0.0062718  0.6663 0.5146
+## Residuals 219 2.06137 0.0094126
+```
+
+```r
+permutest(betadisper(dist, meta$group), pairwise = TRUE)
+```
+
+```
+## 
+## Permutation test for homogeneity of multivariate dispersions
+## Permutation: free
+## Number of permutations: 999
+## 
+## Response: Distances
+##            Df  Sum Sq   Mean Sq      F N.Perm Pr(>F)
+## Groups      2 0.01254 0.0062718 0.6663    999   0.54
+## Residuals 219 2.06137 0.0094126                     
+## 
+## Pairwise comparisons:
+## (Observed p-value below diagonal, permuted p-value above diagonal)
+##         DI      ED    HE
+## DI         0.49500 0.704
+## ED 0.44195         0.285
+## HE 0.69375 0.30498
+```
+
+We can also check which taxa contribute most to the community differences. Are these same or different compared to DESeq2?
+
+
+```r
+coef <- coefficients(permanova)["group1",]
+top.coef <- coef[rev(order(abs(coef)))[1:20]]
+par(mar = c(3, 14, 2, 1))
+barplot(sort(top.coef), horiz = T, las = 1, main = "Top taxa")
+```
+
+<img src="08-MAW-PVII_files/figure-html/permanovatop-1.png" width="600px" />
+
+
 # Further exercises
 
-When done with the differential abundance testing examples, you can investigate the use of the following standard methods for microbiome studies. 
+When done with the differential abundance testing examples, you can investigate the use of the following standard methods for microbiome studies. We are available to discuss and explain the technical aspects in more detail during the class.
 
-- Compositionality effect: compare the effect of CLR transformation (microbiome::clr) on microbiome ordination with PCoA. Prepare PCoA with Bray-Curtis distances for compositional data; and PCoA with euclidean distances for CLR-transformed data (microbiome::transform). For examples, see [microbiome tutorial](http://microbiome.github.io/microbiome/Landscaping.html).
+
+## Compositionality
+
+**Compositionality effect** compare the effect of CLR transformation (microbiome::clr) on microbiome analysis results. 1) Compare t-test and/or Wilcoxon test results between data that is transformed with compositional or clr transformation (see the function microbiome::transform); and/or 2) Prepare PCoA with Bray-Curtis distances for compositional data; and PCoA with euclidean distances for CLR-transformed data (microbiome::transform). For examples, see [microbiome tutorial](http://microbiome.github.io/microbiome/Landscaping.html).
+
+
+## Redundancy analysis (RDA)
+
+A very good overview of various multivariate methods used in microbial ecology is provided [here](http://www.wright.edu/~oleg.paliy/Papers/Paliy_ME2016.pdf). Read the Redundancy analysis (and possibly other) section. Next, try to perform simple redundancy analysis in R based on the following examples.
+
+Standard RDA for microbiota profiles versus the given (here 'time')
+variable from sample metadata (see also the RDA method in
+phyloseq::ordinate)
+
+
+```r
+x <- transform(dietswap, "compositional")
+otu <- abundances(x)
+metadata <- meta(x)
+
+library(vegan)
+rda.result <- vegan::rda(t(otu) ~ factor(metadata$nationality),
+                         na.action = na.fail, scale = TRUE)
+```
+
+Visualize the standard RDA output:
+
+
+```r
+plot(rda.result, choices = c(1,2), type = "points", pch = 15, scaling = 3, cex = 0.7, col = metadata$time)
+points(rda.result, choices = c(1,2), pch = 15, scaling = 3, cex = 0.7, col = metadata$time)
+pl <- ordihull(rda.result, metadata$nationality, scaling = 3, label = TRUE)
+```
+
+
+Test RDA significance:
+
+
+```r
+permutest(rda.result) 
+```
+
+Include confounding variables:
+
+
+```r
+rda.result2 <- vegan::rda(t(otu) ~ metadata$nationality + Condition(metadata$bmi_group + metadata$sex))
+```
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-26"
+date: "2018-05-28"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---

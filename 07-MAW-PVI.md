@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-26"
+date: "2018-05-28"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -210,9 +210,9 @@ stool.ig # we can see all the attributes and weights
 ```
 
 ```
-## IGRAPH ae7cfb1 UNW- 679 2454 -- 
+## IGRAPH ff7fd47 UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from ae7cfb1 (vertex names):
+## + edges from ff7fd47 (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    

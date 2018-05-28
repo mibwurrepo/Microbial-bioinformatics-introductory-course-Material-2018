@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-26">
+<meta name="date" content="2018-05-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.7</b> Read data from OTU-picking stratergy</a></li>
 <li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.8</b> Variablity</a></li>
 <li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.9</b> OTU-picking stratergy</a></li>
-<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stragey"><i class="fa fa-check"></i><b>2.10</b> NG-tax stragey</a></li>
+<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stratergy"><i class="fa fa-check"></i><b>2.10</b> NG-tax stratergy</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>3</b> Alpha diversities</a><ul>
 <li class="chapter" data-level="3.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>3.1</b> Equal sample sums</a></li>
@@ -189,9 +189,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.1.4" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#overdispersion"><i class="fa fa-check"></i><b>10.1.4</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#generalized-linear-models-a-brief-overview"><i class="fa fa-check"></i><b>10.2</b> Generalized linear models: a brief overview</a></li>
-<li class="chapter" data-level="10.3" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#deseq2-differential-abundance-testing-for-sequencing-data"><i class="fa fa-check"></i><b>10.3</b> DESeq2: differential abundance testing for sequencing data</a></li>
+<li class="chapter" data-level="10.3" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#deseq2-differential-abundance-testing-for-sequencing-data"><i class="fa fa-check"></i><b>10.3</b> DESeq2: differential abundance testing for sequencing data</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#fitting-deseq2"><i class="fa fa-check"></i><b>10.3.1</b> Fitting DESeq2</a></li>
+<li class="chapter" data-level="10.3.2" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#comparison-between-deseq2-and-standard-models"><i class="fa fa-check"></i><b>10.3.2</b> Comparison between DESeq2 and standard models</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="further-exercises.html"><a href="further-exercises.html"><i class="fa fa-check"></i><b>11</b> Further exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="multivariate-comparisons-of-microbial-community-composition.html"><a href="multivariate-comparisons-of-microbial-community-composition.html"><i class="fa fa-check"></i><b>11</b> Multivariate comparisons of microbial community composition</a><ul>
+<li class="chapter" data-level="11.1" data-path="multivariate-comparisons-of-microbial-community-composition.html"><a href="multivariate-comparisons-of-microbial-community-composition.html#permanova-1"><i class="fa fa-check"></i><b>11.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="11.2" data-path="multivariate-comparisons-of-microbial-community-composition.html"><a href="multivariate-comparisons-of-microbial-community-composition.html#checking-the-homogeneity-condition-1"><i class="fa fa-check"></i><b>11.2</b> Checking the homogeneity condition</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="further-exercises.html"><a href="further-exercises.html"><i class="fa fa-check"></i><b>12</b> Further exercises</a><ul>
+<li class="chapter" data-level="12.1" data-path="further-exercises.html"><a href="further-exercises.html#compositionality"><i class="fa fa-check"></i><b>12.1</b> Compositionality</a></li>
+<li class="chapter" data-level="12.2" data-path="further-exercises.html"><a href="further-exercises.html#redundancy-analysis-rda"><i class="fa fa-check"></i><b>12.2</b> Redundancy analysis (RDA)</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -212,7 +222,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</h1>
 <h4 class="author"><em>Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes</em></h4>
-<h4 class="date"><em>2018-05-26</em></h4>
+<h4 class="date"><em>2018-05-28</em></h4>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
@@ -225,9 +235,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>We recommend using your own laptop. If this is not possible, kindly contact the organizers.</p>
 <p>Install the following software before the course:</p>
 <ul>
-<li><a href="https://www.r-project.org/">R version 3.4.4</a><br />
+<li>R 3.4.4 <a href="https://cran.r-project.org/bin/windows/base/old/3.4.4/">Download link</a>.<br />
 </li>
-<li><a href="https://www.rstudio.com/">R Studio</a></li>
+<li>Rstudio <a href="https://www.rstudio.com/products/rstudio/download/">Download link</a>.</li>
 </ul>
 <p>Download the master branch of the the github repository for the <a href="https://github.com/mibwurrepo/Microbial-bioinformatics-introductory-course-Material-2018">course</a>.</p>
 <img src="images/Gihub_repo_step1.png" alt="microbiome R package" />

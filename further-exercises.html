@@ -25,14 +25,14 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-26">
+<meta name="date" content="2018-05-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="advanced-models-for-differential-abundance.html">
+<link rel="prev" href="multivariate-comparisons-of-microbial-community-composition.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -124,7 +124,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.7" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#read-data-from-otu-picking-stratergy"><i class="fa fa-check"></i><b>2.7</b> Read data from OTU-picking stratergy</a></li>
 <li class="chapter" data-level="2.8" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#variablity"><i class="fa fa-check"></i><b>2.8</b> Variablity</a></li>
 <li class="chapter" data-level="2.9" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#otu-picking-stratergy"><i class="fa fa-check"></i><b>2.9</b> OTU-picking stratergy</a></li>
-<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stragey"><i class="fa fa-check"></i><b>2.10</b> NG-tax stragey</a></li>
+<li class="chapter" data-level="2.10" data-path="set-up-and-pre-processing.html"><a href="set-up-and-pre-processing.html#ng-tax-stratergy"><i class="fa fa-check"></i><b>2.10</b> NG-tax stratergy</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="alpha-diversities.html"><a href="alpha-diversities.html"><i class="fa fa-check"></i><b>3</b> Alpha diversities</a><ul>
 <li class="chapter" data-level="3.1" data-path="alpha-diversities.html"><a href="alpha-diversities.html#equal-sample-sums"><i class="fa fa-check"></i><b>3.1</b> Equal sample sums</a></li>
@@ -189,9 +189,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.1.4" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#overdispersion"><i class="fa fa-check"></i><b>10.1.4</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#generalized-linear-models-a-brief-overview"><i class="fa fa-check"></i><b>10.2</b> Generalized linear models: a brief overview</a></li>
-<li class="chapter" data-level="10.3" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#deseq2-differential-abundance-testing-for-sequencing-data"><i class="fa fa-check"></i><b>10.3</b> DESeq2: differential abundance testing for sequencing data</a></li>
+<li class="chapter" data-level="10.3" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#deseq2-differential-abundance-testing-for-sequencing-data"><i class="fa fa-check"></i><b>10.3</b> DESeq2: differential abundance testing for sequencing data</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#fitting-deseq2"><i class="fa fa-check"></i><b>10.3.1</b> Fitting DESeq2</a></li>
+<li class="chapter" data-level="10.3.2" data-path="advanced-models-for-differential-abundance.html"><a href="advanced-models-for-differential-abundance.html#comparison-between-deseq2-and-standard-models"><i class="fa fa-check"></i><b>10.3.2</b> Comparison between DESeq2 and standard models</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="further-exercises.html"><a href="further-exercises.html"><i class="fa fa-check"></i><b>11</b> Further exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="multivariate-comparisons-of-microbial-community-composition.html"><a href="multivariate-comparisons-of-microbial-community-composition.html"><i class="fa fa-check"></i><b>11</b> Multivariate comparisons of microbial community composition</a><ul>
+<li class="chapter" data-level="11.1" data-path="multivariate-comparisons-of-microbial-community-composition.html"><a href="multivariate-comparisons-of-microbial-community-composition.html#permanova-1"><i class="fa fa-check"></i><b>11.1</b> PERMANOVA</a></li>
+<li class="chapter" data-level="11.2" data-path="multivariate-comparisons-of-microbial-community-composition.html"><a href="multivariate-comparisons-of-microbial-community-composition.html#checking-the-homogeneity-condition-1"><i class="fa fa-check"></i><b>11.2</b> Checking the homogeneity condition</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="further-exercises.html"><a href="further-exercises.html"><i class="fa fa-check"></i><b>12</b> Further exercises</a><ul>
+<li class="chapter" data-level="12.1" data-path="further-exercises.html"><a href="further-exercises.html#compositionality"><i class="fa fa-check"></i><b>12.1</b> Compositionality</a></li>
+<li class="chapter" data-level="12.2" data-path="further-exercises.html"><a href="further-exercises.html#redundancy-analysis-rda"><i class="fa fa-check"></i><b>12.2</b> Redundancy analysis (RDA)</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -210,19 +220,40 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="further-exercises" class="section level1">
-<h1><span class="header-section-number">11</span> Further exercises</h1>
-<p>When done with the differential abundance testing examples, you can investigate the use of the following standard methods for microbiome studies.</p>
-<ul>
-<li>Compositionality effect: compare the effect of CLR transformation (microbiome::clr) on microbiome ordination with PCoA. Prepare PCoA with Bray-Curtis distances for compositional data; and PCoA with euclidean distances for CLR-transformed data (microbiome::transform). For examples, see <a href="http://microbiome.github.io/microbiome/Landscaping.html">microbiome tutorial</a>.</li>
-</ul>
+<h1><span class="header-section-number">12</span> Further exercises</h1>
+<p>When done with the differential abundance testing examples, you can investigate the use of the following standard methods for microbiome studies. We are available to discuss and explain the technical aspects in more detail during the class.</p>
+<div id="compositionality" class="section level2">
+<h2><span class="header-section-number">12.1</span> Compositionality</h2>
+<p><strong>Compositionality effect</strong> compare the effect of CLR transformation (microbiome::clr) on microbiome analysis results. 1) Compare t-test and/or Wilcoxon test results between data that is transformed with compositional or clr transformation (see the function microbiome::transform); and/or 2) Prepare PCoA with Bray-Curtis distances for compositional data; and PCoA with euclidean distances for CLR-transformed data (microbiome::transform). For examples, see <a href="http://microbiome.github.io/microbiome/Landscaping.html">microbiome tutorial</a>.</p>
+</div>
+<div id="redundancy-analysis-rda" class="section level2">
+<h2><span class="header-section-number">12.2</span> Redundancy analysis (RDA)</h2>
+<p>A very good overview of various multivariate methods used in microbial ecology is provided <a href="http://www.wright.edu/~oleg.paliy/Papers/Paliy_ME2016.pdf">here</a>. Read the Redundancy analysis (and possibly other) section. Next, try to perform simple redundancy analysis in R based on the following examples.</p>
+<p>Standard RDA for microbiota profiles versus the given (here ‘time’) variable from sample metadata (see also the RDA method in phyloseq::ordinate)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">transform</span>(dietswap, <span class="st">&quot;compositional&quot;</span>)
+otu &lt;-<span class="st"> </span><span class="kw">abundances</span>(x)
+metadata &lt;-<span class="st"> </span><span class="kw">meta</span>(x)
 
+<span class="kw">library</span>(vegan)
+rda.result &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">rda</span>(<span class="kw">t</span>(otu) <span class="op">~</span><span class="st"> </span><span class="kw">factor</span>(metadata<span class="op">$</span>nationality),
+                         <span class="dt">na.action =</span> na.fail, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Visualize the standard RDA output:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rda.result, <span class="dt">choices =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">type =</span> <span class="st">&quot;points&quot;</span>, <span class="dt">pch =</span> <span class="dv">15</span>, <span class="dt">scaling =</span> <span class="dv">3</span>, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">col =</span> metadata<span class="op">$</span>time)
+<span class="kw">points</span>(rda.result, <span class="dt">choices =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">pch =</span> <span class="dv">15</span>, <span class="dt">scaling =</span> <span class="dv">3</span>, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">col =</span> metadata<span class="op">$</span>time)
+pl &lt;-<span class="st"> </span><span class="kw">ordihull</span>(rda.result, metadata<span class="op">$</span>nationality, <span class="dt">scaling =</span> <span class="dv">3</span>, <span class="dt">label =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Test RDA significance:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">permutest</span>(rda.result) </code></pre></div>
+<p>Include confounding variables:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rda.result2 &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">rda</span>(<span class="kw">t</span>(otu) <span class="op">~</span><span class="st"> </span>metadata<span class="op">$</span>nationality <span class="op">+</span><span class="st"> </span><span class="kw">Condition</span>(metadata<span class="op">$</span>bmi_group <span class="op">+</span><span class="st"> </span>metadata<span class="op">$</span>sex))</code></pre></div>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="advanced-models-for-differential-abundance.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multivariate-comparisons-of-microbial-community-composition.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

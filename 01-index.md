@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes"
-date: "2018-05-26"
+date: "2018-05-28"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -19,10 +19,10 @@ We recommend using your own laptop. If this is not possible, kindly contact the 
 
 Install the following software before the course:
 
-* [R version 3.4](https://www.r-project.org/)   
-* [R Studio](https://www.rstudio.com/)   
+* R 3.4.4 [Download link](https://cran.r-project.org/bin/windows/base/old/3.4.4/).    
+* Rstudio [Download link](https://www.rstudio.com/products/rstudio/download/).  
 
-Download the master brach of the the github repository for the [course](https://github.com/mibwurrepo/Microbial-bioinformatics-introductory-course-Material-2018).  
+Download the master branch of the the github repository for the [course](https://github.com/mibwurrepo/Microbial-bioinformatics-introductory-course-Material-2018).  
 
 ![ microbiome R package](images/Gihub_repo_step1.png)</center>  
 

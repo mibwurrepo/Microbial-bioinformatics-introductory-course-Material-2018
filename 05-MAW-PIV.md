@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-26"
+date: "2018-05-28"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -151,6 +151,7 @@ Bray-Curtis dissimilarity does not consider phylogenetic relationships between O
 
 Section on multivariate analysis will be discussed on Day3.  
 
+
 ## PERMANOVA  
 
 Permutational multivariate analysis of variance [further reading](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841)  
@@ -237,9 +238,10 @@ permutest(ps.disper, pairwise = TRUE)
 ##                          human skin metagenome human vaginal metagenome
 ## human gut metagenome                1.0000e-03                    0.001
 ## human oral metagenome               3.2000e-02                    0.001
-## human skin metagenome                                             0.007
+## human skin metagenome                                             0.008
 ## human vaginal metagenome            7.0275e-03
 ```
+
 
 
 

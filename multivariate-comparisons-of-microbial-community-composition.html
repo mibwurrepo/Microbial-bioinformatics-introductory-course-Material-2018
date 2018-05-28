@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="differential-abundance-testing-for-univariate-data.html">
-<link rel="next" href="advanced-models-for-differential-abundance.html">
+<link rel="prev" href="advanced-models-for-differential-abundance.html">
+<link rel="next" href="further-exercises.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -219,129 +219,70 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-models-the-role-of-covariates" class="section level1">
-<h1><span class="header-section-number">9</span> Linear models: the role of covariates</h1>
-<p>This section provides hands-on introduction to linear (and generalized linear) models.</p>
-<p><strong>Task Fit linear model to compare abundance between the two groups.</strong> You can use functions lm or glm, for instance.</p>
-<div id="fitting-a-linear-model" class="section level2">
-<h2><span class="header-section-number">9.1</span> Fitting a linear model</h2>
-<p>Let us compare two groups with a linear model. We use Log10 abundances since this is closer to the Gaussian assumptions than the absolute count data. Fit a linear model with Gaussian variation as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</code></pre></div>
-</div>
-<div id="interpreting-linear-model-output" class="section level2">
-<h2><span class="header-section-number">9.2</span> Interpreting linear model output</h2>
-<p>Investigate the model coefficients:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">summary</span>(res)<span class="op">$</span>coefficients, <span class="dt">digits =</span> <span class="dv">5</span>)</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">Estimate</th>
-<th align="right">Std. Error</th>
-<th align="right">t value</th>
-<th align="right">Pr(&gt;|t|)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td align="right">2.06864</td>
-<td align="right">0.01500</td>
-<td align="right">137.89729</td>
-<td align="right">0.00000</td>
-</tr>
-<tr class="even">
-<td>GroupAFR</td>
-<td align="right">0.08065</td>
-<td align="right">0.02246</td>
-<td align="right">3.59001</td>
-<td align="right">0.00041</td>
-</tr>
-</tbody>
-</table>
-<p>The intercept equals to the mean in the first group:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AAM&quot;</span>)<span class="op">$</span>Log10_Abundance))</code></pre></div>
-<pre><code>## [1] 2.068637</code></pre>
-<p>The group term equals to the difference between group means:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AFR&quot;</span>)<span class="op">$</span>Log10_Abundance) <span class="op">-</span>
-<span class="st">      </span><span class="kw">mean</span>(<span class="kw">subset</span>(df, Group <span class="op">==</span><span class="st"> &quot;AAM&quot;</span>)<span class="op">$</span>Log10_Abundance))</code></pre></div>
-<pre><code>## [1] 0.080646</code></pre>
-<p>Note that the linear model (default) significance equals to t-test assuming equal variances.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">t.test</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group, <span class="dt">data =</span> df, <span class="dt">var.equal=</span><span class="ot">TRUE</span>)<span class="op">$</span>p.value)</code></pre></div>
-<pre><code>## [1] 0.0004077211</code></pre>
-</div>
-<div id="covariate-testing" class="section level2">
-<h2><span class="header-section-number">9.3</span> Covariate testing</h2>
-<p><strong>Task: Investigate how sex and bmi affect the results. </strong></p>
-<p>An important advantage of linear and generalized linear models, compared to plain t-test is that they allow incorporating additional variables, such as potential confounders (age, BMI, gender..):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a covariate:</span>
-df<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">meta</span>(d)<span class="op">$</span>sex
-df<span class="op">$</span>bmi_group &lt;-<span class="st"> </span><span class="kw">meta</span>(d)<span class="op">$</span>bmi_group
+<div id="multivariate-comparisons-of-microbial-community-composition" class="section level1">
+<h1><span class="header-section-number">11</span> Multivariate comparisons of microbial community composition</h1>
+<p>The above examples focus on comparison per individual taxonomic group. Often, the groups are correlated and we are interested in comparing the overall community composition.</p>
+<div id="permanova-1" class="section level2">
+<h2><span class="header-section-number">11.1</span> PERMANOVA</h2>
+<p>Permutational multivariate analysis of variance <a href="https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841">further reading</a>. See also <a href="https://www.statmethods.net/stats/anova.html">statmethods</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vegan)</code></pre></div>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.5-2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pseq &lt;-<span class="st"> </span>dietswap
 
-<span class="co"># Fit the model:</span>
-res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>bmi_group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)</code></pre></div>
-<p>We can even include interaction terms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <span class="op">~</span><span class="st"> </span>Group <span class="op">*</span><span class="st"> </span>sex <span class="op">*</span><span class="st"> </span>bmi_group, <span class="dt">data =</span> df, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>)
-<span class="kw">kable</span>(<span class="kw">coefficients</span>(res))</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">x</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td align="right">2.0812548</td>
-</tr>
-<tr class="even">
-<td>GroupAFR</td>
-<td align="right">0.0233341</td>
-</tr>
-<tr class="odd">
-<td>sexMale</td>
-<td align="right">0.0090777</td>
-</tr>
-<tr class="even">
-<td>bmi_groupoverweight</td>
-<td align="right">-0.0075846</td>
-</tr>
-<tr class="odd">
-<td>bmi_groupobese</td>
-<td align="right">-0.0203030</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:sexMale</td>
-<td align="right">0.0375102</td>
-</tr>
-<tr class="odd">
-<td>GroupAFR:bmi_groupoverweight</td>
-<td align="right">-0.0467722</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:bmi_groupobese</td>
-<td align="right">0.1209742</td>
-</tr>
-<tr class="odd">
-<td>sexMale:bmi_groupoverweight</td>
-<td align="right">-0.0295655</td>
-</tr>
-<tr class="even">
-<td>sexMale:bmi_groupobese</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td>GroupAFR:sexMale:bmi_groupoverweight</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td>GroupAFR:sexMale:bmi_groupobese</td>
-<td align="right">NA</td>
-</tr>
-</tbody>
-</table>
-<p>For more examples on using and analysing linear models, see statmethods <a href="https://www.statmethods.net/stats/regression.html">regression</a> and [ANOVA](See also <a href="https://www.statmethods.net/stats/anova.html">statmethods</a> tutorials. <strong>Try to adapt those examples on our microbiome example data data sets</strong>.</p>
+<span class="co"># Pick relative abundances (compositional) and sample metadata </span>
+pseq.rel &lt;-<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">transform</span>(pseq, <span class="st">&quot;compositional&quot;</span>)
+otu &lt;-<span class="st"> </span><span class="kw">abundances</span>(pseq.rel)
+meta &lt;-<span class="st"> </span><span class="kw">meta</span>(pseq.rel)
+
+<span class="co"># samples x species as input</span>
+<span class="kw">library</span>(vegan)
+permanova &lt;-<span class="st"> </span><span class="kw">adonis</span>(<span class="kw">t</span>(otu) <span class="op">~</span><span class="st"> </span>group,
+               <span class="dt">data =</span> meta, <span class="dt">permutations=</span><span class="dv">99</span>, <span class="dt">method =</span> <span class="st">&quot;bray&quot;</span>)
+
+<span class="co"># P-value</span>
+<span class="kw">print</span>(<span class="kw">as.data.frame</span>(permanova<span class="op">$</span>aov.tab)[<span class="st">&quot;group&quot;</span>, <span class="st">&quot;Pr(&gt;F)&quot;</span>])</code></pre></div>
+<pre><code>## [1] 0.02</code></pre>
+</div>
+<div id="checking-the-homogeneity-condition-1" class="section level2">
+<h2><span class="header-section-number">11.2</span> Checking the homogeneity condition</h2>
+<p>Type <code>?betadisper</code> in R console for more information.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Note the assumption of similar multivariate spread among the groups</span>
+<span class="co"># ie. analogous to variance homogeneity</span>
+<span class="co"># Here the groups have signif. different spreads and</span>
+<span class="co"># permanova result may be potentially explained by that.</span>
+dist &lt;-<span class="st"> </span><span class="kw">vegdist</span>(<span class="kw">t</span>(otu))
+<span class="kw">anova</span>(<span class="kw">betadisper</span>(dist, meta<span class="op">$</span>group))</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Distances
+##            Df  Sum Sq   Mean Sq F value Pr(&gt;F)
+## Groups      2 0.01254 0.0062718  0.6663 0.5146
+## Residuals 219 2.06137 0.0094126</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">permutest</span>(<span class="kw">betadisper</span>(dist, meta<span class="op">$</span>group), <span class="dt">pairwise =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## 
+## Permutation test for homogeneity of multivariate dispersions
+## Permutation: free
+## Number of permutations: 999
+## 
+## Response: Distances
+##            Df  Sum Sq   Mean Sq      F N.Perm Pr(&gt;F)
+## Groups      2 0.01254 0.0062718 0.6663    999   0.54
+## Residuals 219 2.06137 0.0094126                     
+## 
+## Pairwise comparisons:
+## (Observed p-value below diagonal, permuted p-value above diagonal)
+##         DI      ED    HE
+## DI         0.49500 0.704
+## ED 0.44195         0.285
+## HE 0.69375 0.30498</code></pre>
+<p>We can also check which taxa contribute most to the community differences. Are these same or different compared to DESeq2?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coef &lt;-<span class="st"> </span><span class="kw">coefficients</span>(permanova)[<span class="st">&quot;group1&quot;</span>,]
+top.coef &lt;-<span class="st"> </span>coef[<span class="kw">rev</span>(<span class="kw">order</span>(<span class="kw">abs</span>(coef)))[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>]]
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">1</span>))
+<span class="kw">barplot</span>(<span class="kw">sort</span>(top.coef), <span class="dt">horiz =</span> T, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Top taxa&quot;</span>)</code></pre></div>
+<p><img src="08-MAW-PVII_files/figure-html/permanovatop-1.png" width="600px" /></p>
 </div>
 </div>
             </section>
@@ -349,8 +290,8 @@ res &lt;-<span class="st"> </span><span class="kw">glm</span>(Log10_Abundance <s
           </div>
         </div>
       </div>
-<a href="differential-abundance-testing-for-univariate-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="advanced-models-for-differential-abundance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="advanced-models-for-differential-abundance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="further-exercises.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
