@@ -172,7 +172,7 @@ ps.otu <- readRDS("./input_data/ps.sub.rds")
 # use print option to see the data saved as phyloseq object.
 
 
-ps1 <- readRDS("ps.ngtax.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 print(ps.otu)
 
@@ -298,7 +298,7 @@ ntaxa(ps.otu)-ntaxa(ps0.1.otu)
 ```
 
 
-## NG-tax stragey   
+## NG-tax stratergy   
 
 ```{r}
 ps1.1.ngtax <- subset_taxa(ps.ng.tax, Family != "Mitochondria")
