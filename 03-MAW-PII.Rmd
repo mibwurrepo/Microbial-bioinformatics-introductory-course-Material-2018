@@ -36,7 +36,7 @@ We will use the filtered phyloseq object from **Set-up and Pre-processing** sect
 
 ```{r}
 
-ps1 <- readRDS("./phyobjects/ps1.rds")
+ps1 <- readRDS("./phyobjects/ps.ng.tax.rds")
 
 # use print option to see the data saved as phyloseq object.
 
@@ -53,7 +53,7 @@ summary(sample_sums(ps1))
 
 As is evident there is a large difference in the number of reads. Minimum is 1286 and maximum is 41694!! There is a ~30X difference!  
 
-We can plot the rarefaction curve for the observed OTUs in the entire data set.  
+We can plot the rarefaction curve for the observed ASVs in the entire data set.  
 
 ```{r}
 
@@ -65,7 +65,7 @@ p <- vegan::rarecurve(out_tab,
 
 ```
 
-Not all samples are reaching a plateau and that few samples have high number of reads and high number of OTUs.  
+Not all samples are reaching a plateau and that few samples have high number of reads and high number of ASVs.  
 Since we are comparing different body sites, some are expected to have low bacterial load.  
 We will normalize to the lowest depth of at least 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This decision will depend on the research question being addressed.  
 
@@ -226,7 +226,7 @@ Phylogenetic diversity is calculated using the `picante` package.
 
 library(picante)
 
-ps0.rar.otutab <- as.data.frame(ps0.rar@otu_table)
+ps0.rar.asvtab <- as.data.frame(ps0.rar@otu_table)
 
 ps0.rar.tree <- ps0.rar@phy_tree
 
@@ -236,7 +236,7 @@ ps0.rar.tree <- ps0.rar@phy_tree
 
 ps0.rar@phy_tree
 # it is a rooted tree
-df.pd <- pd(t(ps0.rar.otutab), ps0.rar.tree,include.root=T) # t(ou_table) transposes the table for use in picante and the tre file comes from the first code chunck we used to read tree file (see making a phyloseq object section).
+df.pd <- pd(t(ps0.rar.asvtab), ps0.rar.tree,include.root=T) # t(ou_table) transposes the table for use in picante and the tre file comes from the first code chunck we used to read tree file (see making a phyloseq object section).
 
 
 datatable(df.pd)
@@ -277,7 +277,7 @@ pd.plot + stat_compare_means(comparisons = L.pairs,
 **NOTE:**  
 
 There are arguments both for and against the use of rarefying to equal library size.  
-The application of normalization method will depend on the type of research question. It is always good to check if there is a correlation between increasing library sizes and richness. Observed OTUs and Phylogenetic diversity can be affected by library sizes. It is always good to check for this before making a choice.    
+The application of normalization method will depend on the type of research question. It is always good to check if there is a correlation between increasing library sizes and richness. Observed ASVs and Phylogenetic diversity can be affected by library sizes. It is always good to check for this before making a choice.    
 
 ```{r}
 

@@ -68,7 +68,7 @@ ps1.stool <- subset_samples(ps1, bodysite == "Stool")
 ```
 
 
-**For testing reduce the number of OTUs**  
+**For testing reduce the number of ASVs**  
 
 ```{r}
 

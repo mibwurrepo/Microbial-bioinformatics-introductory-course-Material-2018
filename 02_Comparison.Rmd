@@ -169,7 +169,7 @@ The data is from the [Human microbiome project phase I data](https://www.ncbi.nl
 ```{r}
 
 ps.otu <- readRDS("./input_data/ps.sub.rds")
-#microbiome::write_phyloseq(ps0, "METADATA")
+#microbiome::write_phyloseq(ps.otu, "METADATA")
 # use print option to see the data saved as phyloseq object.
 
 
