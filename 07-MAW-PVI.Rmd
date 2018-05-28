@@ -10,7 +10,7 @@ site: bookdown::bookdown_site
 
 More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
 
-The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function.    
 This step is heavy on computational memory and slow. Noise filtered OTU-OTU level covariance would be ideal.     
 
 **Load packages and data**  
@@ -281,7 +281,7 @@ stool.net.mod <- asNetwork(stool.ig.mod)
 
 ```
 
-
+Set vertex attributes. We can color by phyla and set the size of nodes based on log2 abundance.  
 
 ```{r}
 
@@ -296,6 +296,8 @@ stool.net.mod %v% "nodesize" <- vsize
 ```{r, warning=FALSE, message=FALSE}
 
 mycolors <- scale_color_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"))
+
+# check the colorpicker in the addins option in RStudio to interactively select color options.  
 
 p <- ggnet2(stool.net.mod, node.color = "Phylum", 
             label = TRUE, node.size = 2, 
@@ -358,7 +360,6 @@ print(modulesOneOtus)
 [Microbial Co-occurrence Relationships in the Human Microbiome](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002606)  
 
 [Correlation detection strategies in microbial data sets vary widely in sensitivity and precision](http://www.nature.com/ismej/journal/v10/n7/full/ismej2015235a.html)  
-
 
 
 ```{r}

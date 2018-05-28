@@ -39,7 +39,6 @@ print(ps1)
 
 ```{r, fig.height= 6, fig.width=20, warning=FALSE, message= FALSE}
 
-
 ps1.com <- ps1
 taxa_names(ps1.com) <- paste0("Seq_", rownames(tax_table(ps1.com)))
 
@@ -73,7 +72,7 @@ guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15
     face = "italic", colour = "Black", angle = 0)))
 
 
-## Now we need to plot at family level, We can do it as follows:
+## Now we need to plot at family level, we can do it as follows:
 
 # first remove the phy_tree
 
@@ -147,9 +146,8 @@ ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 ```
 
 For more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
-
 ## Heatmaps  
-These are a good alternative to barplots.  
+These are a good alternative to barplots (if done right).  
 
 ```{r}
 

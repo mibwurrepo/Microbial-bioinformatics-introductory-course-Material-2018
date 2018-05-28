@@ -113,7 +113,7 @@ print(wt.unifrac + stat_ellipse())
 
 The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
-You can try repeating this analysis with phyloseq object from OTU-picking approach. 
+You can repeating this analysis with phyloseq object from OTU-picking approach. 
 
 Another important aspect regarding weighted unifrac is its property of having heavier weights for abundant taxa. To detect changes in moderately abundant lineages, an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
 
@@ -137,7 +137,6 @@ p
 Bray-Curtis dissimilarity does not consider phylogenetic relationships between OTUs. There are several distance methods and a list can be obtained by typying `?distanceMethodList` in the console pane.   
 
 Section on multivariate analysis will be discussed on Day3.  
-
 
 ## PERMANOVA  
 
