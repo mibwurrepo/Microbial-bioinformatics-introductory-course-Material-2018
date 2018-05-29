@@ -55,7 +55,7 @@ print(ps1.stool.rel2)
 
 ```
 
-Check of the core OTUs  
+Check for the core ASVs  
 
 ```{r}
 
@@ -65,7 +65,7 @@ print(core.taxa.standard)
 
 ```
 
-There are 16 OTUs that are core based on the cut-offs for prevalence and detection we choose. However, we only see IDs, not very informative. We can get the classification of these as below.    
+There are 16 ASVs that are core based on the cut-offs for prevalence and detection we choose. However, we only see IDs, not very informative. We can get the classification of these as below.    
 
 ```{r}
 
@@ -110,8 +110,12 @@ detections <- 10^seq(log10(1e-3), log10(.2), length = 10)
 
 # Also define gray color palette
 gray <- gray(seq(0,1,length=5))
-p.core <- plot_core(ps1.stool.rel2, plot.type = "heatmap", colours = gray,
-    prevalences = prevalences, detections = detections, min.prevalence = .5) +
+p.core <- plot_core(ps1.stool.rel2, 
+                    plot.type = "heatmap", 
+                    colours = gray,
+                    prevalences = prevalences, 
+                    detections = detections, 
+                    min.prevalence = .5) +
     xlab("Detection Threshold (Relative Abundance (%))")
 print(p.core)    
 
@@ -148,7 +152,7 @@ print(p.core)
 
 ```
 
-We have a custom script to format this figure which can be found in `scripts` folder in the `RProject`.  
+Use the `format_to_besthit` function from microbiomeutilities to get the best classification of the ASVs.  
 
 ```{r}
 
@@ -162,9 +166,9 @@ p.core <- plot_core(ps1.stool.rel2.f,
                     min.prevalence = .5) + 
   xlab("Detection Threshold (Relative Abundance (%))")
 
-print(p.core) 
+p.core + theme(axis.text.y = element_text(face="italic"))
 
-plot(p.core + theme(axis.text.y = element_text(face="italic")))
+print(p.core)
 
 ```
 

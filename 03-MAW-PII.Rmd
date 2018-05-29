@@ -53,21 +53,23 @@ summary(sample_sums(ps1))
 
 As is evident there is a large difference in the number of reads. Minimum is 2458 and maximum is 115023!! There is a ~47X difference!  
 
-We can plot the rarefaction curve for the observed ASVs in the entire data set.  
+We can plot the rarefaction curve for the observed ASVs in the entire data set. This is a way to check how has the richness captured in the sequencing effort.   
 
 ```{r}
 
-out_tab <- t(abundances(ps1))
-p <- vegan::rarecurve(out_tab, 
+otu_tab <- t(abundances(ps1))
+p <- vegan::rarecurve(otu_tab, 
                       step = 50, label = FALSE, 
-                      sample = min(rowSums(out_tab), 
+                      sample = min(rowSums(otu_tab), 
                                    col = "blue", cex = 0.6))
 
 ```
 
 Almost all samples are reaching a plateau and few samples have high number of reads and high number of ASVs.  
 Since we are comparing different body sites, some are expected to have low bacterial load.  
-We will normalize to the lowest depth of at least 2000 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This decision will depend on the research question being addressed.  
+We will normalize to the lowest depth of at least 2458 reads to keep maximum samples for our anlaysis. This can be varied to remove samples with lower sequencing depth. This decision will depend on the research question being addressed.  
+
+Note: At the end of this section, we look at relationship between reads per samples and diversity metrics. 
 
 ## Equal sample sums  
 
@@ -75,7 +77,7 @@ We will normalize to the lowest depth of at least 2000 reads to keep maximum sam
 
 set.seed(9242)  # This will help in reproducing the filtering and nomalisation. 
 
-ps0.rar <- rarefy_even_depth(ps1, sample.size = 2000)
+ps0.rar <- rarefy_even_depth(ps1, sample.size = 2458)
 
 saveRDS(ps0.rar, "./phyobjects/ps0.rar.rds")
 
@@ -92,6 +94,7 @@ print(ps0.rar)
 
 ```
 
+The plot below is only for a quick and dirty check for reads per samples.   
 
 ```{r}
 
@@ -101,6 +104,7 @@ barplot(sample_sums(ps0.rar), las =2)
 
 ```
 
+Quick check taxa prevalence.  
 
 ```{r}
 # quick check taxa prevalence
@@ -286,27 +290,33 @@ lib.div <- diversities(ps1, index = "all")
 lib.div2 <- richness(ps1)
 
 
-# let us add library size
-lib.div$LibrarySize <- sample_sums(ps1)
+# let us add nmber of total reads/samples
+lib.div$ReadsPerSample <- sample_sums(ps1)
 
 lib.div$Richness <- lib.div2$`0`
 
 colnames(lib.div)
 
-ggscatter(lib.div, "LibrarySize", 
-          "shannon") + 
+```
+
+We will use `ggscatter` function from `ggpubr` package to visualze. 
+
+```{r}
+
+p1 <- ggscatter(lib.div, "shannon", "ReadsPerSample") + 
   stat_cor(method = "pearson")
 
-ggscatter(lib.div, "inverse_simpson", "LibrarySize",
+p2 <- ggscatter(lib.div, "inverse_simpson", "ReadsPerSample",
           add = "loess") + 
   stat_cor(method = "pearson")
 
-ggscatter(lib.div, "Richness", "LibrarySize",
+p3 <- ggscatter(lib.div, "Richness", "ReadsPerSample",
           add = "loess") + 
   stat_cor(method = "pearson", 
            label.x = 100, 
            label.y = 50000)
 
+ggarrange(p1,p2,p3, ncol=2, nrow = 2)
 ```
 
 
