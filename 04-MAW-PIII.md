@@ -1,14 +1,14 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-28"
+date: "2018-05-29"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
 
 # Composition plots  
 
-Barplots are a simple way of visualising the composition of your samples.    
+Barplots are a one way of visualising the composition of your samples.    
 
 We will use the filtered phyloseq object from **Set-up and Pre-processing** section.  
 
@@ -46,7 +46,9 @@ print(ps1)
 
 ```r
 ps1.com <- ps1
-taxa_names(ps1.com) <- paste0("Seq_", rownames(tax_table(ps1.com)))
+
+# if you have dada2/deblur output and sequences as taxa names, then you can change them as follows
+taxa_names(ps1.com) <- paste0("ASV_", rownames(tax_table(ps1.com)))
 
 # We need to set Palette
 taxic <- as.data.frame(ps1.com@tax_table)  # this will help in setting large color options
@@ -68,14 +70,8 @@ new.tax <- tax_table(taxmat)  # convert into phyloseq compatible file.
 tax_table(ps1.com) <- new.tax  # incroporate into phyloseq Object
 
 
-
 # now edit the unclassified taxa
 tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "", "Family"] <- "Unclassified family"
-
-
-# We will also remove the 'f__' patterns for cleaner labels
-# tax_table(ps1.com)[, colnames(tax_table(ps1.com))] <- gsub(tax_table(ps1.com)[, 
-#    colnames(tax_table(ps1.com))], pattern = "[a-z]__", replacement = "")
 
 # it would be nice to have the Taxonomic names in italics.
 # for that we set this

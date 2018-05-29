@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-28">
+<meta name="date" content="2018-05-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -268,14 +268,14 @@ dist &lt;-<span class="st"> </span><span class="kw">vegdist</span>(<span class="
 ## 
 ## Response: Distances
 ##            Df  Sum Sq   Mean Sq      F N.Perm Pr(&gt;F)
-## Groups      2 0.01254 0.0062718 0.6663    999  0.501
+## Groups      2 0.01254 0.0062718 0.6663    999  0.512
 ## Residuals 219 2.06137 0.0094126                     
 ## 
 ## Pairwise comparisons:
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##         DI      ED    HE
-## DI         0.40600 0.681
-## ED 0.44195         0.294
+## DI         0.44200 0.689
+## ED 0.44195         0.308
 ## HE 0.69375 0.30498</code></pre>
 <p>We can also check which taxa contribute most to the community differences. Are these same or different compared to DESeq2?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coef &lt;-<span class="st"> </span><span class="kw">coefficients</span>(permanova)[<span class="st">&quot;group1&quot;</span>,]
