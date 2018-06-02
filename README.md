@@ -12,3 +12,11 @@ Before starting please install
 * Rstudio [Download link](https://www.rstudio.com/products/rstudio/download/).
 
 A [bookdown](https://bookdown.org/) book covering Day2 and Day3 topics can be found at this weblink: https://goo.gl/CPChhd
+
+**We welcome community contributions to this resource**  
+These can be improvements to existing tutorials or additional topics such as:  
+
+* Classifiers Random Forest, SVM, etc.  
+* Advanced multivariate statistics.  
+* Any other analysis related to microbial ecology.  
+ Create a pull request or send an email to Sudarshan Shetty at sudarshanshetty9@gmail.com 
