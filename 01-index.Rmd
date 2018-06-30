@@ -43,7 +43,7 @@ The script to set-up the RStudio environment with required package installations
 * [phyloseq](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217)  
 * [microbiome](http://microbiome.github.io/microbiome/)  
 * [R graphics cookbook](http://www.cookbook-r.com/Graphs/)  
-* [List of R tools for microbiome analysis](https://microsud.github.io/Tools-Microbiome-Anlaysis/)  
+* [List of R tools for microbiome analysis](https://microsud.github.io/Tools-Microbiome-Analysis/)  
 
 ## Focus    
 The primary aim is introduce microbial community data analysis. There will be talks and discussion on theory and methodology for analysis of microbial community data. We will cover topics ranging from design of studies, sequencing technologies, importance of controls and standardized DNA processing. Supervised hands-on training covering analyses from raw reads using NG-Tax, downstream analysis in R for exploration and analysis of microbiome sequencing data will be priority. There will be a strong focus on using R, R Studio for moving towards reproducible and open science.   
