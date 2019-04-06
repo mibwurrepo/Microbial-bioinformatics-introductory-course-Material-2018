@@ -1,7 +1,7 @@
 ---
-title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0"
 author: "Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes"
-date: "2018-05-29"
+date: "2019-04-06"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -19,14 +19,16 @@ We recommend using your own laptop. If this is not possible, kindly contact the 
 
 Install the following software before the course:
 
-* R 3.4.4 [Download link](https://cran.r-project.org/bin/windows/base/old/3.4.4/).    
+* R 3.5.1 [Download link](https://cran.r-project.org/bin/windows/base/old/3.5.1/).    
 * Rstudio [Download link](https://www.rstudio.com/products/rstudio/download/).  
+
+*Make sure you have admin rights on the machine you install these softwares to avoid access issues.  
 
 Download the master branch of the the github repository for the [course](https://github.com/mibwurrepo/Microbial-bioinformatics-introductory-course-Material-2018).  
 
 ![ microbiome R package](images/Gihub_repo_step1.png)</center>  
 
-Unzip the `Microbial-bioinformatics-introductory-course-Material-2018-master.zip` folder.  
+Unzip the `Microbial-bioinformatics-introductory-course-Material-2018-master.zip` folder. Unzip the `humanmicrobiome.zip` subfolder within the `input_data` folder so that the *humanmicrobiome.biom* file is in `input_data` folder.  
 open the `microbiometutorials.Rproj`  
 
 The script to set-up the RStudio environment with required package installations can be found in the folder named `scripts/setup_microbiome_analysis.R`. In the image below, there is description of how to run this code.    
@@ -43,13 +45,21 @@ The script to set-up the RStudio environment with required package installations
 * [phyloseq](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217)  
 * [microbiome](http://microbiome.github.io/microbiome/)  
 * [R graphics cookbook](http://www.cookbook-r.com/Graphs/)  
-* [List of R tools for microbiome analysis](https://microsud.github.io/Tools-Microbiome-Anlaysis/)  
+* [List of R tools for microbiome analysis](https://microsud.github.io/Tools-Microbiome-Analysis/)  
 
 ## Focus    
 The primary aim is introduce microbial community data analysis. There will be talks and discussion on theory and methodology for analysis of microbial community data. We will cover topics ranging from design of studies, sequencing technologies, importance of controls and standardized DNA processing. Supervised hands-on training covering analyses from raw reads using NG-Tax, downstream analysis in R for exploration and analysis of microbiome sequencing data will be priority. There will be a strong focus on using R, R Studio for moving towards reproducible and open science.   
 
 ## Target audience  
 Anyone who plans to or is currently doing high throughput microbial community analysis.  
+
+
+
+
+
+
+
+
 
 ## License  
 

@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-29"
+date: "2019-04-06"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -117,7 +117,7 @@ print(wt.unifrac + stat_ellipse())
 
 The figure brings forward an important characteristics of microbiome data called the 'Horse-shoe effect'. An investigation and explaination for this can be found in the article by Morton JT., et al. 2017 [Uncovering the Horseshoe Effect in Microbial Analyses](http://msystems.asm.org/content/2/1/e00166-16).   
 
-You can repeating this analysis with phyloseq object from OTU-picking approach. 
+You can repeat this analysis with phyloseq object from OTU-picking approach. 
 
 Another important aspect regarding weighted unifrac is its property of having heavier weights for abundant taxa. To detect changes in moderately abundant lineages, an extenstion called generalized (UniFrac distance)(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3413390/) has been developed. In this test data, we expect sufficient biological variation in composition between sites and hence, we do not apply GUniFrac.  
 
@@ -147,7 +147,7 @@ p
 
 <img src="05-MAW-PIV_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-Bray-Curtis dissimilarity does not consider phylogenetic relationships between OTUs. There are several distance methods and a list can be obtained by typying `?distanceMethodList` in the console pane.   
+Bray-Curtis dissimilarity does not consider phylogenetic relationships between ASVs. There are several distance methods and a list can be obtained by typing `?distanceMethodList` in the console pane.   
 
 Section on multivariate analysis will be discussed on Day3.  
 
@@ -169,7 +169,18 @@ library(vegan)
 ```
 
 ```
-## This is vegan 2.5-2
+## This is vegan 2.5-3
+```
+
+```
+## 
+## Attaching package: 'vegan'
+```
+
+```
+## The following object is masked from 'package:microbiome':
+## 
+##     diversity
 ```
 
 ```r
@@ -236,8 +247,8 @@ permutest(ps.disper, pairwise = TRUE)
 ## human vaginal metagenome           3.1013e-18            1.4078e-10
 ##                          human skin metagenome human vaginal metagenome
 ## human gut metagenome                1.0000e-03                    0.001
-## human oral metagenome               2.9000e-02                    0.001
-## human skin metagenome                                             0.014
+## human oral metagenome               2.4000e-02                    0.001
+## human skin metagenome                                             0.009
 ## human vaginal metagenome            7.0275e-03
 ```
 
@@ -249,51 +260,52 @@ sessionInfo()
 ```
 
 ```
-## R version 3.4.4 (2018-03-15)
+## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 16299)
+## Running under: Windows 10 x64 (build 17763)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=English_United States.1252 
+## [1] LC_COLLATE=English_Netherlands.1252   
 ## [2] LC_CTYPE=English_United States.1252   
 ## [3] LC_MONETARY=English_United States.1252
 ## [4] LC_NUMERIC=C                          
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] vegan_2.5-2          lattice_0.20-35      permute_0.9-4       
-##  [4] dplyr_0.7.5          ggpubr_0.1.6         magrittr_1.5        
-##  [7] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
-## [10] phyloseq_1.22.3     
+##  [1] vegan_2.5-3        lattice_0.20-35    permute_0.9-4     
+##  [4] dplyr_0.7.7        ggpubr_0.1.8       magrittr_1.5      
+##  [7] RColorBrewer_1.1-2 microbiome_1.5.28  ggplot2_3.1.0     
+## [10] phyloseq_1.24.2   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.4    xfun_0.1            reshape2_1.4.3     
-##  [4] purrr_0.2.4         splines_3.4.4       rhdf5_2.22.0       
-##  [7] colorspace_1.3-2    htmltools_0.3.6     stats4_3.4.4       
-## [10] mgcv_1.8-23         yaml_2.1.19         survival_2.41-3    
-## [13] rlang_0.2.0         pillar_1.2.2        withr_2.1.2        
-## [16] glue_1.2.0          BiocGenerics_0.24.0 bindrcpp_0.2.2     
-## [19] foreach_1.4.4       plyr_1.8.4          bindr_0.1.1        
-## [22] stringr_1.3.1       zlibbioc_1.24.0     Biostrings_2.46.0  
-## [25] munsell_0.4.3       gtable_0.2.0        codetools_0.2-15   
-## [28] evaluate_0.10.1     labeling_0.3        Biobase_2.38.0     
-## [31] knitr_1.20          IRanges_2.12.0      biomformat_1.6.0   
-## [34] parallel_3.4.4      Rcpp_0.12.17        backports_1.1.2    
-## [37] scales_0.5.0        S4Vectors_0.16.0    jsonlite_1.5       
-## [40] XVector_0.18.0      digest_0.6.15       Rtsne_0.13         
-## [43] stringi_1.2.2       bookdown_0.7        grid_3.4.4         
-## [46] ade4_1.7-11         rprojroot_1.3-2     tools_3.4.4        
-## [49] lazyeval_0.2.1      tibble_1.4.2        cluster_2.0.6      
-## [52] tidyr_0.8.1         ape_5.1             pkgconfig_2.0.1    
-## [55] MASS_7.3-49         Matrix_1.2-12       data.table_1.11.2  
-## [58] assertthat_0.2.0    rmarkdown_1.9       iterators_1.0.9    
-## [61] R6_2.2.2            multtest_2.34.0     igraph_1.2.1       
-## [64] nlme_3.1-131.1      compiler_3.4.4
+##  [1] Rcpp_0.12.19        ape_5.2             tidyr_0.8.2        
+##  [4] Biostrings_2.48.0   assertthat_0.2.0    rprojroot_1.3-2    
+##  [7] digest_0.6.18       foreach_1.4.4       R6_2.3.0           
+## [10] plyr_1.8.4          backports_1.1.2     stats4_3.5.1       
+## [13] evaluate_0.12       pillar_1.3.0        zlibbioc_1.26.0    
+## [16] rlang_0.3.0.1       lazyeval_0.2.1      data.table_1.11.8  
+## [19] S4Vectors_0.18.3    Matrix_1.2-15       rmarkdown_1.10     
+## [22] labeling_0.3        splines_3.5.1       Rtsne_0.15         
+## [25] stringr_1.3.1       igraph_1.2.2        munsell_0.5.0      
+## [28] compiler_3.5.1      xfun_0.4            pkgconfig_2.0.2    
+## [31] BiocGenerics_0.26.0 multtest_2.36.0     mgcv_1.8-25        
+## [34] htmltools_0.3.6     biomformat_1.8.0    tidyselect_0.2.5   
+## [37] tibble_1.4.2        bookdown_0.7        IRanges_2.14.12    
+## [40] codetools_0.2-15    crayon_1.3.4        withr_2.1.2        
+## [43] MASS_7.3-51.1       grid_3.5.1          nlme_3.1-137       
+## [46] jsonlite_1.5        gtable_0.2.0        scales_1.0.0       
+## [49] stringi_1.2.4       XVector_0.20.0      reshape2_1.4.3     
+## [52] bindrcpp_0.2.2      Rhdf5lib_1.2.1      iterators_1.0.10   
+## [55] tools_3.5.1         ade4_1.7-13         Biobase_2.40.0     
+## [58] glue_1.3.0          purrr_0.2.5         parallel_3.5.1     
+## [61] survival_2.43-1     yaml_2.2.0          colorspace_1.3-2   
+## [64] rhdf5_2.24.0        cluster_2.0.7-1     knitr_1.20         
+## [67] bindr_0.1.1
 ```
 
 

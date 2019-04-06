@@ -1,7 +1,7 @@
 ---
 title: "Differential abundance testing"
 author: "Leo Lahti"
-date: "2018-05-29"
+date: "2019-04-06"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -44,12 +44,12 @@ kable(head(df))
 
             Abundance  Group 
 ---------  ----------  ------
-Sample-1          310  AAM   
-Sample-2         1441  AFR   
-Sample-3          356  AFR   
-Sample-4         1528  AFR   
-Sample-5          361  AFR   
-Sample-6         2375  AFR   
+Sample-1            5  AAM   
+Sample-2           23  AFR   
+Sample-3            6  AFR   
+Sample-4           24  AFR   
+Sample-5            6  AFR   
+Sample-6           38  AFR   
 
 
 ## Visual comparison of two groups
@@ -93,7 +93,7 @@ print(t.test(Log10_Abundance ~ Group, data = df)$p.value)
 ```
 
 ```
-## [1] 0.06032956
+## [1] 0.02554997
 ```
 
 According to this, the abundances is not significantly different between the two groups (at  $p<0.05$ level).
@@ -127,7 +127,7 @@ print(wilcox.test(Log10_Abundance ~ Group, data = df)$p.value)
 ```
 
 ```
-## [1] 0.01803111
+## [1] 0.02979053
 ```
 
 
@@ -141,7 +141,7 @@ print(wilcox.test(Abundance ~ Group, data = df)$p.value)
 ```
 
 ```
-## [1] 0.01803111
+## [1] 0.02979053
 ```
 
 
@@ -249,10 +249,10 @@ Investigate the model coefficients:
 knitr::kable(summary(res)$coefficients, digits = 5)
 ```
 
-               Estimate   Std. Error     t value   Pr(>|t|)
-------------  ---------  -----------  ----------  ---------
-(Intercept)     2.06864      0.01500   137.89729    0.00000
-GroupAFR        0.08065      0.02246     3.59001    0.00041
+               Estimate   Std. Error    t value   Pr(>|t|)
+------------  ---------  -----------  ---------  ---------
+(Intercept)     0.64825      0.02877   22.53405          0
+GroupAFR        0.20313      0.04308    4.71530          0
 
 
 The intercept equals to the mean in the first group:
@@ -264,7 +264,7 @@ print(mean(subset(df, Group == "AAM")$Log10_Abundance))
 ```
 
 ```
-## [1] 2.068637
+## [1] 0.6482493
 ```
 
 The group term equals to the difference between group means:
@@ -276,7 +276,7 @@ print(mean(subset(df, Group == "AFR")$Log10_Abundance) -
 ```
 
 ```
-## [1] 0.080646
+## [1] 0.2031287
 ```
 
 
@@ -288,7 +288,7 @@ print(t.test(Log10_Abundance ~ Group, data = df, var.equal=TRUE)$p.value)
 ```
 
 ```
-## [1] 0.0004077211
+## [1] 4.284318e-06
 ```
 
 
@@ -318,18 +318,18 @@ kable(coefficients(res))
 
                                                  x
 -------------------------------------  -----------
-(Intercept)                              2.0812548
-GroupAFR                                 0.0233341
-sexMale                                  0.0090777
-bmi_groupoverweight                     -0.0075846
-bmi_groupobese                          -0.0203030
-GroupAFR:sexMale                         0.0375102
-GroupAFR:bmi_groupoverweight            -0.0467722
-GroupAFR:bmi_groupobese                  0.1209742
-sexMale:bmi_groupoverweight             -0.0295655
-sexMale:bmi_groupobese                          NA
-GroupAFR:sexMale:bmi_groupoverweight            NA
-GroupAFR:sexMale:bmi_groupobese                 NA
+(Intercept)                              0.8736029
+GroupAFR                                 0.0261450
+sexmale                                  0.0022871
+bmi_groupoverweight                     -0.3160401
+bmi_groupobese                          -0.2117135
+GroupAFR:sexmale                        -0.2180267
+GroupAFR:bmi_groupoverweight             0.5360971
+GroupAFR:bmi_groupobese                  0.2396655
+sexmale:bmi_groupoverweight              0.0133203
+sexmale:bmi_groupobese                          NA
+GroupAFR:sexmale:bmi_groupoverweight            NA
+GroupAFR:sexmale:bmi_groupobese                 NA
 
 
 For more examples on using and analysing linear models, see statmethods [regression](https://www.statmethods.net/stats/regression.html) and [ANOVA](See also [statmethods](https://www.statmethods.net/stats/anova.html) tutorials. **Try to adapt those examples on our microbiome example data data sets**.
@@ -355,11 +355,11 @@ print(abundances(d)[1:5,1:3])
 
 ```
 ##                              Sample-1 Sample-2 Sample-3
-## Actinomycetaceae                   11       67       21
-## Aerococcus                          1        1        1
-## Aeromonas                           1        1        1
-## Akkermansia                      1167     6127     4235
-## Alcaligenes faecalis et rel.       90      126      188
+## Actinomycetaceae                    0        1        0
+## Aerococcus                          0        0        0
+## Aeromonas                           0        0        0
+## Akkermansia                        18       97       67
+## Alcaligenes faecalis et rel.        1        2        3
 ```
 
 ### Sparsity 
@@ -466,7 +466,7 @@ knitr::kable(summary(res)$coefficients, digits = 5)
 
                Estimate   Std. Error    z value   Pr(>|z|)
 ------------  ---------  -----------  ---------  ---------
-(Intercept)     5.02355      0.00544   922.6545          0
+(Intercept)     2.09286      0.02357   88.79275          0
 
 
 Note the link between mean and estimated coefficient ($\mu = e^{Xb}$):
@@ -477,7 +477,7 @@ mean(df$Abundance)
 ```
 
 ```
-## [1] 151.9505
+## [1] 8.108108
 ```
 
 ```r
@@ -486,7 +486,7 @@ exp(coef(res))
 
 ```
 ## (Intercept) 
-##    151.9505
+##    8.108108
 ```
 
 
@@ -525,16 +525,16 @@ knitr::kable(deseq.results %>%
 
 
 
-   baseMean   log2FoldChange     lfcSE       stat   pvalue   padj  taxon                          
------------  ---------------  --------  ---------  -------  -----  -------------------------------
- 1870.08336          1.89495   0.12667   14.95965        0      0  Clostridium difficile et rel.  
- 1015.44245          2.12453   0.18359   11.57241        0      0  Klebisiella pneumoniae et rel. 
- 3335.72902          3.02549   0.28380   10.66044        0      0  Mitsuokella multiacida et rel. 
- 1519.25023          1.60976   0.18026    8.93027        0      0  Enterobacter aerogenes et rel. 
- 2848.86627          1.77112   0.22906    7.73226        0      0  Megasphaera elsdenii et rel.   
-  321.24275          2.86529   0.37602    7.61997        0      0  Serratia                       
-   19.97851          2.24305   0.31335    7.15820        0      0  Aquabacterium                  
-  173.00079          1.80120   0.26252    6.86114        0      0  Haemophilus                    
+ baseMean   log2FoldChange     lfcSE       stat    pvalue      padj  taxon                          
+---------  ---------------  --------  ---------  --------  --------  -------------------------------
+ 29.20535          1.91205   0.13432   14.23457   0.00000   0.00000  Clostridium difficile et rel.  
+ 51.65152          3.04116   0.28687   10.60107   0.00000   0.00000  Mitsuokella multiacida et rel. 
+ 12.39749          1.83825   0.18531    9.91994   0.00000   0.00000  Klebisiella pneumoniae et rel. 
+ 44.16494          1.78333   0.23072    7.72937   0.00000   0.00000  Megasphaera elsdenii et rel.   
+ 66.93783          1.68345   0.25330    6.64609   0.00000   0.00000  Escherichia coli et rel.       
+  3.63459          1.53142   0.23140    6.61792   0.00000   0.00000  Weissella et rel.              
+  5.74035          3.07334   0.47848    6.42308   0.00000   0.00000  Serratia                       
+  0.42171          1.70079   0.47147    3.60743   0.00031   0.00075  Moraxellaceae                  
 
 
 ### Comparison between DESeq2 and standard models
@@ -604,7 +604,18 @@ library(vegan)
 ```
 
 ```
-## This is vegan 2.5-2
+## This is vegan 2.5-3
+```
+
+```
+## 
+## Attaching package: 'vegan'
+```
+
+```
+## The following object is masked from 'package:microbiome':
+## 
+##     diversity
 ```
 
 ```r
@@ -646,9 +657,9 @@ anova(betadisper(dist, meta$group))
 ## Analysis of Variance Table
 ## 
 ## Response: Distances
-##            Df  Sum Sq   Mean Sq F value Pr(>F)
-## Groups      2 0.01254 0.0062718  0.6663 0.5146
-## Residuals 219 2.06137 0.0094126
+##            Df  Sum Sq  Mean Sq F value Pr(>F)
+## Groups      2 0.01252 0.006262  0.6649 0.5154
+## Residuals 219 2.06254 0.009418
 ```
 
 ```r
@@ -662,16 +673,16 @@ permutest(betadisper(dist, meta$group), pairwise = TRUE)
 ## Number of permutations: 999
 ## 
 ## Response: Distances
-##            Df  Sum Sq   Mean Sq      F N.Perm Pr(>F)
-## Groups      2 0.01254 0.0062718 0.6663    999  0.512
-## Residuals 219 2.06137 0.0094126                     
+##            Df  Sum Sq  Mean Sq      F N.Perm Pr(>F)
+## Groups      2 0.01252 0.006262 0.6649    999  0.521
+## Residuals 219 2.06254 0.009418                     
 ## 
 ## Pairwise comparisons:
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##         DI      ED    HE
-## DI         0.44200 0.689
-## ED 0.44195         0.308
-## HE 0.69375 0.30498
+## DI         0.45100 0.694
+## ED 0.44203         0.307
+## HE 0.69469 0.30560
 ```
 
 We can also check which taxa contribute most to the community differences. Are these same or different compared to DESeq2?
@@ -741,6 +752,9 @@ rda.result2 <- vegan::rda(t(otu) ~ metadata$nationality + Condition(metadata$bmi
 ```
 
 
+# Citation  
+If you found this book useful, please cite:  
+Shetty Sudarshan A, Lahti Leo, Hermes Gerben DA, & Hauke Smidt. (2018, September 27). Microbial bioinformatics introductory course material 2018 (Version 0.01). Zenodo. http://doi.org/10.5281/zenodo.1436630
 
 
 

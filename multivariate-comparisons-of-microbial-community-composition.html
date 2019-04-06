@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</title>
-  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018">
+  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</title>
+  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-29">
+<meta name="date" content="2019-04-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,7 +47,7 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.4/datatables.js"></script>
 <link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -139,6 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>4.2</b> Barplot relative abundance</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>4.2.1</b> Barplot customize</a></li>
 </ul></li>
+<li class="chapter" data-level="4.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>4.3</b> Heatmaps</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>5</b> Beta diversity metrics</a><ul>
 <li class="chapter" data-level="5.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>5.1</b> Phylogenetic beta-diversity metrics</a><ul>
@@ -202,6 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="further-exercises.html"><a href="further-exercises.html#compositionality"><i class="fa fa-check"></i><b>12.1</b> Compositionality</a></li>
 <li class="chapter" data-level="12.2" data-path="further-exercises.html"><a href="further-exercises.html#redundancy-analysis-rda"><i class="fa fa-check"></i><b>12.2</b> Redundancy analysis (RDA)</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="citation.html"><a href="citation.html"><i class="fa fa-check"></i><b>13</b> Citation</a></li>
 </ul>
 
       </nav>
@@ -211,7 +213,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</a>
           </h1>
         </div>
 
@@ -228,7 +230,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vegan)</code></pre></div>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.5-2</code></pre>
+<pre><code>## This is vegan 2.5-3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;vegan&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:microbiome&#39;:
+## 
+##     diversity</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pseq &lt;-<span class="st"> </span>dietswap
 
 <span class="co"># Pick relative abundances (compositional) and sample metadata </span>
@@ -257,9 +264,9 @@ dist &lt;-<span class="st"> </span><span class="kw">vegdist</span>(<span class="
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Distances
-##            Df  Sum Sq   Mean Sq F value Pr(&gt;F)
-## Groups      2 0.01254 0.0062718  0.6663 0.5146
-## Residuals 219 2.06137 0.0094126</code></pre>
+##            Df  Sum Sq  Mean Sq F value Pr(&gt;F)
+## Groups      2 0.01252 0.006262  0.6649 0.5154
+## Residuals 219 2.06254 0.009418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">permutest</span>(<span class="kw">betadisper</span>(dist, meta<span class="op">$</span>group), <span class="dt">pairwise =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ## Permutation test for homogeneity of multivariate dispersions
@@ -267,16 +274,16 @@ dist &lt;-<span class="st"> </span><span class="kw">vegdist</span>(<span class="
 ## Number of permutations: 999
 ## 
 ## Response: Distances
-##            Df  Sum Sq   Mean Sq      F N.Perm Pr(&gt;F)
-## Groups      2 0.01254 0.0062718 0.6663    999  0.512
-## Residuals 219 2.06137 0.0094126                     
+##            Df  Sum Sq  Mean Sq      F N.Perm Pr(&gt;F)
+## Groups      2 0.01252 0.006262 0.6649    999  0.521
+## Residuals 219 2.06254 0.009418                     
 ## 
 ## Pairwise comparisons:
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##         DI      ED    HE
-## DI         0.44200 0.689
-## ED 0.44195         0.308
-## HE 0.69375 0.30498</code></pre>
+## DI         0.45100 0.694
+## ED 0.44203         0.307
+## HE 0.69469 0.30560</code></pre>
 <p>We can also check which taxa contribute most to the community differences. Are these same or different compared to DESeq2?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coef &lt;-<span class="st"> </span><span class="kw">coefficients</span>(permanova)[<span class="st">&quot;group1&quot;</span>,]
 top.coef &lt;-<span class="st"> </span>coef[<span class="kw">rev</span>(<span class="kw">order</span>(<span class="kw">abs</span>(coef)))[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>]]

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</title>
-  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018">
+  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</title>
+  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-29">
+<meta name="date" content="2019-04-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,7 +47,7 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.4/datatables.js"></script>
 <link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -139,6 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>4.2</b> Barplot relative abundance</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>4.2.1</b> Barplot customize</a></li>
 </ul></li>
+<li class="chapter" data-level="4.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>4.3</b> Heatmaps</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>5</b> Beta diversity metrics</a><ul>
 <li class="chapter" data-level="5.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>5.1</b> Phylogenetic beta-diversity metrics</a><ul>
@@ -202,6 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="further-exercises.html"><a href="further-exercises.html#compositionality"><i class="fa fa-check"></i><b>12.1</b> Compositionality</a></li>
 <li class="chapter" data-level="12.2" data-path="further-exercises.html"><a href="further-exercises.html#redundancy-analysis-rda"><i class="fa fa-check"></i><b>12.2</b> Redundancy analysis (RDA)</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="citation.html"><a href="citation.html"><i class="fa fa-check"></i><b>13</b> Citation</a></li>
 </ul>
 
       </nav>
@@ -211,7 +213,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</a>
           </h1>
         </div>
 
@@ -229,7 +231,7 @@ This step is heavy on computational memory and slow. Noise filtered OTU-OTU leve
 <span class="kw">install_github</span>(<span class="st">&quot;zdk123/SpiecEasi&quot;</span>)
 
 <span class="co"># Other packages you need to install are</span>
-<span class="kw">install.packages</span>(<span class="st">&quot;igraph&quot;</span>)
+<span class="co"># install.packages(&#39;igraph&#39;)</span>
 
 <span class="kw">install.packages</span>(<span class="st">&quot;intergraph&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;GGally&quot;</span>)
@@ -257,9 +259,10 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps1.stool.otu &lt;-<span class="st"> </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(ps1.stool) <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>, ps1.stool)
 
 <span class="co"># Add taxonomic classification to OTU ID</span>
-ps1.stool.otu.f &lt;-<span class="st"> </span>microbiomeutilities<span class="op">::</span><span class="kw">format_to_besthit</span>(ps1.stool.otu)
-
-<span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool.otu))</code></pre></div>
+ps1.stool.otu.f &lt;-<span class="st"> </span>microbiomeutilities<span class="op">::</span><span class="kw">format_to_besthit</span>(ps1.stool.otu)</code></pre></div>
+<pre><code>## Warning: replacing previous import &#39;ggplot2::alpha&#39; by &#39;microbiome::alpha&#39;
+## when loading &#39;microbiomeutilities&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool.otu))</code></pre></div>
 <pre><code>## Taxonomy Table:     [6 taxa by 6 taxonomic ranks]:
 ##            Domain     Phylum          Class         Order          
 ## 9410491526 &quot;Bacteria&quot; &quot;Bacteroidetes&quot; &quot;Bacteroidia&quot; &quot;Bacteroidales&quot;
@@ -279,7 +282,7 @@ ps1.stool.otu.f &lt;-<span class="st"> </span>microbiomeutilities<span class="op
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">tax_table</span>(ps1.stool.otu.f))</code></pre></div>
 <div id="prepare-data-for-spieceasi" class="section level2">
 <h2><span class="header-section-number">7.1</span> Prepare data for SpiecEasi</h2>
-<p>The calcualtion of SpiecEasi are time consuming. For this tutorial we will have the necessary input files for SpiecEasi.</p>
+<p>The calculation of SpiecEasi are time consuming. For this tutorial, we will have the necessary input files for SpiecEasi.</p>
 <ul>
 <li>OTU table<br />
 </li>
@@ -333,7 +336,7 @@ net.c &lt;-<span class="st"> </span><span class="kw">spiec.easi</span>(otu.c, <s
 <p><strong>We have save the output of net.c to save time</strong></p>
 <p>The output of <code>spiec.easi</code> is stored in <em>./input_data/</em> as <em>stool.net.c.rds</em>. Read this file in R and follow the steps below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the PC has low processing power, you can read the otuput created by us present in the input_data folder.</span>
-
+<span class="kw">source</span>(<span class="st">&quot;scripts/symBeta.R&quot;</span>) <span class="co"># load custom function to get weights.</span>
 net.c &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;input_data/stool.net.rds&quot;</span>)
 <span class="kw">class</span>(net.c)</code></pre></div>
 <pre><code>## [1] &quot;select&quot;</code></pre>
@@ -347,9 +350,9 @@ vsize &lt;-<span class="st"> </span><span class="kw">log2</span>(<span class="kw
 <h3><span class="header-section-number">7.2.1</span> Prepare data for plotting</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stool.ig &lt;-<span class="st"> </span><span class="kw">graph.adjacency</span>(n.c, <span class="dt">mode=</span><span class="st">&#39;undirected&#39;</span>, <span class="dt">add.rownames =</span> <span class="ot">TRUE</span>, <span class="dt">weighted =</span> <span class="ot">TRUE</span>)
 stool.ig <span class="co"># we can see all the attributes and weights</span></code></pre></div>
-<pre><code>## IGRAPH d42b40f UNW- 679 2454 -- 
+<pre><code>## IGRAPH 30c0360 UNW- 679 2454 -- 
 ## + attr: name (v/c), TRUE (v/c), weight (e/n)
-## + edges from d42b40f (vertex names):
+## + edges from 30c0360 (vertex names):
 ## [1] OTU-9410491526:Bacteroides--OTU-9410491516:Bacteroides   
 ## [2] OTU-9410491526:Bacteroides--OTU-9410491518:Bacteroides   
 ## [3] OTU-9410491526:Bacteroides--OTU-941049327:Bacteroides    
@@ -536,68 +539,70 @@ modulesSixOtus=modules<span class="op">$</span>names[modulesSixIndices]
 <p><a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002606">Microbial Co-occurrence Relationships in the Human Microbiome</a></p>
 <p><a href="http://www.nature.com/ismej/journal/v10/n7/full/ismej2015235a.html">Correlation detection strategies in microbial data sets vary widely in sensitivity and precision</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.4 (2018-03-15)
+<pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 16299)
+## Running under: Windows 10 x64 (build 17763)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=English_United States.1252 
+## [1] LC_COLLATE=English_Netherlands.1252   
 ## [2] LC_CTYPE=English_United States.1252   
 ## [3] LC_MONETARY=English_United States.1252
 ## [4] LC_NUMERIC=C                          
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] scales_0.5.0         sna_2.4              statnet.common_4.0.0
-##  [4] bindrcpp_0.2.2       igraph_1.2.1         ggnet_0.1.0         
-##  [7] intergraph_2.0-2     network_1.13.0.1     SpiecEasi_0.1.2     
-## [10] dplyr_0.7.5          ggpubr_0.1.6         magrittr_1.5        
-## [13] RColorBrewer_1.1-2   microbiome_1.1.10013 ggplot2_2.2.1.9000  
-## [16] phyloseq_1.22.3     
+##  [1] scales_1.0.0         sna_2.4              statnet.common_4.1.4
+##  [4] bindrcpp_0.2.2       igraph_1.2.2         ggnet_0.1.0         
+##  [7] intergraph_2.0-2     network_1.15         SpiecEasi_1.0.5     
+## [10] dplyr_0.7.7          ggpubr_0.1.8         magrittr_1.5        
+## [13] RColorBrewer_1.1-2   microbiome_1.5.28    ggplot2_3.1.0       
+## [16] phyloseq_1.24.2     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] viridis_0.5.1              Biobase_2.38.0            
-##  [3] tidyr_0.8.1                viridisLite_0.3.0         
-##  [5] VGAM_1.0-5                 jsonlite_1.5              
-##  [7] splines_3.4.4              foreach_1.4.4             
-##  [9] assertthat_0.2.0           stats4_3.4.4              
-## [11] ggrepel_0.8.0              yaml_2.1.19               
-## [13] pillar_1.2.2               backports_1.1.2           
-## [15] lattice_0.20-35            glue_1.2.0                
-## [17] digest_0.6.15              XVector_0.18.0            
+##  [1] viridis_0.5.1              Biobase_2.40.0            
+##  [3] tidyr_0.8.2                viridisLite_0.3.0         
+##  [5] VGAM_1.1-1                 jsonlite_1.5              
+##  [7] splines_3.5.1              foreach_1.4.4             
+##  [9] assertthat_0.2.0           stats4_3.5.1              
+## [11] ggrepel_0.8.0              yaml_2.2.0                
+## [13] pillar_1.3.0               backports_1.1.2           
+## [15] lattice_0.20-35            glue_1.3.0                
+## [17] digest_0.6.18              XVector_0.20.0            
 ## [19] colorspace_1.3-2           htmltools_0.3.6           
-## [21] Matrix_1.2-12              plyr_1.8.4                
-## [23] microbiomeutilities_0.99.0 pkgconfig_2.0.1           
-## [25] pheatmap_1.0.10            bookdown_0.7              
-## [27] zlibbioc_1.24.0            purrr_0.2.4               
-## [29] Rtsne_0.13                 huge_1.2.7                
-## [31] tibble_1.4.2               mgcv_1.8-23               
-## [33] IRanges_2.12.0             withr_2.1.2               
-## [35] BiocGenerics_0.24.0        lazyeval_0.2.1            
-## [37] survival_2.41-3            evaluate_0.10.1           
-## [39] nlme_3.1-131.1             MASS_7.3-49               
-## [41] vegan_2.5-2                tools_3.4.4               
-## [43] data.table_1.11.2          formatR_1.5               
-## [45] stringr_1.3.1              S4Vectors_0.16.0          
-## [47] munsell_0.4.3              cluster_2.0.6             
-## [49] Biostrings_2.46.0          ade4_1.7-11               
-## [51] compiler_3.4.4             rlang_0.2.0               
-## [53] rhdf5_2.22.0               grid_3.4.4                
-## [55] iterators_1.0.9            biomformat_1.6.0          
-## [57] rmarkdown_1.9              boot_1.3-20               
-## [59] gtable_0.2.0               codetools_0.2-15          
-## [61] multtest_2.34.0            reshape2_1.4.3            
-## [63] R6_2.2.2                   gridExtra_2.3             
-## [65] knitr_1.20                 bindr_0.1.1               
-## [67] rprojroot_1.3-2            permute_0.9-4             
-## [69] ape_5.1                    stringi_1.2.2             
-## [71] parallel_3.4.4             Rcpp_0.12.17              
-## [73] tidyselect_0.2.4           xfun_0.1</code></pre>
+## [21] Matrix_1.2-15              plyr_1.8.4                
+## [23] microbiomeutilities_0.99.0 pkgconfig_2.0.2           
+## [25] pheatmap_1.0.10            pulsar_0.3.5              
+## [27] bookdown_0.7               zlibbioc_1.26.0           
+## [29] purrr_0.2.5                Rtsne_0.15                
+## [31] huge_1.3.1                 tibble_1.4.2              
+## [33] mgcv_1.8-25                IRanges_2.14.12           
+## [35] withr_2.1.2                BiocGenerics_0.26.0       
+## [37] lazyeval_0.2.1             survival_2.43-1           
+## [39] crayon_1.3.4               evaluate_0.12             
+## [41] nlme_3.1-137               MASS_7.3-51.1             
+## [43] vegan_2.5-3                tools_3.5.1               
+## [45] data.table_1.11.8          formatR_1.5               
+## [47] stringr_1.3.1              Rhdf5lib_1.2.1            
+## [49] S4Vectors_0.18.3           munsell_0.5.0             
+## [51] cluster_2.0.7-1            Biostrings_2.48.0         
+## [53] ade4_1.7-13                compiler_3.5.1            
+## [55] rlang_0.3.0.1              rhdf5_2.24.0              
+## [57] grid_3.5.1                 iterators_1.0.10          
+## [59] biomformat_1.8.0           rmarkdown_1.10            
+## [61] gtable_0.2.0               codetools_0.2-15          
+## [63] multtest_2.36.0            reshape2_1.4.3            
+## [65] R6_2.3.0                   gridExtra_2.3             
+## [67] knitr_1.20                 bindr_0.1.1               
+## [69] rprojroot_1.3-2            permute_0.9-4             
+## [71] ape_5.2                    stringi_1.2.4             
+## [73] parallel_3.5.1             Rcpp_0.12.19              
+## [75] coda_0.19-2                tidyselect_0.2.5          
+## [77] xfun_0.4</code></pre>
 
 </div>
 </div>

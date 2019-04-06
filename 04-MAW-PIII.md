@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2018-05-29"
+date: "2019-04-06"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -51,13 +51,13 @@ ps1.com <- ps1
 taxa_names(ps1.com) <- paste0("ASV_", rownames(tax_table(ps1.com)))
 
 # We need to set Palette
-taxic <- as.data.frame(ps1.com@tax_table)  # this will help in setting large color options
+taxic <- as.data.frame(ps1.com@tax_table) # this will help in setting large color options
 
-#colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)
-#getPalette = colorRampPalette(brewer.pal(12, "Paired"))  # change the palette as well as the number of colors will change according to palette.
+# colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)
+# getPalette = colorRampPalette(brewer.pal(12, "Paired"))  # change the palette as well as the number of colors will change according to palette.
 
-taxic$OTU <- rownames(taxic)  # Add the OTU ids from OTU table into the taxa table at the end.
-colnames(taxic)  # You can see that we now have extra taxonomy levels.
+taxic$OTU <- rownames(taxic) # Add the OTU ids from OTU table into the taxa table at the end.
+colnames(taxic) # You can see that we now have extra taxonomy levels.
 ```
 
 ```
@@ -65,9 +65,9 @@ colnames(taxic)  # You can see that we now have extra taxonomy levels.
 ```
 
 ```r
-taxmat <- as.matrix(taxic)  # convert it into a matrix.
-new.tax <- tax_table(taxmat)  # convert into phyloseq compatible file.
-tax_table(ps1.com) <- new.tax  # incroporate into phyloseq Object
+taxmat <- as.matrix(taxic) # convert it into a matrix.
+new.tax <- tax_table(taxmat) # convert into phyloseq compatible file.
+tax_table(ps1.com) <- new.tax # incroporate into phyloseq Object
 
 
 # now edit the unclassified taxa
@@ -76,8 +76,10 @@ tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "", "Family"] <- "Unclassif
 # it would be nice to have the Taxonomic names in italics.
 # for that we set this
 
-guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15, 
-    face = "italic", colour = "Black", angle = 0)))
+guide_italics <- guides(fill = guide_legend(label.theme = element_text(
+  size = 15,
+  face = "italic", colour = "Black", angle = 0
+)))
 
 
 ## Now we need to plot at family level, we can do it as follows:
@@ -86,15 +88,15 @@ guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15
 
 ps1.com@phy_tree <- NULL
 
-# Second merge at family level 
+# Second merge at family level
 
-ps1.com.fam <- microbiome::aggregate_taxa(ps1.com, "Family", top = 10)
+ps1.com.fam <- microbiome::aggregate_top_taxa(ps1.com, "Family", top = 10)
 
-plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") + 
-    scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
-    theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size=18))
-  
+plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") +
+  scale_fill_brewer("Family", palette = "Paired") + theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size = 18))
+
 plot.composition.COuntAbun
 ```
 
@@ -117,13 +119,15 @@ Make it relative abundance
 # Use traqnsform function of microbiome to convert it to rel abun.
 ps1.com.fam.rel <- microbiome::transform(ps1.com.fam, "compositional")
 
-plot.composition.relAbun <- plot_composition(ps1.com.fam.rel, 
-                                             sample.sort = "scientific_name", 
-                                             x.label = "env_material") + theme(legend.position = "bottom") + scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
-    theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size=18))
-  
-plot.composition.relAbun
+plot.composition.relAbun <- plot_composition(ps1.com.fam.rel,
+                                             sample.sort = "scientific_name",
+                                             x.label = "env_material") 
+plot.composition.relAbun <- plot.composition.relAbun + theme(legend.position = "bottom") 
+plot.composition.relAbun <- plot.composition.relAbun + scale_fill_brewer("Family", palette = "Paired") + theme_bw() 
+plot.composition.relAbun <- plot.composition.relAbun + theme(axis.text.x = element_text(angle = 90)) 
+plot.composition.relAbun <- plot.composition.relAbun + ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size = 18))
+
+print(plot.composition.relAbun)
 ```
 
 <img src="04-MAW-PIII_files/figure-html/unnamed-chunk-4-1.png" width="1920" />
@@ -141,29 +145,31 @@ colnames(data.com)
 ```
 
 ```
-## [1] "OTU"       "Sample"    "Abundance" "xlabel"
+## [1] "Tax"       "Sample"    "Abundance" "xlabel"
 ```
 
 
 ```r
-p.com <- ggplot(data.com, aes(x = Sample, y = Abundance, fill = OTU))
+p.com <- ggplot(data.com, aes(x = Sample, y = Abundance, fill = Tax))
 p.com <- p.com + geom_bar(position = "stack", stat = "identity")
 p.com <- p.com + scale_x_discrete(labels = data.com$xlabel, breaks = data.com$Sample)
 p.com <- p.com + facet_grid(~xlabel, scales = "free") + theme_bw()
-p.com <- p.com + scale_fill_brewer("Family", palette = "Paired") 
-p.com <- p.com + rremove("x.text") 
+p.com <- p.com + scale_fill_brewer("Family", palette = "Paired")
+p.com <- p.com + rremove("x.text")
 
 ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 ```
 
 For more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
-## Heatmaps  
+
+## Heatmaps   
+
 These are a good alternative to barplots (if done right).  
 
 
 ```r
 # base plot
-p.heat <- ggplot(data.com, aes(x = Sample, y = OTU)) + geom_tile(aes(fill = Abundance)) 
+p.heat <- ggplot(data.com, aes(x = Sample, y = Tax)) + geom_tile(aes(fill = Abundance)) 
 
 # Change color
 p.heat <- p.heat + scale_fill_distiller("Abundance", palette = "RdYlBu") + theme_bw() 
@@ -207,7 +213,13 @@ Following is an example of customizing the plot using ggpubr.
 
 ```r
 # we use count data at family level from the barplot for counts
-ps_df <- microbiomeutilities::phy_to_ldf(ps1.com.fam, transform.counts = "compositional")
+ps_df <- microbiomeutilities::phy_to_ldf(ps1.com.fam, 
+                                         transform.counts = "compositional")
+```
+
+```
+## Warning: replacing previous import 'ggplot2::alpha' by 'microbiome::alpha'
+## when loading 'microbiomeutilities'
 ```
 
 ```
@@ -220,7 +232,7 @@ colnames(ps_df)
 
 ```
 ##  [1] "OTUID"                       "Family"                     
-##  [3] "OTU"                         "Sam_rep"                    
+##  [3] "unique"                      "Sam_rep"                    
 ##  [5] "Abundance"                   "BarcodeSequence"            
 ##  [7] "LinkerPrimerSequence"        "run_prefix"                 
 ##  [9] "body_habitat"                "body_product"               
@@ -261,65 +273,66 @@ sessionInfo()
 ```
 
 ```
-## R version 3.4.4 (2018-03-15)
+## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 16299)
+## Running under: Windows 10 x64 (build 17763)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=English_United States.1252 
+## [1] LC_COLLATE=English_Netherlands.1252   
 ## [2] LC_CTYPE=English_United States.1252   
 ## [3] LC_MONETARY=English_United States.1252
 ## [4] LC_NUMERIC=C                          
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2.2       dplyr_0.7.5          ggpubr_0.1.6        
-## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
-## [7] ggplot2_2.2.1.9000   phyloseq_1.22.3     
+## [1] bindrcpp_0.2.2     dplyr_0.7.7        ggpubr_0.1.8      
+## [4] magrittr_1.5       RColorBrewer_1.1-2 microbiome_1.5.28 
+## [7] ggplot2_3.1.0      phyloseq_1.24.2   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] ggrepel_0.8.0              Rcpp_0.12.17              
-##  [3] ape_5.1                    lattice_0.20-35           
-##  [5] tidyr_0.8.1                Biostrings_2.46.0         
-##  [7] assertthat_0.2.0           rprojroot_1.3-2           
-##  [9] digest_0.6.15              foreach_1.4.4             
-## [11] R6_2.2.2                   plyr_1.8.4                
-## [13] backports_1.1.2            stats4_3.4.4              
-## [15] evaluate_0.10.1            pillar_1.2.2              
-## [17] zlibbioc_1.24.0            rlang_0.2.0               
-## [19] lazyeval_0.2.1             data.table_1.11.2         
-## [21] vegan_2.5-2                S4Vectors_0.16.0          
-## [23] Matrix_1.2-12              rmarkdown_1.9             
-## [25] labeling_0.3               splines_3.4.4             
-## [27] Rtsne_0.13                 stringr_1.3.1             
-## [29] pheatmap_1.0.10            igraph_1.2.1              
-## [31] munsell_0.4.3              compiler_3.4.4            
-## [33] xfun_0.1                   pkgconfig_2.0.1           
-## [35] BiocGenerics_0.24.0        multtest_2.34.0           
-## [37] mgcv_1.8-23                htmltools_0.3.6           
-## [39] biomformat_1.6.0           tidyselect_0.2.4          
-## [41] gridExtra_2.3              tibble_1.4.2              
-## [43] bookdown_0.7               IRanges_2.12.0            
-## [45] codetools_0.2-15           viridisLite_0.3.0         
-## [47] permute_0.9-4              withr_2.1.2               
-## [49] MASS_7.3-49                grid_3.4.4                
-## [51] nlme_3.1-131.1             jsonlite_1.5              
-## [53] gtable_0.2.0               scales_0.5.0              
-## [55] stringi_1.2.2              XVector_0.18.0            
-## [57] reshape2_1.4.3             viridis_0.5.1             
-## [59] ggsci_2.9                  iterators_1.0.9           
-## [61] tools_3.4.4                microbiomeutilities_0.99.0
-## [63] ade4_1.7-11                Biobase_2.38.0            
-## [65] glue_1.2.0                 purrr_0.2.4               
-## [67] parallel_3.4.4             survival_2.41-3           
-## [69] yaml_2.1.19                colorspace_1.3-2          
-## [71] rhdf5_2.22.0               cluster_2.0.6             
-## [73] knitr_1.20                 bindr_0.1.1
+##  [1] Biobase_2.40.0             viridis_0.5.1             
+##  [3] tidyr_0.8.2                jsonlite_1.5              
+##  [5] viridisLite_0.3.0          splines_3.5.1             
+##  [7] foreach_1.4.4              assertthat_0.2.0          
+##  [9] stats4_3.5.1               yaml_2.2.0                
+## [11] ggrepel_0.8.0              pillar_1.3.0              
+## [13] backports_1.1.2            lattice_0.20-35           
+## [15] glue_1.3.0                 digest_0.6.18             
+## [17] XVector_0.20.0             colorspace_1.3-2          
+## [19] htmltools_0.3.6            Matrix_1.2-15             
+## [21] plyr_1.8.4                 microbiomeutilities_0.99.0
+## [23] pkgconfig_2.0.2            pheatmap_1.0.10           
+## [25] bookdown_0.7               zlibbioc_1.26.0           
+## [27] purrr_0.2.5                scales_1.0.0              
+## [29] Rtsne_0.15                 tibble_1.4.2              
+## [31] mgcv_1.8-25                IRanges_2.14.12           
+## [33] withr_2.1.2                BiocGenerics_0.26.0       
+## [35] lazyeval_0.2.1             survival_2.43-1           
+## [37] crayon_1.3.4               evaluate_0.12             
+## [39] nlme_3.1-137               MASS_7.3-51.1             
+## [41] vegan_2.5-3                tools_3.5.1               
+## [43] data.table_1.11.8          stringr_1.3.1             
+## [45] Rhdf5lib_1.2.1             S4Vectors_0.18.3          
+## [47] munsell_0.5.0              ggsci_2.9                 
+## [49] cluster_2.0.7-1            Biostrings_2.48.0         
+## [51] ade4_1.7-13                compiler_3.5.1            
+## [53] rlang_0.3.0.1              rhdf5_2.24.0              
+## [55] grid_3.5.1                 iterators_1.0.10          
+## [57] biomformat_1.8.0           igraph_1.2.2              
+## [59] labeling_0.3               rmarkdown_1.10            
+## [61] gtable_0.2.0               codetools_0.2-15          
+## [63] multtest_2.36.0            reshape2_1.4.3            
+## [65] R6_2.3.0                   gridExtra_2.3             
+## [67] knitr_1.20                 bindr_0.1.1               
+## [69] rprojroot_1.3-2            permute_0.9-4             
+## [71] ape_5.2                    stringi_1.2.4             
+## [73] parallel_3.5.1             Rcpp_0.12.19              
+## [75] tidyselect_0.2.5           xfun_0.4
 ```
 
 

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</title>
-  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018">
+  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</title>
+  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-29">
+<meta name="date" content="2019-04-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,7 +47,7 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.4/datatables.js"></script>
 <link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -139,6 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>4.2</b> Barplot relative abundance</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>4.2.1</b> Barplot customize</a></li>
 </ul></li>
+<li class="chapter" data-level="4.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>4.3</b> Heatmaps</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>5</b> Beta diversity metrics</a><ul>
 <li class="chapter" data-level="5.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>5.1</b> Phylogenetic beta-diversity metrics</a><ul>
@@ -202,6 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="further-exercises.html"><a href="further-exercises.html#compositionality"><i class="fa fa-check"></i><b>12.1</b> Compositionality</a></li>
 <li class="chapter" data-level="12.2" data-path="further-exercises.html"><a href="further-exercises.html#redundancy-analysis-rda"><i class="fa fa-check"></i><b>12.2</b> Redundancy analysis (RDA)</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="citation.html"><a href="citation.html"><i class="fa fa-check"></i><b>13</b> Citation</a></li>
 </ul>
 
       </nav>
@@ -211,7 +213,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</a>
           </h1>
         </div>
 
@@ -229,11 +231,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Sequencing data consists of discrete counts:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">abundances</span>(d)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
 <pre><code>##                              Sample-1 Sample-2 Sample-3
-## Actinomycetaceae                   11       67       21
-## Aerococcus                          1        1        1
-## Aeromonas                           1        1        1
-## Akkermansia                      1167     6127     4235
-## Alcaligenes faecalis et rel.       90      126      188</code></pre>
+## Actinomycetaceae                    0        1        0
+## Aerococcus                          0        0        0
+## Aeromonas                           0        0        0
+## Akkermansia                        18       97       67
+## Alcaligenes faecalis et rel.        1        2        3</code></pre>
 </div>
 <div id="sparsity" class="section level3">
 <h3><span class="header-section-number">10.1.2</span> Sparsity</h3>
@@ -314,19 +316,19 @@ res &lt;-<span class="st"> </span><span class="kw">glm</span>(Abundance <span cl
 <tbody>
 <tr class="odd">
 <td>(Intercept)</td>
-<td align="right">5.02355</td>
-<td align="right">0.00544</td>
-<td align="right">922.6545</td>
+<td align="right">2.09286</td>
+<td align="right">0.02357</td>
+<td align="right">88.79275</td>
 <td align="right">0</td>
 </tr>
 </tbody>
 </table>
 <p>Note the link between mean and estimated coefficient (<span class="math inline">\(\mu = e^{Xb}\)</span>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(df<span class="op">$</span>Abundance)</code></pre></div>
-<pre><code>## [1] 151.9505</code></pre>
+<pre><code>## [1] 8.108108</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="kw">coef</span>(res))</code></pre></div>
 <pre><code>## (Intercept) 
-##    151.9505</code></pre>
+##    8.108108</code></pre>
 </div>
 <div id="deseq2-differential-abundance-testing-for-sequencing-data" class="section level2">
 <h2><span class="header-section-number">10.3</span> DESeq2: differential abundance testing for sequencing data</h2>
@@ -369,76 +371,76 @@ knitr<span class="op">::</span><span class="kw">kable</span>(deseq.results <span
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">1870.08336</td>
-<td align="right">1.89495</td>
-<td align="right">0.12667</td>
-<td align="right">14.95965</td>
-<td align="right">0</td>
-<td align="right">0</td>
+<td align="right">29.20535</td>
+<td align="right">1.91205</td>
+<td align="right">0.13432</td>
+<td align="right">14.23457</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
 <td align="left">Clostridium difficile et rel.</td>
 </tr>
 <tr class="even">
-<td align="right">1015.44245</td>
-<td align="right">2.12453</td>
-<td align="right">0.18359</td>
-<td align="right">11.57241</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">Klebisiella pneumoniae et rel.</td>
-</tr>
-<tr class="odd">
-<td align="right">3335.72902</td>
-<td align="right">3.02549</td>
-<td align="right">0.28380</td>
-<td align="right">10.66044</td>
-<td align="right">0</td>
-<td align="right">0</td>
+<td align="right">51.65152</td>
+<td align="right">3.04116</td>
+<td align="right">0.28687</td>
+<td align="right">10.60107</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
 <td align="left">Mitsuokella multiacida et rel.</td>
 </tr>
-<tr class="even">
-<td align="right">1519.25023</td>
-<td align="right">1.60976</td>
-<td align="right">0.18026</td>
-<td align="right">8.93027</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">Enterobacter aerogenes et rel.</td>
-</tr>
 <tr class="odd">
-<td align="right">2848.86627</td>
-<td align="right">1.77112</td>
-<td align="right">0.22906</td>
-<td align="right">7.73226</td>
-<td align="right">0</td>
-<td align="right">0</td>
+<td align="right">12.39749</td>
+<td align="right">1.83825</td>
+<td align="right">0.18531</td>
+<td align="right">9.91994</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
+<td align="left">Klebisiella pneumoniae et rel.</td>
+</tr>
+<tr class="even">
+<td align="right">44.16494</td>
+<td align="right">1.78333</td>
+<td align="right">0.23072</td>
+<td align="right">7.72937</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
 <td align="left">Megasphaera elsdenii et rel.</td>
 </tr>
+<tr class="odd">
+<td align="right">66.93783</td>
+<td align="right">1.68345</td>
+<td align="right">0.25330</td>
+<td align="right">6.64609</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
+<td align="left">Escherichia coli et rel.</td>
+</tr>
 <tr class="even">
-<td align="right">321.24275</td>
-<td align="right">2.86529</td>
-<td align="right">0.37602</td>
-<td align="right">7.61997</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">Serratia</td>
+<td align="right">3.63459</td>
+<td align="right">1.53142</td>
+<td align="right">0.23140</td>
+<td align="right">6.61792</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
+<td align="left">Weissella et rel.</td>
 </tr>
 <tr class="odd">
-<td align="right">19.97851</td>
-<td align="right">2.24305</td>
-<td align="right">0.31335</td>
-<td align="right">7.15820</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">Aquabacterium</td>
+<td align="right">5.74035</td>
+<td align="right">3.07334</td>
+<td align="right">0.47848</td>
+<td align="right">6.42308</td>
+<td align="right">0.00000</td>
+<td align="right">0.00000</td>
+<td align="left">Serratia</td>
 </tr>
 <tr class="even">
-<td align="right">173.00079</td>
-<td align="right">1.80120</td>
-<td align="right">0.26252</td>
-<td align="right">6.86114</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="left">Haemophilus</td>
+<td align="right">0.42171</td>
+<td align="right">1.70079</td>
+<td align="right">0.47147</td>
+<td align="right">3.60743</td>
+<td align="right">0.00031</td>
+<td align="right">0.00075</td>
+<td align="left">Moraxellaceae</td>
 </tr>
 </tbody>
 </table>

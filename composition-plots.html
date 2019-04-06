@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</title>
-  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018">
+  <title>OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</title>
+  <meta name="description" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta property="og:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018" />
+  <meta name="twitter:title" content="OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes">
 
 
-<meta name="date" content="2018-05-29">
+<meta name="date" content="2019-04-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,7 +47,7 @@
 
 
 
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.4/datatables.js"></script>
 <link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -139,6 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.2" data-path="composition-plots.html"><a href="composition-plots.html#barplot-relative-abundance"><i class="fa fa-check"></i><b>4.2</b> Barplot relative abundance</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="composition-plots.html"><a href="composition-plots.html#barplot-customize"><i class="fa fa-check"></i><b>4.2.1</b> Barplot customize</a></li>
 </ul></li>
+<li class="chapter" data-level="4.3" data-path="composition-plots.html"><a href="composition-plots.html#heatmaps"><i class="fa fa-check"></i><b>4.3</b> Heatmaps</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html"><i class="fa fa-check"></i><b>5</b> Beta diversity metrics</a><ul>
 <li class="chapter" data-level="5.1" data-path="beta-diversity-metrics.html"><a href="beta-diversity-metrics.html#phylogenetic-beta-diversity-metrics"><i class="fa fa-check"></i><b>5.1</b> Phylogenetic beta-diversity metrics</a><ul>
@@ -202,6 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="further-exercises.html"><a href="further-exercises.html#compositionality"><i class="fa fa-check"></i><b>12.1</b> Compositionality</a></li>
 <li class="chapter" data-level="12.2" data-path="further-exercises.html"><a href="further-exercises.html#redundancy-analysis-rda"><i class="fa fa-check"></i><b>12.2</b> Redundancy analysis (RDA)</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="citation.html"><a href="citation.html"><i class="fa fa-check"></i><b>13</b> Citation</a></li>
 </ul>
 
       </nav>
@@ -211,7 +213,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">OPEN &amp; REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0</a>
           </h1>
         </div>
 
@@ -247,17 +249,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">taxa_names</span>(ps1.com) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ASV_&quot;</span>, <span class="kw">rownames</span>(<span class="kw">tax_table</span>(ps1.com)))
 
 <span class="co"># We need to set Palette</span>
-taxic &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ps1.com<span class="op">@</span>tax_table)  <span class="co"># this will help in setting large color options</span>
+taxic &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(ps1.com<span class="op">@</span>tax_table) <span class="co"># this will help in setting large color options</span>
 
-<span class="co">#colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)</span>
-<span class="co">#getPalette = colorRampPalette(brewer.pal(12, &quot;Paired&quot;))  # change the palette as well as the number of colors will change according to palette.</span>
+<span class="co"># colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)</span>
+<span class="co"># getPalette = colorRampPalette(brewer.pal(12, &quot;Paired&quot;))  # change the palette as well as the number of colors will change according to palette.</span>
 
-taxic<span class="op">$</span>OTU &lt;-<span class="st"> </span><span class="kw">rownames</span>(taxic)  <span class="co"># Add the OTU ids from OTU table into the taxa table at the end.</span>
-<span class="kw">colnames</span>(taxic)  <span class="co"># You can see that we now have extra taxonomy levels.</span></code></pre></div>
+taxic<span class="op">$</span>OTU &lt;-<span class="st"> </span><span class="kw">rownames</span>(taxic) <span class="co"># Add the OTU ids from OTU table into the taxa table at the end.</span>
+<span class="kw">colnames</span>(taxic) <span class="co"># You can see that we now have extra taxonomy levels.</span></code></pre></div>
 <pre><code>## [1] &quot;Domain&quot; &quot;Phylum&quot; &quot;Class&quot;  &quot;Order&quot;  &quot;Family&quot; &quot;Genus&quot;  &quot;OTU&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">taxmat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(taxic)  <span class="co"># convert it into a matrix.</span>
-new.tax &lt;-<span class="st"> </span><span class="kw">tax_table</span>(taxmat)  <span class="co"># convert into phyloseq compatible file.</span>
-<span class="kw">tax_table</span>(ps1.com) &lt;-<span class="st"> </span>new.tax  <span class="co"># incroporate into phyloseq Object</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">taxmat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(taxic) <span class="co"># convert it into a matrix.</span>
+new.tax &lt;-<span class="st"> </span><span class="kw">tax_table</span>(taxmat) <span class="co"># convert into phyloseq compatible file.</span>
+<span class="kw">tax_table</span>(ps1.com) &lt;-<span class="st"> </span>new.tax <span class="co"># incroporate into phyloseq Object</span>
 
 
 <span class="co"># now edit the unclassified taxa</span>
@@ -266,8 +268,10 @@ new.tax &lt;-<span class="st"> </span><span class="kw">tax_table</span>(taxmat) 
 <span class="co"># it would be nice to have the Taxonomic names in italics.</span>
 <span class="co"># for that we set this</span>
 
-guide_italics &lt;-<span class="st"> </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">label.theme =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">15</span>, 
-    <span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>, <span class="dt">angle =</span> <span class="dv">0</span>)))
+guide_italics &lt;-<span class="st"> </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">label.theme =</span> <span class="kw">element_text</span>(
+  <span class="dt">size =</span> <span class="dv">15</span>,
+  <span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>, <span class="dt">angle =</span> <span class="dv">0</span>
+)))
 
 
 ## Now we need to plot at family level, we can do it as follows:
@@ -276,15 +280,15 @@ guide_italics &lt;-<span class="st"> </span><span class="kw">guides</span>(<span
 
 ps1.com<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span>
 
-<span class="co"># Second merge at family level </span>
+<span class="co"># Second merge at family level</span>
 
-ps1.com.fam &lt;-<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">aggregate_taxa</span>(ps1.com, <span class="st">&quot;Family&quot;</span>, <span class="dt">top =</span> <span class="dv">10</span>)
+ps1.com.fam &lt;-<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">aggregate_top_taxa</span>(ps1.com, <span class="st">&quot;Family&quot;</span>, <span class="dt">top =</span> <span class="dv">10</span>)
 
-plot.composition.COuntAbun &lt;-<span class="st"> </span><span class="kw">plot_composition</span>(ps1.com.fam) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relative abundance&quot;</span>) <span class="op">+</span><span class="st"> </span>guide_italics <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">18</span>))
-  
+plot.composition.COuntAbun &lt;-<span class="st"> </span><span class="kw">plot_composition</span>(ps1.com.fam) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relative abundance&quot;</span>) <span class="op">+</span><span class="st"> </span>guide_italics <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">18</span>))
+
 plot.composition.COuntAbun</code></pre></div>
 <p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-3-1.png" width="1920" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ggsave(&quot;./Test_Outputfiles/Family_barplot_CountAbundance.pdf&quot;, height = 6, width = 8)</span></code></pre></div>
@@ -298,33 +302,38 @@ plot.composition.COuntAbun</code></pre></div>
 <span class="co"># Use traqnsform function of microbiome to convert it to rel abun.</span>
 ps1.com.fam.rel &lt;-<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">transform</span>(ps1.com.fam, <span class="st">&quot;compositional&quot;</span>)
 
-plot.composition.relAbun &lt;-<span class="st"> </span><span class="kw">plot_composition</span>(ps1.com.fam.rel, 
-                                             <span class="dt">sample.sort =</span> <span class="st">&quot;scientific_name&quot;</span>, 
-                                             <span class="dt">x.label =</span> <span class="st">&quot;env_material&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relative abundance&quot;</span>) <span class="op">+</span><span class="st"> </span>guide_italics <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">18</span>))
-  
-plot.composition.relAbun</code></pre></div>
+plot.composition.relAbun &lt;-<span class="st"> </span><span class="kw">plot_composition</span>(ps1.com.fam.rel,
+                                             <span class="dt">sample.sort =</span> <span class="st">&quot;scientific_name&quot;</span>,
+                                             <span class="dt">x.label =</span> <span class="st">&quot;env_material&quot;</span>) 
+plot.composition.relAbun &lt;-<span class="st"> </span>plot.composition.relAbun <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) 
+plot.composition.relAbun &lt;-<span class="st"> </span>plot.composition.relAbun <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() 
+plot.composition.relAbun &lt;-<span class="st"> </span>plot.composition.relAbun <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>)) 
+plot.composition.relAbun &lt;-<span class="st"> </span>plot.composition.relAbun <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relative abundance&quot;</span>) <span class="op">+</span><span class="st"> </span>guide_italics <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">18</span>))
+
+<span class="kw">print</span>(plot.composition.relAbun)</code></pre></div>
 <p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-4-1.png" width="1920" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ggsave(&quot;./figures/Family_barplot_RelAbundance.pdf&quot;, height = 6, width = 8)</span></code></pre></div>
 <div id="barplot-customize" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Barplot customize</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.com &lt;-<span class="st"> </span>plot.composition.relAbun<span class="op">$</span>data
 <span class="kw">colnames</span>(data.com)</code></pre></div>
-<pre><code>## [1] &quot;OTU&quot;       &quot;Sample&quot;    &quot;Abundance&quot; &quot;xlabel&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.com &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> OTU))
+<pre><code>## [1] &quot;Tax&quot;       &quot;Sample&quot;    &quot;Abundance&quot; &quot;xlabel&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.com &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> Tax))
 p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)
 p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> data.com<span class="op">$</span>xlabel, <span class="dt">breaks =</span> data.com<span class="op">$</span>Sample)
 p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(<span class="op">~</span>xlabel, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
-p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>) 
-p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>) 
+p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;Family&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Paired&quot;</span>)
+p.com &lt;-<span class="st"> </span>p.com <span class="op">+</span><span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>)
 
 <span class="kw">ggsave</span>(<span class="st">&quot;./figures/Composition plots.pdf&quot;</span>, <span class="dt">height =</span> <span class="dv">4</span>, <span class="dt">width =</span> <span class="dv">6</span>)</code></pre></div>
-<p>For more information <a href="http://microbiome.github.io/microbiome/Composition.html">Microbiome tutorial</a><br />
-## Heatmaps<br />
-These are a good alternative to barplots (if done right).</p>
+<p>For more information <a href="http://microbiome.github.io/microbiome/Composition.html">Microbiome tutorial</a></p>
+</div>
+</div>
+<div id="heatmaps" class="section level2">
+<h2><span class="header-section-number">4.3</span> Heatmaps</h2>
+<p>These are a good alternative to barplots (if done right).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># base plot</span>
-p.heat &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> OTU)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Abundance)) 
+p.heat &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data.com, <span class="kw">aes</span>(<span class="dt">x =</span> Sample, <span class="dt">y =</span> Tax)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Abundance)) 
 
 <span class="co"># Change color</span>
 p.heat &lt;-<span class="st"> </span>p.heat <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_distiller</span>(<span class="st">&quot;Abundance&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;RdYlBu&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() 
@@ -357,11 +366,14 @@ p.heat &lt;-<span class="st"> </span>p.heat <span class="op">+</span><span class
 <p><strong>Extra</strong></p>
 <p>Following is an example of customizing the plot using ggpubr.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we use count data at family level from the barplot for counts</span>
-ps_df &lt;-<span class="st"> </span>microbiomeutilities<span class="op">::</span><span class="kw">phy_to_ldf</span>(ps1.com.fam, <span class="dt">transform.counts =</span> <span class="st">&quot;compositional&quot;</span>)</code></pre></div>
+ps_df &lt;-<span class="st"> </span>microbiomeutilities<span class="op">::</span><span class="kw">phy_to_ldf</span>(ps1.com.fam, 
+                                         <span class="dt">transform.counts =</span> <span class="st">&quot;compositional&quot;</span>)</code></pre></div>
+<pre><code>## Warning: replacing previous import &#39;ggplot2::alpha&#39; by &#39;microbiome::alpha&#39;
+## when loading &#39;microbiomeutilities&#39;</code></pre>
 <pre><code>## An additonal column Sam_rep with sample names is created for reference purpose</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(ps_df)</code></pre></div>
 <pre><code>##  [1] &quot;OTUID&quot;                       &quot;Family&quot;                     
-##  [3] &quot;OTU&quot;                         &quot;Sam_rep&quot;                    
+##  [3] &quot;unique&quot;                      &quot;Sam_rep&quot;                    
 ##  [5] &quot;Abundance&quot;                   &quot;BarcodeSequence&quot;            
 ##  [7] &quot;LinkerPrimerSequence&quot;        &quot;run_prefix&quot;                 
 ##  [9] &quot;body_habitat&quot;                &quot;body_product&quot;               
@@ -390,67 +402,67 @@ p.box &lt;-<span class="st"> </span><span class="kw">ggstripchart</span>(ps_df, 
 p.box <span class="op">+</span><span class="st"> </span><span class="kw">rremove</span>(<span class="st">&quot;x.text&quot;</span>)</code></pre></div>
 <p><img src="04-MAW-PIII_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.4 (2018-03-15)
+<pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 16299)
+## Running under: Windows 10 x64 (build 17763)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=English_United States.1252 
+## [1] LC_COLLATE=English_Netherlands.1252   
 ## [2] LC_CTYPE=English_United States.1252   
 ## [3] LC_MONETARY=English_United States.1252
 ## [4] LC_NUMERIC=C                          
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2.2       dplyr_0.7.5          ggpubr_0.1.6        
-## [4] magrittr_1.5         RColorBrewer_1.1-2   microbiome_1.1.10013
-## [7] ggplot2_2.2.1.9000   phyloseq_1.22.3     
+## [1] bindrcpp_0.2.2     dplyr_0.7.7        ggpubr_0.1.8      
+## [4] magrittr_1.5       RColorBrewer_1.1-2 microbiome_1.5.28 
+## [7] ggplot2_3.1.0      phyloseq_1.24.2   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] ggrepel_0.8.0              Rcpp_0.12.17              
-##  [3] ape_5.1                    lattice_0.20-35           
-##  [5] tidyr_0.8.1                Biostrings_2.46.0         
-##  [7] assertthat_0.2.0           rprojroot_1.3-2           
-##  [9] digest_0.6.15              foreach_1.4.4             
-## [11] R6_2.2.2                   plyr_1.8.4                
-## [13] backports_1.1.2            stats4_3.4.4              
-## [15] evaluate_0.10.1            pillar_1.2.2              
-## [17] zlibbioc_1.24.0            rlang_0.2.0               
-## [19] lazyeval_0.2.1             data.table_1.11.2         
-## [21] vegan_2.5-2                S4Vectors_0.16.0          
-## [23] Matrix_1.2-12              rmarkdown_1.9             
-## [25] labeling_0.3               splines_3.4.4             
-## [27] Rtsne_0.13                 stringr_1.3.1             
-## [29] pheatmap_1.0.10            igraph_1.2.1              
-## [31] munsell_0.4.3              compiler_3.4.4            
-## [33] xfun_0.1                   pkgconfig_2.0.1           
-## [35] BiocGenerics_0.24.0        multtest_2.34.0           
-## [37] mgcv_1.8-23                htmltools_0.3.6           
-## [39] biomformat_1.6.0           tidyselect_0.2.4          
-## [41] gridExtra_2.3              tibble_1.4.2              
-## [43] bookdown_0.7               IRanges_2.12.0            
-## [45] codetools_0.2-15           viridisLite_0.3.0         
-## [47] permute_0.9-4              withr_2.1.2               
-## [49] MASS_7.3-49                grid_3.4.4                
-## [51] nlme_3.1-131.1             jsonlite_1.5              
-## [53] gtable_0.2.0               scales_0.5.0              
-## [55] stringi_1.2.2              XVector_0.18.0            
-## [57] reshape2_1.4.3             viridis_0.5.1             
-## [59] ggsci_2.9                  iterators_1.0.9           
-## [61] tools_3.4.4                microbiomeutilities_0.99.0
-## [63] ade4_1.7-11                Biobase_2.38.0            
-## [65] glue_1.2.0                 purrr_0.2.4               
-## [67] parallel_3.4.4             survival_2.41-3           
-## [69] yaml_2.1.19                colorspace_1.3-2          
-## [71] rhdf5_2.22.0               cluster_2.0.6             
-## [73] knitr_1.20                 bindr_0.1.1</code></pre>
+##  [1] Biobase_2.40.0             viridis_0.5.1             
+##  [3] tidyr_0.8.2                jsonlite_1.5              
+##  [5] viridisLite_0.3.0          splines_3.5.1             
+##  [7] foreach_1.4.4              assertthat_0.2.0          
+##  [9] stats4_3.5.1               yaml_2.2.0                
+## [11] ggrepel_0.8.0              pillar_1.3.0              
+## [13] backports_1.1.2            lattice_0.20-35           
+## [15] glue_1.3.0                 digest_0.6.18             
+## [17] XVector_0.20.0             colorspace_1.3-2          
+## [19] htmltools_0.3.6            Matrix_1.2-15             
+## [21] plyr_1.8.4                 microbiomeutilities_0.99.0
+## [23] pkgconfig_2.0.2            pheatmap_1.0.10           
+## [25] bookdown_0.7               zlibbioc_1.26.0           
+## [27] purrr_0.2.5                scales_1.0.0              
+## [29] Rtsne_0.15                 tibble_1.4.2              
+## [31] mgcv_1.8-25                IRanges_2.14.12           
+## [33] withr_2.1.2                BiocGenerics_0.26.0       
+## [35] lazyeval_0.2.1             survival_2.43-1           
+## [37] crayon_1.3.4               evaluate_0.12             
+## [39] nlme_3.1-137               MASS_7.3-51.1             
+## [41] vegan_2.5-3                tools_3.5.1               
+## [43] data.table_1.11.8          stringr_1.3.1             
+## [45] Rhdf5lib_1.2.1             S4Vectors_0.18.3          
+## [47] munsell_0.5.0              ggsci_2.9                 
+## [49] cluster_2.0.7-1            Biostrings_2.48.0         
+## [51] ade4_1.7-13                compiler_3.5.1            
+## [53] rlang_0.3.0.1              rhdf5_2.24.0              
+## [55] grid_3.5.1                 iterators_1.0.10          
+## [57] biomformat_1.8.0           igraph_1.2.2              
+## [59] labeling_0.3               rmarkdown_1.10            
+## [61] gtable_0.2.0               codetools_0.2-15          
+## [63] multtest_2.36.0            reshape2_1.4.3            
+## [65] R6_2.3.0                   gridExtra_2.3             
+## [67] knitr_1.20                 bindr_0.1.1               
+## [69] rprojroot_1.3-2            permute_0.9-4             
+## [71] ape_5.2                    stringi_1.2.4             
+## [73] parallel_3.5.1             Rcpp_0.12.19              
+## [75] tidyselect_0.2.5           xfun_0.4</code></pre>
 
-</div>
 </div>
 </div>
             </section>
