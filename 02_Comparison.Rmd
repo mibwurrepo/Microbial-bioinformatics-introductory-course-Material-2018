@@ -1,8 +1,9 @@
 ---
 title: "Comparison NG-tax and QIIME"
 author: "Sudarshan A. Shetty,"
-date: "25 mei 2018"
-output: html_document
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+site: bookdown::bookdown_site
 ---
 
 # Set-up and Pre-processing  
@@ -10,7 +11,7 @@ output: html_document
 This tutorial will introduce you to basic steps of microbial community analysis. More importantly on how to look at your data and filter appropriately. We will use the [Human microbiome project phase I data](https://www.ncbi.nlm.nih.gov/pubmed/22699609).  
 
 ## OTU or ASVs or sOTUs  
-For past few years (maybe decade), identifying Operational taxonomic units from raw sequences used clustering approach. Using 97% identity cut-off was a standard approach and often closed reference OTU picking was accepted in the sicentific community. During the time of the development of tools and bioinformatics approaches this was possibly the best available method. However, as with many other fields of science, the knowledge has been updated. Evolution of bioinformatics approaches is a constant process. Based on current knowledge, the cons of 97% OTU picking stratergy (using clustering approaches) have out-weighed the pros (eg. less time).  
+For past few years (maybe decade), identifying Operational taxonomic units (OTUs) from raw sequences used clustering approach. Using 97% identity cut-off was a standard approach and often closed reference OTU picking was accepted in the sicentific community. During the time of the development of tools and bioinformatics approaches this was possibly the best available method. However, as with many other fields of science, the knowledge has been updated. Evolution of bioinformatics approaches is a constant process. Based on current knowledge, the cons of 97% OTU picking stratergy (using clustering approaches) have out-weighed the pros (eg. less time).  
 
 Recent approaches are now focused towards Amplicon Seuence Variants/sOTUs:  
 * [Oligotyping](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3864673/)  
@@ -25,7 +26,7 @@ Note: Some how naming is different and variable. For this purpose and in this bo
 In this, section, we will compare outputs from 97% OTU picking approach and NG-tax approach.  
 The data used here is the 16S rRNA gene variable region (V1-V3) for 97% OTU-pciking. The raw reads were processed using QIIME 1.9.1, SortMeRNA, and OTU picking was done using the closed-reference OTU-picking at 97% identity.   
 
-For NG-Tax, we used the same raw data and processed through default settings.  
+For NG-Tax, we use the same raw data and processed through default settings.  
 
 Here, we do not aim to bench mark. For this course, we aim to show differences between results from two approaches.  
 
@@ -44,18 +45,17 @@ Let us create few folders to organize the analysis. While this can be personal p
 ```{r, eval=FALSE}
 
 # Create Folders as following
-#Tables  
+# Tables
 dir.create("tables")
 
-# Figures 
-dir.create("figures")  
+# Figures
+dir.create("figures")
 
-# Phyloseq objects  
-dir.create("phyobjects")  
+# Phyloseq objects
+dir.create("phyobjects")
 
-# Custom codes/notes  
+# Custom codes/notes
 dir.create("codes_notes")
-
 ```
 
 **Load packages**  
@@ -64,12 +64,12 @@ dir.create("codes_notes")
 
 library(microbiome) # data analysis and visualisation
 library(phyloseq) # also the basis of data object. Data analysis and visualisation
-library(microbiomeutilities) # some utility tools 
+library(microbiomeutilities) # some utility tools
 library(RColorBrewer) # nice color options
 library(ggpubr) # publication quality figures, based on ggplot2
 library(DT) # interactive tables in html and markdown
 library(data.table) # alternative to data.frame
-library(dplyr) # data handling  
+library(dplyr) # data handling
 
 ```
 
@@ -131,25 +131,22 @@ treefile_p1 <- read.tree("./input_data/humanmicrobiome.tree")
 
 ```{r, eval=TRUE}
 
-ps.ng.tax <-merge_phyloseq(ps.ng.tax,treefile_p1)
+ps.ng.tax <- merge_phyloseq(ps.ng.tax, treefile_p1)
 # ps.ng.tax is the first phyloseq object.
 
 print(ps.ng.tax)
 
-rank_names(ps.ng.tax) # we check the taxonomic rank information 
+rank_names(ps.ng.tax) # we check the taxonomic rank information
 
 datatable(tax_table(ps.ng.tax)) # the table is interactive you can scrol and search thorugh it for details.
-
-
 ```
 
 Before that we will clean the taxonomy table.  
 ```{r}
 
-tax_table(ps.ng.tax)[,colnames(tax_table(ps.ng.tax))] <- gsub(tax_table(ps.ng.tax)[,colnames(tax_table(ps.ng.tax))],pattern="[a-z]__",replacement="")
+tax_table(ps.ng.tax)[, colnames(tax_table(ps.ng.tax))] <- gsub(tax_table(ps.ng.tax)[, colnames(tax_table(ps.ng.tax))], pattern = "[a-z]__", replacement = "")
 
-tax_table(ps.ng.tax)[tax_table(ps.ng.tax)[,"Phylum"]== "","Phylum"] <- "Unidentified"
-
+tax_table(ps.ng.tax)[tax_table(ps.ng.tax)[, "Phylum"] == "", "Phylum"] <- "Unidentified"
 ```
 
 ```{r}
@@ -169,7 +166,7 @@ The data is from the [Human microbiome project phase I data](https://www.ncbi.nl
 ```{r}
 
 ps.otu <- readRDS("./input_data/ps.sub.rds")
-#microbiome::write_phyloseq(ps.otu, "METADATA")
+# microbiome::write_phyloseq(ps.otu, "METADATA")
 # use print option to see the data saved as phyloseq object.
 
 
@@ -213,7 +210,6 @@ p2 <- plot_taxa_cv(ps.otu, plot.type = "scatter")
 
 p2 + scale_x_log10()
 
-
 ```
 
 From the above two plots, we see that there are several OTUs which have high C.V. and low mean. The OTU-picking approach seems to be noisy and NG-Tax approach seems to have less noise. Thus, the ASVs identified by NG-Tax are of high confidence as they seem to be reprsented by high number of sequences in the raw data.  
@@ -226,7 +222,6 @@ Let us check for distribution of number of sequences retained after OTU picking 
 p_seqdepth.otu <- plot_read_distribution(ps.otu, "scientific_name", "density")
 
 p_seqdepth.ngtax <- plot_read_distribution(ps.ng.tax, "scientific_name", "density")
-
 ```
 
 
@@ -245,12 +240,12 @@ Moving on to distribution of taxa
 
 ```{r}
 # We make a data table with information on the OTUs
-ps0_df_taxa <- data.table(tax_table(ps.ng.tax), 
-                        ASVabundance = taxa_sums(ps.ng.tax), 
-                        ASV= taxa_names(ps.ng.tax))
+ps0_df_taxa <- data.table(tax_table(ps.ng.tax),
+                          ASVabundance = taxa_sums(ps.ng.tax),
+                          ASV = taxa_names(ps.ng.tax))
 
-ps0_tax_plot <- ggplot(ps0_df_taxa, aes(ASVabundance)) + 
-  geom_histogram() + ggtitle("Histogram of ASVs (unique sequence) counts (NG-Tax)") + 
+ps0_tax_plot <- ggplot(ps0_df_taxa, aes(ASVabundance)) +
+  geom_histogram() + ggtitle("Histogram of ASVs (unique sequence) counts (NG-Tax)") +
   theme_bw() + scale_x_log10() + ylab("Frequency of ASVs") + xlab("Abundance (raw counts)")
 
 print(ps0_tax_plot)
@@ -351,6 +346,7 @@ OTU picking approach.
 
 #total number of reads in the dataset
 reads_per_otu <- taxa_sums(ps0.1.otu)
+
 print(sum(reads_per_otu))
 
 ```
@@ -386,7 +382,7 @@ length(which(taxa_sums(ps1.1.ngtax) <= 1))
 
 ```
 
-Let us see how many doubletons are there?
+Check how many doubletons are there?
 
 ```{r}
 
@@ -394,7 +390,7 @@ length(which(taxa_sums(ps0.1.otu) == 2))
 length(which(taxa_sums(ps1.1.ngtax) == 2))
 ```
 
-Let us see how many Singletons and doubletons are there?
+Check how many Singletons and doubletons are there?
 
 ```{r}
 
@@ -403,6 +399,7 @@ length(which(taxa_sums(ps0.1.otu) <= 2))
 ```
 
 Singletons and doubletons  
+
 ```{r}
 
 round((892/3690)*100, digits = 2)

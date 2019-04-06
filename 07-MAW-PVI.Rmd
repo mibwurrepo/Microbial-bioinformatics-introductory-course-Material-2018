@@ -20,7 +20,7 @@ library(devtools)
 install_github("zdk123/SpiecEasi")
 
  #Other packages you need to install are 
-install.packages("igraph")
+#install.packages("igraph")
 
 install.packages("intergraph")
 install.packages("GGally")
@@ -90,7 +90,7 @@ head(tax_table(ps1.stool.otu.f))
 
 ## Prepare data for SpiecEasi  
 
-The calcualtion of SpiecEasi are time consuming. For this tutorial we will have the necessary input files for SpiecEasi.  
+The calculation of SpiecEasi are time consuming. For this tutorial, we will have the necessary input files for SpiecEasi.  
 
 * OTU table  
 * Taxonomy table  
@@ -140,7 +140,7 @@ The output of `spiec.easi` is stored in *./input_data/* as *stool.net.c.rds*. Re
 
 ```{r}
 # the PC has low processing power, you can read the otuput created by us present in the input_data folder.
-
+source("scripts/symBeta.R") # load custom function to get weights.
 net.c <- readRDS("input_data/stool.net.rds")
 class(net.c)
 n.c <- symBeta(getOptBeta(net.c))

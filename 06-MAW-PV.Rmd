@@ -101,7 +101,6 @@ This visualization method has been used for instance in [Intestinal microbiome l
 
 Note that you can order the taxa on the heatmap with the order.taxa argument.
 
-
 ```{r}
 
 # Core with compositionals:

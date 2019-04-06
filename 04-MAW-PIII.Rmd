@@ -45,17 +45,17 @@ ps1.com <- ps1
 taxa_names(ps1.com) <- paste0("ASV_", rownames(tax_table(ps1.com)))
 
 # We need to set Palette
-taxic <- as.data.frame(ps1.com@tax_table)  # this will help in setting large color options
+taxic <- as.data.frame(ps1.com@tax_table) # this will help in setting large color options
 
-#colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)
-#getPalette = colorRampPalette(brewer.pal(12, "Paired"))  # change the palette as well as the number of colors will change according to palette.
+# colourCount = length(unique(taxic$Family))  #define number of variable colors based on number of Family (change the level accordingly to phylum/class/order)
+# getPalette = colorRampPalette(brewer.pal(12, "Paired"))  # change the palette as well as the number of colors will change according to palette.
 
-taxic$OTU <- rownames(taxic)  # Add the OTU ids from OTU table into the taxa table at the end.
-colnames(taxic)  # You can see that we now have extra taxonomy levels.
+taxic$OTU <- rownames(taxic) # Add the OTU ids from OTU table into the taxa table at the end.
+colnames(taxic) # You can see that we now have extra taxonomy levels.
 
-taxmat <- as.matrix(taxic)  # convert it into a matrix.
-new.tax <- tax_table(taxmat)  # convert into phyloseq compatible file.
-tax_table(ps1.com) <- new.tax  # incroporate into phyloseq Object
+taxmat <- as.matrix(taxic) # convert it into a matrix.
+new.tax <- tax_table(taxmat) # convert into phyloseq compatible file.
+tax_table(ps1.com) <- new.tax # incroporate into phyloseq Object
 
 
 # now edit the unclassified taxa
@@ -64,8 +64,10 @@ tax_table(ps1.com)[tax_table(ps1.com)[, "Family"] == "", "Family"] <- "Unclassif
 # it would be nice to have the Taxonomic names in italics.
 # for that we set this
 
-guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15, 
-    face = "italic", colour = "Black", angle = 0)))
+guide_italics <- guides(fill = guide_legend(label.theme = element_text(
+  size = 15,
+  face = "italic", colour = "Black", angle = 0
+)))
 
 
 ## Now we need to plot at family level, we can do it as follows:
@@ -74,17 +76,16 @@ guide_italics <- guides(fill = guide_legend(label.theme = element_text(size = 15
 
 ps1.com@phy_tree <- NULL
 
-# Second merge at family level 
+# Second merge at family level
 
-ps1.com.fam <- microbiome::aggregate_taxa(ps1.com, "Family", top = 10)
+ps1.com.fam <- microbiome::aggregate_top_taxa(ps1.com, "Family", top = 10)
 
-plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") + 
-    scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
-    theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size=18))
-  
+plot.composition.COuntAbun <- plot_composition(ps1.com.fam) + theme(legend.position = "bottom") +
+  scale_fill_brewer("Family", palette = "Paired") + theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size = 18))
+
 plot.composition.COuntAbun
-
 #ggsave("./Test_Outputfiles/Family_barplot_CountAbundance.pdf", height = 6, width = 8)
 
 
@@ -103,14 +104,15 @@ Make it relative abundance
 # Use traqnsform function of microbiome to convert it to rel abun.
 ps1.com.fam.rel <- microbiome::transform(ps1.com.fam, "compositional")
 
-plot.composition.relAbun <- plot_composition(ps1.com.fam.rel, 
-                                             sample.sort = "scientific_name", 
-                                             x.label = "env_material") + theme(legend.position = "bottom") + scale_fill_brewer("Family", palette = "Paired") + theme_bw() + 
-    theme(axis.text.x = element_text(angle = 90)) + 
-  ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size=18))
-  
-plot.composition.relAbun
+plot.composition.relAbun <- plot_composition(ps1.com.fam.rel,
+                                             sample.sort = "scientific_name",
+                                             x.label = "env_material") 
+plot.composition.relAbun <- plot.composition.relAbun + theme(legend.position = "bottom") 
+plot.composition.relAbun <- plot.composition.relAbun + scale_fill_brewer("Family", palette = "Paired") + theme_bw() 
+plot.composition.relAbun <- plot.composition.relAbun + theme(axis.text.x = element_text(angle = 90)) 
+plot.composition.relAbun <- plot.composition.relAbun + ggtitle("Relative abundance") + guide_italics + theme(legend.title = element_text(size = 18))
 
+print(plot.composition.relAbun)
 
 #ggsave("./figures/Family_barplot_RelAbundance.pdf", height = 6, width = 8)
 
@@ -129,12 +131,12 @@ colnames(data.com)
 ```{r}
 
 
-p.com <- ggplot(data.com, aes(x = Sample, y = Abundance, fill = OTU))
+p.com <- ggplot(data.com, aes(x = Sample, y = Abundance, fill = Tax))
 p.com <- p.com + geom_bar(position = "stack", stat = "identity")
 p.com <- p.com + scale_x_discrete(labels = data.com$xlabel, breaks = data.com$Sample)
 p.com <- p.com + facet_grid(~xlabel, scales = "free") + theme_bw()
-p.com <- p.com + scale_fill_brewer("Family", palette = "Paired") 
-p.com <- p.com + rremove("x.text") 
+p.com <- p.com + scale_fill_brewer("Family", palette = "Paired")
+p.com <- p.com + rremove("x.text")
 
 ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 
@@ -142,13 +144,15 @@ ggsave("./figures/Composition plots.pdf", height = 4, width = 6)
 ```
 
 For more information [Microbiome tutorial](http://microbiome.github.io/microbiome/Composition.html)   
-## Heatmaps  
+
+## Heatmaps   
+
 These are a good alternative to barplots (if done right).  
 
 ```{r}
 
 # base plot
-p.heat <- ggplot(data.com, aes(x = Sample, y = OTU)) + geom_tile(aes(fill = Abundance)) 
+p.heat <- ggplot(data.com, aes(x = Sample, y = Tax)) + geom_tile(aes(fill = Abundance)) 
 
 # Change color
 p.heat <- p.heat + scale_fill_distiller("Abundance", palette = "RdYlBu") + theme_bw() 
@@ -188,7 +192,8 @@ Following is an example of customizing the plot using ggpubr.
 ```{r}
 
 # we use count data at family level from the barplot for counts
-ps_df <- microbiomeutilities::phy_to_ldf(ps1.com.fam, transform.counts = "compositional")
+ps_df <- microbiomeutilities::phy_to_ldf(ps1.com.fam, 
+                                         transform.counts = "compositional")
 
 colnames(ps_df)
 # this data.frame can be used to customize several plots.  
