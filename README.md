@@ -20,3 +20,8 @@ These can be improvements to existing tutorials or additional topics such as:
 * Advanced multivariate statistics.  
 * Any other analysis related to microbial ecology.  
  Create a pull request or send an email to Sudarshan Shetty at sudarshanshetty9@gmail.com 
+
+
+**Citation**  
+If you found this book useful, please cite:
+Shetty Sudarshan A, Lahti Leo, Hermes Gerben DA, & Hauke Smidt. (2018, September 27). Microbial bioinformatics introductory course material 2018 (Version 0.01). Zenodo. http://doi.org/10.5281/zenodo.1436630
