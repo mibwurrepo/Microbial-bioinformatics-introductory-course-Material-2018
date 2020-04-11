@@ -1,7 +1,7 @@
 ---
 title: "Differential abundance testing"
 author: "Leo Lahti"
-date: "2019-04-06"
+date: "2020-04-11"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -604,7 +604,7 @@ library(vegan)
 ```
 
 ```
-## This is vegan 2.5-3
+## This is vegan 2.5-6
 ```
 
 ```
@@ -636,7 +636,7 @@ print(as.data.frame(permanova$aov.tab)["group", "Pr(>F)"])
 ```
 
 ```
-## [1] 0.03
+## [1] 0.05
 ```
 
 ## Checking the homogeneity condition  
@@ -674,14 +674,14 @@ permutest(betadisper(dist, meta$group), pairwise = TRUE)
 ## 
 ## Response: Distances
 ##            Df  Sum Sq  Mean Sq      F N.Perm Pr(>F)
-## Groups      2 0.01252 0.006262 0.6649    999  0.521
+## Groups      2 0.01252 0.006262 0.6649    999  0.505
 ## Residuals 219 2.06254 0.009418                     
 ## 
 ## Pairwise comparisons:
 ## (Observed p-value below diagonal, permuted p-value above diagonal)
 ##         DI      ED    HE
-## DI         0.45100 0.694
-## ED 0.44203         0.307
+## DI         0.40100 0.693
+## ED 0.44203         0.296
 ## HE 0.69469 0.30560
 ```
 

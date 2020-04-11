@@ -1,7 +1,7 @@
 ---
-title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v2.0"
+title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018 v3.0 (Updated 11-Apr-2020)"
 author: "Sudarshan A. Shetty, Leo Lahti, Gerben DA. Hermes"
-date: "2019-04-06"
+date: "2020-04-11"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -21,6 +21,10 @@ Install the following software before the course:
 
 * R 3.5.1 [Download link](https://cran.r-project.org/bin/windows/base/old/3.5.1/).    
 * Rstudio [Download link](https://www.rstudio.com/products/rstudio/download/).  
+
+# The version 3 of this tutorial from Apr-11-2020 has been tested using
+* R version 3.6.3 [Download link](https://cran.r-project.org/bin/windows/base/old/3.5.1/).    
+* Rstudio [Download link](https://www.rstudio.com/products/rstudio/download/).
 
 *Make sure you have admin rights on the machine you install these softwares to avoid access issues.  
 
@@ -54,8 +58,12 @@ The primary aim is introduce microbial community data analysis. There will be ta
 Anyone who plans to or is currently doing high throughput microbial community analysis.  
 
 
+# Citation  
+If you found this book useful, please cite:  
+Shetty Sudarshan A, Lahti Leo, Hermes Gerben DA, & Hauke Smidt. (2020, April 11). Microbial bioinformatics introductory course material 2018 (Version v3.0). Zenodo. http://doi.org/10.5281/zenodo.1436630
 
-
+*Previous version**  
+Shetty Sudarshan A, Lahti Leo, Hermes Gerben DA, & Hauke Smidt. (2018, September 27). Microbial bioinformatics introductory course material 2018. Zenodo. http://doi.org/10.5281/zenodo.1436630
 
 
 

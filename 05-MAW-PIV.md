@@ -1,7 +1,7 @@
 ---
 title: "OPEN & REPRODUCIBLE MICROBIOME DATA ANALYSIS SPRING SCHOOL 2018"
 author: "Sudarshan"
-date: "2019-04-06"
+date: "2020-04-11"
 output: bookdown::gitbook
 site: bookdown::bookdown_site
 ---
@@ -137,12 +137,17 @@ p <- p + scale_color_brewer(palette = "Dark2")+ scale_fill_gradient(low = "#e0ec
 ```
 
 ```
-## Scale for 'fill' is already present. Adding another scale for 'fill',
-## which will replace the existing scale.
+## Scale for 'fill' is already present. Adding another scale for 'fill', which
+## will replace the existing scale.
 ```
 
 ```r
 p 
+```
+
+```
+## Warning: Position guide is perpendicular to the intended axis. Did you mean to
+## specify a different guide `position`?
 ```
 
 <img src="05-MAW-PIV_files/figure-html/unnamed-chunk-6-1.png" width="672" />
@@ -169,7 +174,7 @@ library(vegan)
 ```
 
 ```
-## This is vegan 2.5-3
+## This is vegan 2.5-6
 ```
 
 ```
@@ -247,8 +252,8 @@ permutest(ps.disper, pairwise = TRUE)
 ## human vaginal metagenome           3.1013e-18            1.4078e-10
 ##                          human skin metagenome human vaginal metagenome
 ## human gut metagenome                1.0000e-03                    0.001
-## human oral metagenome               2.4000e-02                    0.001
-## human skin metagenome                                             0.009
+## human oral metagenome               2.5000e-02                    0.001
+## human skin metagenome                                             0.006
 ## human vaginal metagenome            7.0275e-03
 ```
 
@@ -260,52 +265,48 @@ sessionInfo()
 ```
 
 ```
-## R version 3.5.1 (2018-07-02)
+## R version 3.6.3 (2020-02-29)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 17763)
+## Running under: Windows 10 x64 (build 18363)
 ## 
 ## Matrix products: default
 ## 
 ## locale:
-## [1] LC_COLLATE=English_Netherlands.1252   
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
+## [1] LC_COLLATE=English_Netherlands.1252  LC_CTYPE=English_Netherlands.1252   
+## [3] LC_MONETARY=English_Netherlands.1252 LC_NUMERIC=C                        
+## [5] LC_TIME=English_Netherlands.1252    
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] vegan_2.5-3        lattice_0.20-35    permute_0.9-4     
-##  [4] dplyr_0.7.7        ggpubr_0.1.8       magrittr_1.5      
-##  [7] RColorBrewer_1.1-2 microbiome_1.5.28  ggplot2_3.1.0     
-## [10] phyloseq_1.24.2   
+##  [1] vegan_2.5-6        lattice_0.20-40    permute_0.9-5      dplyr_0.8.5       
+##  [5] ggpubr_0.2.5       magrittr_1.5       RColorBrewer_1.1-2 microbiome_1.8.0  
+##  [9] ggplot2_3.3.0      phyloseq_1.30.0   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.19        ape_5.2             tidyr_0.8.2        
-##  [4] Biostrings_2.48.0   assertthat_0.2.0    rprojroot_1.3-2    
-##  [7] digest_0.6.18       foreach_1.4.4       R6_2.3.0           
-## [10] plyr_1.8.4          backports_1.1.2     stats4_3.5.1       
-## [13] evaluate_0.12       pillar_1.3.0        zlibbioc_1.26.0    
-## [16] rlang_0.3.0.1       lazyeval_0.2.1      data.table_1.11.8  
-## [19] S4Vectors_0.18.3    Matrix_1.2-15       rmarkdown_1.10     
-## [22] labeling_0.3        splines_3.5.1       Rtsne_0.15         
-## [25] stringr_1.3.1       igraph_1.2.2        munsell_0.5.0      
-## [28] compiler_3.5.1      xfun_0.4            pkgconfig_2.0.2    
-## [31] BiocGenerics_0.26.0 multtest_2.36.0     mgcv_1.8-25        
-## [34] htmltools_0.3.6     biomformat_1.8.0    tidyselect_0.2.5   
-## [37] tibble_1.4.2        bookdown_0.7        IRanges_2.14.12    
-## [40] codetools_0.2-15    crayon_1.3.4        withr_2.1.2        
-## [43] MASS_7.3-51.1       grid_3.5.1          nlme_3.1-137       
-## [46] jsonlite_1.5        gtable_0.2.0        scales_1.0.0       
-## [49] stringi_1.2.4       XVector_0.20.0      reshape2_1.4.3     
-## [52] bindrcpp_0.2.2      Rhdf5lib_1.2.1      iterators_1.0.10   
-## [55] tools_3.5.1         ade4_1.7-13         Biobase_2.40.0     
-## [58] glue_1.3.0          purrr_0.2.5         parallel_3.5.1     
-## [61] survival_2.43-1     yaml_2.2.0          colorspace_1.3-2   
-## [64] rhdf5_2.24.0        cluster_2.0.7-1     knitr_1.20         
-## [67] bindr_0.1.1
+##  [1] tidyselect_1.0.0    xfun_0.12           reshape2_1.4.3     
+##  [4] purrr_0.3.3         splines_3.6.3       rhdf5_2.30.1       
+##  [7] vctrs_0.2.4         colorspace_1.4-1    htmltools_0.4.0    
+## [10] stats4_3.6.3        mgcv_1.8-31         yaml_2.2.1         
+## [13] survival_3.1-11     rlang_0.4.5         pillar_1.4.3       
+## [16] withr_2.1.2         glue_1.3.2          BiocGenerics_0.32.0
+## [19] foreach_1.4.8       lifecycle_0.2.0     plyr_1.8.6         
+## [22] stringr_1.4.0       zlibbioc_1.32.0     Biostrings_2.54.0  
+## [25] ggsignif_0.6.0      munsell_0.5.0       gtable_0.3.0       
+## [28] codetools_0.2-16    evaluate_0.14       labeling_0.3       
+## [31] Biobase_2.46.0      knitr_1.28          IRanges_2.20.2     
+## [34] biomformat_1.14.0   parallel_3.6.3      Rcpp_1.0.4         
+## [37] scales_1.1.0        S4Vectors_0.24.3    jsonlite_1.6.1     
+## [40] XVector_0.26.0      farver_2.0.3        digest_0.6.25      
+## [43] Rtsne_0.15          stringi_1.4.6       bookdown_0.18      
+## [46] grid_3.6.3          ade4_1.7-15         tools_3.6.3        
+## [49] tibble_2.1.3        cluster_2.1.0       tidyr_1.0.2        
+## [52] crayon_1.3.4        ape_5.3             pkgconfig_2.0.3    
+## [55] MASS_7.3-51.5       Matrix_1.2-18       data.table_1.12.8  
+## [58] assertthat_0.2.1    rmarkdown_2.1       iterators_1.0.12   
+## [61] Rhdf5lib_1.8.0      R6_2.4.1            multtest_2.42.0    
+## [64] igraph_1.2.4.2      nlme_3.1-145        compiler_3.6.3
 ```
 
 
