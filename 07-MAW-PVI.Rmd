@@ -116,7 +116,7 @@ head(tax.c)
 
 More information on [SPIEC-EASI](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004226).  
 
-This input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
+The input for SPIEC-EASI is a counts table. The normalization and tranformation is done by the function. This is very handy tool.  
 This step is heavy on computational memory and very slow. For this workshop we have already have the output and will skip this chuck.  
 ```{r, eval=FALSE}
 
